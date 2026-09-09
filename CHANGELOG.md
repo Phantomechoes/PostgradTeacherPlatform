@@ -12,4 +12,8 @@
   - 目录骨架：`backend/`、`admin-web/`、`miniprogram/`、`docs/`、`scripts/`、`.github/`（仅占位说明，无可运行代码）
   - 冻结规范纳入仓库：`AGENTS.md`、`docs/product/开发前工程规范_V0.1.md`、`docs/product/DECISIONS_PENDING.md`
   - GitHub Issue / PR 模板：`.github/ISSUE_TEMPLATE/development_task.md`、`.github/ISSUE_TEMPLATE/bug_report.md`、`.github/pull_request_template.md`
-  - S0-01 四个检查点实施完成，等待 commit / push / PR / merge 验收（此时尚不算 Done）
+  - S0-01 已通过 [PR #2](https://github.com/Phantomechoes/PostgradTeacherPlatform/pull/2) 合并进 `main`（Done）
+
+### Changed
+
+- 精细化根目录 `AGENTS.md` 操作规则（[Issue #3](https://github.com/Phantomechoes/PostgradTeacherPlatform/issues/3)）：Context Loading Order、冲突优先级、Tool / Skill Routing、Mandatory Stop Conditions。不改冻结工程规范，不改 Research Blocked 状态。
