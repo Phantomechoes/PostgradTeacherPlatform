@@ -7,6 +7,15 @@
 
 ### Added
 
+- S0-02 后端起步（[Issue #5](https://github.com/Phantomechoes/PostgradTeacherPlatform/issues/5)），工作分支 `feature/5-backend-bootstrap`：
+  - Python 3.12 + uv 后端环境（`backend/pyproject.toml`、`backend/uv.lock`、`backend/.python-version`）
+  - FastAPI 最小应用（`backend/app/main.py`）
+  - `GET /health` 返回 `{"status":"ok"}`
+  - Swagger `/docs`
+  - pytest（`backend/tests/test_health.py`）
+  - Ruff
+  - Windows 后端运行说明（`backend/README.md`）
+
 - S0-01 仓库起步（[Issue #1](https://github.com/Phantomechoes/PostgradTeacherPlatform/issues/1)），工作分支 `chore/s0-01-repository-bootstrap`：
   - 根目录说明与协作文件：`README.md`、`CONTRIBUTING.md`、`PROJECT_STATUS.md`、`CHANGELOG.md`、`.gitignore`、`.editorconfig`
   - 目录骨架：`backend/`、`admin-web/`、`miniprogram/`、`docs/`、`scripts/`、`.github/`（仅占位说明，无可运行代码）

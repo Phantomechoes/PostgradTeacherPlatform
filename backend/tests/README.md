@@ -7,4 +7,4 @@
 - 一条正常路径
 - 一条关键异常路径
 
-S0-02 才会出现第一批测试（例如健康检查）。当前没有测试文件，也没有测试框架配置。
+当前已有 `test_health.py`，覆盖 `GET /health`。在 `backend/` 下执行：`uv run pytest`。完整 Windows 说明见 [`backend/README.md`](../README.md)。

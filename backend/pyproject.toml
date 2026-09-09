@@ -1,0 +1,24 @@
+[project]
+name = "postgrad-teacher-platform-backend"
+version = "0.1.0"
+description = "Backend service for PostgradTeacherPlatform (S0-02 bootstrap)."
+requires-python = ">=3.12,<3.13"
+dependencies = [
+    "fastapi",
+    "uvicorn",
+]
+
+[dependency-groups]
+dev = [
+    "httpx",
+    "pytest",
+    "ruff",
+]
+
+[tool.uv]
+package = false
+default-groups = ["dev"]
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]

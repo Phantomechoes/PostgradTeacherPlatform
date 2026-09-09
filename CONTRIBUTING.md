@@ -5,7 +5,7 @@
 给 Agent 的短规范：[`AGENTS.md`](./AGENTS.md)。  
 调研尚未确认的事项：[`docs/product/DECISIONS_PENDING.md`](./docs/product/DECISIONS_PENDING.md)。
 
-当前对应任务：[Issue #1 — S0-01 Repository Bootstrap](https://github.com/Phantomechoes/PostgradTeacherPlatform/issues/1)。
+当前对应任务：[Issue #5 — S0-02 Backend Bootstrap](https://github.com/Phantomechoes/PostgradTeacherPlatform/issues/5)。
 
 ## 必须遵守的原则
 
@@ -122,7 +122,7 @@ ci: ...
 - 主开发环境是 Windows 原生，不把 WSL 或容器当成当前前提。
 - 文本文件使用 UTF-8；换行与缩进以 [`.editorconfig`](./.editorconfig) 为准。
 - 本地密钥只放在 `.env`，仓库只提交 `.env.example`（S0-03 才会引入环境变量示例）。
-- S0-01 不安装 Python / Node / PostgreSQL，也不创建可运行后端。
+- S0-02 使用 uv 管理的 Python 3.12；不要使用 Anaconda 或系统 Python 作为本项目解释器。Node / PostgreSQL 仍不属于本任务。
 
 ## 当前阶段不要做的事
 
