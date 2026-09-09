@@ -8,28 +8,29 @@ GitHub：<https://github.com/Phantomechoes/PostgradTeacherPlatform>
 
 ## 正在进行
 
-- **Refine AGENTS Operational Rules**（仓库治理，不是业务开发）
-  - Issue：[ #3](https://github.com/Phantomechoes/PostgradTeacherPlatform/issues/3)
-  - 分支：`chore/refine-agents-operational-rules`
-  - 状态：文件修改进行中（未 commit / push / PR）
-  - 目标：Context Loading Order、Repository State > Conversation Memory、Tool / Skill Routing、Mandatory Stop Conditions
-  - 明确不做：不改冻结工程规范、不改 Research Blocked 状态、不进入 S0-02
+- **S0-02 Backend Bootstrap**
+  - Issue：[ #5](https://github.com/Phantomechoes/PostgradTeacherPlatform/issues/5)
+  - 分支：`feature/5-backend-bootstrap`
+  - 状态：实现已完成，等待 Git 提交与 PR 审查（尚未 merge，因此不是 Done）
+  - 目标：Python 3.12 + uv、FastAPI、`GET /health`、pytest、Ruff、Windows 运行说明
+  - 明确不做：PostgreSQL / SQLAlchemy / Alembic、业务 API、React、小程序、Docker、CI、Research Blocked 逻辑
 
 ## 已完成
 
 - **S0-01 Repository Bootstrap**：**Done**
   - Issue #1 已关闭；PR #2 已合并进 `main`（`1bae0e5`）
   - 交付：根目录工程文件、目录骨架、冻结规范纳入仓库、Issue/PR 模板
-  - 仍无可运行后端 / 后台 / 小程序
 
-## Ready（S0-01 完成后的下一正式开发任务）
+- **Refine AGENTS Operational Rules**：**Done**
+  - Issue #3 已关闭；PR #4 已合并进 `main`（`03ce647`）
+  - 交付：Context Loading Order、Repository State > Conversation Memory、Tool / Skill Routing、Mandatory Stop Conditions
+  - 未改冻结工程规范，未改 Research Blocked 状态
 
-- S0-02 Backend Bootstrap：FastAPI、`GET /health`、pytest、Ruff
+## Ready（S0-02 之后，未经批准不得自行进入）
+
 - S0-03 Database Bootstrap：PostgreSQL、SQLAlchemy、Alembic、环境配置
 - S0-04 Admin Bootstrap：React + TypeScript + Vite + Ant Design
 - S0-05 CI：backend test / lint、frontend build
-
-本治理 Issue 完成后，下一正式开发任务仍是 **S0-02 Backend Bootstrap**。未经批准不得自行进入。
 
 ## Research Blocked（禁止擅自正式开发）
 
@@ -49,13 +50,15 @@ GitHub：<https://github.com/Phantomechoes/PostgradTeacherPlatform>
 
 ## Known Issues
 
-- 目录骨架和规范已就位，但仍没有可运行程序（无 FastAPI、无数据库、无管理后台工程、无小程序工程）。
+- S0-02 实现已完成，但尚未 commit / push / PR / merge，因此还不能标 Done。
+- 仍无数据库、管理后台工程、小程序工程。
+- pytest 对 Starlette TestClient / httpx 有 DeprecationWarning（2 条）；当前不阻塞 S0-02。
 - 本机未安装 GitHub CLI（`gh`）。
 - 本机未配置持久的 Git `user.name` / `user.email`。
 
 ## 下一里程碑
 
-1. 完成本治理 Issue（AGENTS.md 精细化）的 commit / push / PR / 负责人验收。
-2. 进入 S0-02 Backend Bootstrap（须单独 Issue 与批准）。
+1. 将 S0-02 提交、push、开 PR；merge 进 `main` 后才把 S0-02 标为 Done。
+2. 进入 S0-03 Database Bootstrap（须单独 Issue 与批准）。
 
 Sprint 0 全部完成后，才开始 Sprint 1（院校—学院—专业—招生目录—考试科目主数据）。
