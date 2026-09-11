@@ -1,10 +1,14 @@
 [project]
 name = "postgrad-teacher-platform-backend"
 version = "0.1.0"
-description = "Backend service for PostgradTeacherPlatform (S0-02 bootstrap)."
+description = "Backend service for PostgradTeacherPlatform (S0-03 database bootstrap)."
 requires-python = ">=3.12,<3.13"
 dependencies = [
+    "alembic>=1.19.2",
     "fastapi",
+    "psycopg[binary]>=3,<4",
+    "pydantic-settings>=2.15.0",
+    "sqlalchemy>=2,<3",
     "uvicorn",
 ]
 
@@ -22,3 +26,7 @@ default-groups = ["dev"]
 [tool.pytest.ini_options]
 pythonpath = ["."]
 testpaths = ["tests"]
+
+[tool.ruff.lint.per-file-ignores]
+# Alembic autogenerate still emits template-style imports and pass.
+"migrations/versions/*.py" = ["F401", "UP007", "UP035", "PIE790"]

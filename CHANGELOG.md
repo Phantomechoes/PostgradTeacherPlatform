@@ -7,7 +7,13 @@
 
 ### Added
 
-- S0-02 后端起步（[Issue #5](https://github.com/Phantomechoes/PostgradTeacherPlatform/issues/5)），工作分支 `feature/5-backend-bootstrap`：
+- S0-03 数据库起步（[Issue #7](https://github.com/Phantomechoes/PostgradTeacherPlatform/issues/7)），工作分支 `feature/7-database-bootstrap`（实现完成，待提交 / PR，尚未 merge）：
+  - 本机 PostgreSQL 18.6 开发库 `postgrad_teacher_platform`，应用角色 `postgrad_teacher_platform_app`
+  - SQLAlchemy 2.x + psycopg 3、pydantic-settings、`.env.example`
+  - Alembic baseline `27d6bd3c881a`（仅 `alembic_version`，无业务表）
+  - Windows 数据库 / migration 说明（`backend/README.md`）
+
+- S0-02 后端起步（[Issue #5](https://github.com/Phantomechoes/PostgradTeacherPlatform/issues/5)），工作分支 `feature/5-backend-bootstrap`，已通过 [PR #6](https://github.com/Phantomechoes/PostgradTeacherPlatform/pull/6) 合并进 `main`（`deba8df`，Done）：
   - Python 3.12 + uv 后端环境（`backend/pyproject.toml`、`backend/uv.lock`、`backend/.python-version`）
   - FastAPI 最小应用（`backend/app/main.py`）
   - `GET /health` 返回 `{"status":"ok"}`

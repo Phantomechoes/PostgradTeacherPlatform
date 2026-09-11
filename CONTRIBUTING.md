@@ -5,7 +5,7 @@
 给 Agent 的短规范：[`AGENTS.md`](./AGENTS.md)。  
 调研尚未确认的事项：[`docs/product/DECISIONS_PENDING.md`](./docs/product/DECISIONS_PENDING.md)。
 
-当前对应任务：[Issue #5 — S0-02 Backend Bootstrap](https://github.com/Phantomechoes/PostgradTeacherPlatform/issues/5)。
+当前对应任务：[Issue #7 — S0-03 Database Bootstrap](https://github.com/Phantomechoes/PostgradTeacherPlatform/issues/7)。
 
 ## 必须遵守的原则
 
@@ -121,15 +121,16 @@ ci: ...
 
 - 主开发环境是 Windows 原生，不把 WSL 或容器当成当前前提。
 - 文本文件使用 UTF-8；换行与缩进以 [`.editorconfig`](./.editorconfig) 为准。
-- 本地密钥只放在 `.env`，仓库只提交 `.env.example`（S0-03 才会引入环境变量示例）。
-- S0-02 使用 uv 管理的 Python 3.12；不要使用 Anaconda 或系统 Python 作为本项目解释器。Node / PostgreSQL 仍不属于本任务。
+- 本地密钥只放在 `.env`，仓库只提交 `.env.example`。真实数据库口令不得进入 Git / Issue / PR。
+- 后端使用 uv 管理的 Python 3.12；不要使用 Anaconda 或系统 Python 作为本项目解释器。
+- FastAPI / SQLAlchemy / Alembic 使用应用角色 `postgrad_teacher_platform_app`，不要使用 `postgres` 超级用户作为日常 `DATABASE_URL`。
 
 ## 当前阶段不要做的事
 
 Sprint 0 尚未完成前，不要开始：
 
-- FastAPI 业务接口（属于 S0-02 及以后）
-- 数据库表和迁移（属于 S0-03）
+- FastAPI 业务接口（S0-02 只有 `/health`；业务 API 留给后续 Sprint）
+- 业务数据库表（S0-03 只有 Alembic baseline / `alembic_version`）
 - 管理后台页面（属于 S0-04）
 - CI 工作流（属于 S0-05）
 - 被调研阻塞的业务功能
