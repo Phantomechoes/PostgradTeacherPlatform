@@ -8,13 +8,12 @@ GitHub：<https://github.com/Phantomechoes/PostgradTeacherPlatform>
 
 ## 正在进行
 
-- **S0-03 Database Bootstrap**
-  - Issue：[ #7](https://github.com/Phantomechoes/PostgradTeacherPlatform/issues/7)
-  - 分支：`feature/7-database-bootstrap`
+- **S0-04 Admin Web Bootstrap**
+  - Issue：[ #9](https://github.com/Phantomechoes/PostgradTeacherPlatform/issues/9)
+  - 分支：`feature/9-admin-bootstrap`
   - 状态：implementation complete，awaiting Git submission / PR review（尚未 merge，因此不是 Done）
-  - 目标：PostgreSQL 18.x、SQLAlchemy 2.x、Alembic、pydantic-settings、`.env.example`、Windows 数据库说明
-  - 本机开发库：`listen_addresses = localhost`（不对外网卡监听）
-  - 明确不做：业务表 / CRUD、登录、推荐、支付、React、小程序、Docker、CI、Research Blocked 逻辑
+  - 目标：React + TypeScript + Vite + Ant Design 6、pnpm 12、单页内部后台壳、Windows 运行说明
+  - 明确不做：业务 CRUD、登录、React Router、调用后端 API、小程序、Docker、CI、Research Blocked 逻辑
 
 ## 已完成
 
@@ -31,9 +30,13 @@ GitHub：<https://github.com/Phantomechoes/PostgradTeacherPlatform>
   - Issue #5 已关闭；PR #6 已合并进 `main`（`deba8df`）
   - 交付：Python 3.12 + uv、FastAPI、`GET /health`、pytest、Ruff、Windows 后端运行说明
 
-## Ready（S0-03 之后，未经批准不得自行进入）
+- **S0-03 Database Bootstrap**：**Done**
+  - Issue #7 已关闭；PR #8 已合并进 `main`（`5440785`）
+  - 交付：PostgreSQL 18.x、SQLAlchemy 2.x、Alembic baseline、pydantic-settings、`.env.example`、Windows 数据库说明
+  - 本机开发库：`listen_addresses = localhost`
 
-- S0-04 Admin Bootstrap：React + TypeScript + Vite + Ant Design
+## Ready（S0-04 之后，未经批准不得自行进入）
+
 - S0-05 CI：backend test / lint、frontend build
 
 ## Research Blocked（禁止擅自正式开发）
@@ -54,14 +57,15 @@ GitHub：<https://github.com/Phantomechoes/PostgradTeacherPlatform>
 
 ## Known Issues
 
-- S0-03 实现已完成，但尚未 commit / push / PR / merge，因此还不能标 Done。
-- 仍无管理后台工程、小程序工程。
+- S0-04 实现已完成，但尚未 commit / push / PR / merge，因此还不能标 Done。
+- `pnpm build` 因 Ant Design 体积可能出现 >500kB chunk 提示；当前不阻塞，不为此做拆包。
+- 仍无小程序工程。
 - pytest 对 Starlette TestClient / httpx 有 DeprecationWarning（2 条）；当前不阻塞。
 - 本机未安装 GitHub CLI（`gh`）。
 
 ## 下一里程碑
 
-1. 将 S0-03 提交、push、开 PR；merge 进 `main` 后才把 S0-03 标为 Done。
-2. 进入 S0-04 Admin Bootstrap（须单独 Issue 与批准）。
+1. 将 S0-04 提交、push、开 PR；merge 进 `main` 后才把 S0-04 标为 Done。
+2. 进入 S0-05 CI（须单独 Issue 与批准）。
 
 Sprint 0 全部完成后，才开始 Sprint 1（院校—学院—专业—招生目录—考试科目主数据）。

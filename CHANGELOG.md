@@ -7,7 +7,13 @@
 
 ### Added
 
-- S0-03 数据库起步（[Issue #7](https://github.com/Phantomechoes/PostgradTeacherPlatform/issues/7)），工作分支 `feature/7-database-bootstrap`（实现完成，待提交 / PR，尚未 merge）：
+- S0-04 管理后台起步（[Issue #9](https://github.com/Phantomechoes/PostgradTeacherPlatform/issues/9)），工作分支 `feature/9-admin-bootstrap`（实现完成，待提交 / PR，尚未 merge）：
+  - React + TypeScript + Vite，pnpm 12 / Node.js 24
+  - Ant Design 6 单页内部后台壳（Loading / Error / Empty 静态演示）
+  - ESLint + Prettier
+  - Windows 运行说明（`admin-web/README.md`）
+
+- S0-03 数据库起步（[Issue #7](https://github.com/Phantomechoes/PostgradTeacherPlatform/issues/7)），工作分支 `feature/7-database-bootstrap`，已通过 [PR #8](https://github.com/Phantomechoes/PostgradTeacherPlatform/pull/8) 合并进 `main`（`5440785`，Done）：
   - 本机 PostgreSQL 18.6 开发库 `postgrad_teacher_platform`，应用角色 `postgrad_teacher_platform_app`
   - SQLAlchemy 2.x + psycopg 3、pydantic-settings、`.env.example`
   - Alembic baseline `27d6bd3c881a`（仅 `alembic_version`，无业务表）
