@@ -7,8 +7,8 @@
 GitHub 是本项目的唯一事实源：代码、Issue、文档和状态都以本仓库为准。
 
 - 仓库地址：<https://github.com/Phantomechoes/PostgradTeacherPlatform>
-- 当前任务：S0-04 Admin Web Bootstrap（[Issue #9](https://github.com/Phantomechoes/PostgradTeacherPlatform/issues/9)）
-- 当前工作分支：`feature/9-admin-bootstrap`
+- 当前任务：S0-05 CI（[Issue #11](https://github.com/Phantomechoes/PostgradTeacherPlatform/issues/11)）
+- 当前工作分支：`feature/11-ci`
 
 ## 现在做到哪一步
 
@@ -21,8 +21,8 @@ Sprint 0 只做工程底座，按顺序分为：
 | S0-01 | 仓库起步：目录、说明文档、协作规范、Issue/PR 模板 | Done |
 | S0-02 | 后端骨架：FastAPI、健康检查、测试与代码检查 | Done |
 | S0-03 | 数据库：PostgreSQL、SQLAlchemy、Alembic | Done |
-| S0-04 | 内部管理后台骨架 | 实现完成，待提交 / PR |
-| S0-05 | 持续集成（CI） | 未开始 |
+| S0-04 | 内部管理后台骨架 | Done |
+| S0-05 | 持续集成（CI） | 进行中 |
 
 更细的进度见 [`PROJECT_STATUS.md`](./PROJECT_STATUS.md)。
 
@@ -94,7 +94,7 @@ PostgradTeacherPlatform/
 
 ## 在 Windows 上如何开始
 
-1. 用 Git 打开本仓库，开发时不要直接改 `main`。当前工作分支是 `feature/9-admin-bootstrap`。
+1. 用 Git 打开本仓库，开发时不要直接改 `main`。当前工作分支是 `feature/11-ci`。
 2. 先读本文件和 [`PROJECT_STATUS.md`](./PROJECT_STATUS.md)。
 3. 启动后端、配置 `.env`、跑 migration / pytest / Ruff：见 [`backend/README.md`](./backend/README.md)。
 4. 启动管理后台骨架、跑 lint / build：见 [`admin-web/README.md`](./admin-web/README.md)。
