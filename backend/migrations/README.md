@@ -10,4 +10,5 @@
 修改 Model → 生成 migration → 人工阅读 → 执行 → 测试
 ```
 
-当前目录为空。可能丢数据的迁移必须再次请负责人确认。
+已初始化 Alembic；baseline revision `27d6bd3c881a` 只创建 `alembic_version`，没有业务表。
+可能丢数据的迁移必须再次请负责人确认。

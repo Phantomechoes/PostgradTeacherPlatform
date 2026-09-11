@@ -7,8 +7,8 @@
 GitHub 是本项目的唯一事实源：代码、Issue、文档和状态都以本仓库为准。
 
 - 仓库地址：<https://github.com/Phantomechoes/PostgradTeacherPlatform>
-- 当前任务：S0-02 Backend Bootstrap（[Issue #5](https://github.com/Phantomechoes/PostgradTeacherPlatform/issues/5)）
-- 当前工作分支：`feature/5-backend-bootstrap`
+- 当前任务：S0-03 Database Bootstrap（[Issue #7](https://github.com/Phantomechoes/PostgradTeacherPlatform/issues/7)）
+- 当前工作分支：`feature/7-database-bootstrap`
 
 ## 现在做到哪一步
 
@@ -19,8 +19,8 @@ Sprint 0 只做工程底座，按顺序分为：
 | 编号 | 内容 | 状态 |
 |---|---|---|
 | S0-01 | 仓库起步：目录、说明文档、协作规范、Issue/PR 模板 | Done |
-| S0-02 | 后端骨架：FastAPI、健康检查、测试与代码检查 | 实现完成，待提交 / PR |
-| S0-03 | 数据库：PostgreSQL、SQLAlchemy、Alembic | 未开始 |
+| S0-02 | 后端骨架：FastAPI、健康检查、测试与代码检查 | Done |
+| S0-03 | 数据库：PostgreSQL、SQLAlchemy、Alembic | 实现完成，待提交 / PR |
 | S0-04 | 内部管理后台骨架 | 未开始 |
 | S0-05 | 持续集成（CI） | 未开始 |
 
@@ -31,7 +31,7 @@ Sprint 0 只做工程底座，按顺序分为：
 请先按这个预期来看仓库，避免误以为已经可以运行业务系统：
 
 - 已有最小 FastAPI 应用与 `GET /health`，尚无业务 API
-- 还没有数据库和迁移
+- 已有 PostgreSQL 连接、SQLAlchemy 与 Alembic baseline（库中只有 `alembic_version`，无业务表）
 - 还没有管理后台页面
 - 还没有微信小程序工程
 - 还没有支付、佣金、自动推荐、学生选师等业务功能
@@ -40,7 +40,7 @@ Sprint 0 只做工程底座，按顺序分为：
 
 ## 当前仓库里有什么
 
-Checkpoint 1 建立了根目录说明和协作文件。Checkpoint 2 已建立目录骨架（只有说明文件，没有可运行代码）。
+根目录说明、目录骨架、FastAPI `/health` 与数据库工程底座已落地；管理后台和小程序仍只有占位说明。
 
 现在可以直接阅读：
 
@@ -65,7 +65,7 @@ Checkpoint 1 建立了根目录说明和协作文件。Checkpoint 2 已建立目
 
 ```text
 PostgradTeacherPlatform/
-├─ backend/            后端（S0-02 起才放 FastAPI 代码）
+├─ backend/            后端（FastAPI、SQLAlchemy、Alembic）
 ├─ admin-web/          内部管理后台（S0-04）
 ├─ miniprogram/        微信小程序（后续阶段）
 ├─ docs/               产品、调研、架构、数据库、学习文档
@@ -85,7 +85,7 @@ PostgradTeacherPlatform/
 
 ## 当前技术栈（已冻结，尚未落地）
 
-这些选择已经冻结。S0-02 已落地 Python 3.12 + uv + 最小 FastAPI（`GET /health`）。SQLAlchemy、PostgreSQL、管理后台、小程序尚未落地：
+这些选择已经冻结。S0-02 已落地 Python 3.12 + uv + 最小 FastAPI（`GET /health`）。S0-03 已落地 SQLAlchemy 2.x、Alembic 与本机 PostgreSQL 18.x 连接。管理后台、小程序尚未落地：
 
 - 后端：Python 3.12、FastAPI、SQLAlchemy 2.x、Alembic、Pydantic、PostgreSQL、pytest、Ruff
 - 管理后台：React、TypeScript、Vite、Ant Design、pnpm、ESLint、Prettier
@@ -94,9 +94,9 @@ PostgradTeacherPlatform/
 
 ## 在 Windows 上如何开始
 
-1. 用 Git 打开本仓库，开发时不要直接改 `main`。当前工作分支是 `feature/5-backend-bootstrap`。
+1. 用 Git 打开本仓库，开发时不要直接改 `main`。当前工作分支是 `feature/7-database-bootstrap`。
 2. 先读本文件和 [`PROJECT_STATUS.md`](./PROJECT_STATUS.md)。
-3. 启动后端、访问 `/health`、跑 pytest / Ruff：见 [`backend/README.md`](./backend/README.md)。
+3. 启动后端、配置 `.env`、跑 migration / pytest / Ruff：见 [`backend/README.md`](./backend/README.md)。
 4. 若要提需求或改代码，按 [`CONTRIBUTING.md`](./CONTRIBUTING.md) 先开 GitHub Issue，再开对应分支。
 5. 不要把 `.env`、密码、Token 或真实数据库口令提交进仓库。
 
