@@ -8,12 +8,12 @@ GitHub：<https://github.com/Phantomechoes/PostgradTeacherPlatform>
 
 ## 正在进行
 
-- **S0-04 Admin Web Bootstrap**
-  - Issue：[ #9](https://github.com/Phantomechoes/PostgradTeacherPlatform/issues/9)
-  - 分支：`feature/9-admin-bootstrap`
-  - 状态：implementation complete，awaiting Git submission / PR review（尚未 merge，因此不是 Done）
-  - 目标：React + TypeScript + Vite + Ant Design 6、pnpm 12、单页内部后台壳、Windows 运行说明
-  - 明确不做：业务 CRUD、登录、React Router、调用后端 API、小程序、Docker、CI、Research Blocked 逻辑
+- **S0-05 CI**
+  - Issue：[ #11](https://github.com/Phantomechoes/PostgradTeacherPlatform/issues/11)
+  - 分支：`feature/11-ci`
+  - 状态：In Progress
+  - 目标：GitHub Actions；backend `uv sync --locked` / `ruff check` / `pytest`；admin-web `pnpm install --frozen-lockfile` / lint / format:check / build
+  - 明确不做：CD、Docker、PostgreSQL service、E2E、GitHub Secret、branch protection、小程序 CI
 
 ## 已完成
 
@@ -35,9 +35,13 @@ GitHub：<https://github.com/Phantomechoes/PostgradTeacherPlatform>
   - 交付：PostgreSQL 18.x、SQLAlchemy 2.x、Alembic baseline、pydantic-settings、`.env.example`、Windows 数据库说明
   - 本机开发库：`listen_addresses = localhost`
 
-## Ready（S0-04 之后，未经批准不得自行进入）
+- **S0-04 Admin Web Bootstrap**：**Done**
+  - Issue #9 已关闭；PR #10 已合并进 `main`（`1fa1d2e`）
+  - 交付：React + TypeScript + Vite、Ant Design 6 单页骨架、pnpm 12、ESLint + Prettier、Windows 前端说明
 
-- S0-05 CI：backend test / lint、frontend build
+## Ready（S0-05 之后，未经批准不得自行进入）
+
+- Sprint 1：院校—学院—专业—招生目录—考试科目主数据（Sprint 0 全部完成并批准后）
 
 ## Research Blocked（禁止擅自正式开发）
 
@@ -57,7 +61,6 @@ GitHub：<https://github.com/Phantomechoes/PostgradTeacherPlatform>
 
 ## Known Issues
 
-- S0-04 实现已完成，但尚未 commit / push / PR / merge，因此还不能标 Done。
 - `pnpm build` 因 Ant Design 体积可能出现 >500kB chunk 提示；当前不阻塞，不为此做拆包。
 - 仍无小程序工程。
 - pytest 对 Starlette TestClient / httpx 有 DeprecationWarning（2 条）；当前不阻塞。
@@ -65,7 +68,7 @@ GitHub：<https://github.com/Phantomechoes/PostgradTeacherPlatform>
 
 ## 下一里程碑
 
-1. 将 S0-04 提交、push、开 PR；merge 进 `main` 后才把 S0-04 标为 Done。
-2. 进入 S0-05 CI（须单独 Issue 与批准）。
+1. 完成 S0-05 CI（backend test / lint；admin-web lint / format:check / build）。
+2. Sprint 0 全部完成并批准后，才进入 Sprint 1。
 
 Sprint 0 全部完成后，才开始 Sprint 1（院校—学院—专业—招生目录—考试科目主数据）。
