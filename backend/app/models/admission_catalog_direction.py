@@ -1,15 +1,8 @@
-from __future__ import annotations
-
-from typing import TYPE_CHECKING
-
 from sqlalchemy import BigInteger, ForeignKey, Identity, String, UniqueConstraint
-from sqlalchemy.orm import Mapped, mapped_column, relationship
+from sqlalchemy.orm import Mapped, mapped_column
 
 from app.core.db_base import Base
 from app.models.mixins import TimestampMixin
-
-if TYPE_CHECKING:
-    from app.models.admission_catalog import AdmissionCatalog
 
 
 class AdmissionCatalogDirection(TimestampMixin, Base):
@@ -34,7 +27,3 @@ class AdmissionCatalogDirection(TimestampMixin, Base):
     )
     direction_code: Mapped[str] = mapped_column(String(32), nullable=False)
     direction_name: Mapped[str] = mapped_column(String(255), nullable=False)
-
-    admission_catalog: Mapped[AdmissionCatalog] = relationship(
-        back_populates="directions"
-    )

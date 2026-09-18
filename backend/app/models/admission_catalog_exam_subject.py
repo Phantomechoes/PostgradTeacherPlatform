@@ -1,7 +1,3 @@
-from __future__ import annotations
-
-from typing import TYPE_CHECKING
-
 from sqlalchemy import (
     BigInteger,
     CheckConstraint,
@@ -10,14 +6,10 @@ from sqlalchemy import (
     SmallInteger,
     UniqueConstraint,
 )
-from sqlalchemy.orm import Mapped, mapped_column, relationship
+from sqlalchemy.orm import Mapped, mapped_column
 
 from app.core.db_base import Base
 from app.models.mixins import TimestampMixin
-
-if TYPE_CHECKING:
-    from app.models.admission_catalog import AdmissionCatalog
-    from app.models.exam_subject import ExamSubject
 
 
 class AdmissionCatalogExamSubject(TimestampMixin, Base):
@@ -67,10 +59,3 @@ class AdmissionCatalogExamSubject(TimestampMixin, Base):
     )
     exam_unit: Mapped[int] = mapped_column(SmallInteger, nullable=False)
     option_order: Mapped[int] = mapped_column(SmallInteger, nullable=False)
-
-    admission_catalog: Mapped[AdmissionCatalog] = relationship(
-        back_populates="exam_subjects"
-    )
-    exam_subject: Mapped[ExamSubject] = relationship(
-        back_populates="catalog_exam_subjects"
-    )

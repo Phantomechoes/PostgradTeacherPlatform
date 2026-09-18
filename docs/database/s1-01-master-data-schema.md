@@ -108,8 +108,8 @@ School: 北京交通大学
 |---|---|---|
 | id | NO | PK |
 | school_id | NO | FK → schools.id（与 college/major 同校，见第 16 节） |
-| college_id | NO | FK → colleges.id |
-| major_id | NO | FK → majors.id |
+| college_id | NO | 与 school_id 组成组合 FK → colleges(id, school_id) |
+| major_id | NO | 与 school_id 组成组合 FK → majors(id, school_id) |
 | admission_year | NO | 如 2026 |
 | study_mode | NO | `full_time` / `part_time` |
 | is_active | NO | 默认 true；该年条目作废时用 |
@@ -186,12 +186,13 @@ Catalog 的初试单元与科目。科目挂 Catalog，**不挂 Direction**。
 - majors.school_id → schools.id
 - exam_subjects.school_id → schools.id（可空）
 - admission_catalogs.school_id → schools.id
-- admission_catalogs.college_id → colleges.id
-- admission_catalogs.major_id → majors.id
-- 另：组合 FK 保证同校（第 16 节）
+- admission_catalogs `(college_id, school_id)` → colleges `(id, school_id)`
+- admission_catalogs `(major_id, school_id)` → majors `(id, school_id)`
 - admission_catalog_directions.admission_catalog_id → admission_catalogs.id
 - admission_catalog_exam_subjects.admission_catalog_id → admission_catalogs.id
 - admission_catalog_exam_subjects.exam_subject_id → exam_subjects.id
+
+`college_id` / `major_id` **没有**额外单列 FK。同校一致性只靠组合 FK + `school_id` FK（第 16 节）。
 
 建议 `ON DELETE RESTRICT`（历史 Catalog 仍引用时不得删学校/专业）。
 
@@ -212,18 +213,23 @@ Catalog 的初试单元与科目。科目挂 Catalog，**不挂 Direction**。
 
 ### Index（非 unique）
 
-- colleges.school_id
-- majors.school_id
-- exam_subjects.school_id
-- admission_catalogs：`admission_year`；`(school_id, admission_year)`；`college_id`；`major_id`
-- directions.admission_catalog_id
-- catalog_exam_subjects.admission_catalog_id；`exam_subject_id`
+与 migration `44f5a70a766a` 一致：
+
+- `ix_colleges_school_id`
+- `ix_exam_subjects_school_id`
+- `ix_admission_catalogs_college_id`
+- `ix_admission_catalogs_major_id`
+- `ix_admission_catalogs_year`
+- `ix_admission_catalogs_school_year`（school_id, admission_year）
+- `ix_admission_catalog_exam_subjects_exam_subject_id`
+
+不建：`ix_majors_school_id`、`ix_admission_catalog_directions_admission_catalog_id`、`ix_admission_catalog_exam_subjects_admission_catalog_id`（已被 UNIQUE 左前缀覆盖）。
 
 ### Check
 
 - `majors.degree_type IN ('academic', 'professional')`
 - `admission_catalogs.study_mode IN ('full_time', 'part_time')`
-- `admission_catalogs.admission_year BETWEEN 2000 AND 2100`（防脏数，可在实现时微调）
+- `admission_catalogs.admission_year >= 2000`（第一版不设置人为年份上限）
 - `admission_catalog_exam_subjects.exam_unit BETWEEN 1 AND 4`
 - `admission_catalog_exam_subjects.option_order >= 1`
 - `is_active` 列默认 true（类型 BOOLEAN）
@@ -266,19 +272,14 @@ Catalog 同时有 `school_id`、`college_id`、`major_id`，必须：
 - `colleges.school_id = admission_catalogs.school_id`
 - `majors.school_id = admission_catalogs.school_id`
 
-| 方案 | 做法 | 评价 |
-|---|---|---|
-| A | 仅 Service 校验 | 简单，DB 可被绕过 |
-| **B（推荐）** | 组合 FK | 库级保证，无 trigger |
-| C | trigger | **禁止** |
-
-方案 B：
+**最终采用：only composite FK + `school_id` FK。** 不是候选方案。
 
 - `UNIQUE (id, school_id)` on colleges、majors
 - Catalog FK `(college_id, school_id) → colleges(id, school_id)`
 - Catalog FK `(major_id, school_id) → majors(id, school_id)`
+- Catalog FK `school_id → schools.id`
 
-仍保留 `college_id → colleges.id`、`major_id → majors.id` 或只保留组合 FK（实现时二选一，推荐**只保留组合 FK** + `school_id → schools.id`，避免重复）。
+`college_id` / `major_id` **没有**额外单列 FK。禁止 trigger。
 
 ## 17. 历史数据策略
 

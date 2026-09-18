@@ -1,7 +1,3 @@
-from __future__ import annotations
-
-from typing import TYPE_CHECKING
-
 from sqlalchemy import (
     BigInteger,
     Boolean,
@@ -15,17 +11,10 @@ from sqlalchemy import (
     UniqueConstraint,
     true,
 )
-from sqlalchemy.orm import Mapped, mapped_column, relationship
+from sqlalchemy.orm import Mapped, mapped_column
 
 from app.core.db_base import Base
 from app.models.mixins import TimestampMixin
-
-if TYPE_CHECKING:
-    from app.models.admission_catalog_direction import AdmissionCatalogDirection
-    from app.models.admission_catalog_exam_subject import AdmissionCatalogExamSubject
-    from app.models.college import College
-    from app.models.major import Major
-    from app.models.school import School
 
 
 class AdmissionCatalog(TimestampMixin, Base):
@@ -66,7 +55,9 @@ class AdmissionCatalog(TimestampMixin, Base):
     id: Mapped[int] = mapped_column(BigInteger, Identity(), primary_key=True)
     school_id: Mapped[int] = mapped_column(
         BigInteger,
-        ForeignKey("schools.id", ondelete="RESTRICT", name="fk_admission_catalogs_school_id"),
+        ForeignKey(
+            "schools.id", ondelete="RESTRICT", name="fk_admission_catalogs_school_id"
+        ),
         nullable=False,
     )
     college_id: Mapped[int] = mapped_column(BigInteger, nullable=False, index=True)
@@ -75,14 +66,4 @@ class AdmissionCatalog(TimestampMixin, Base):
     study_mode: Mapped[str] = mapped_column(String(32), nullable=False)
     is_active: Mapped[bool] = mapped_column(
         Boolean, nullable=False, server_default=true()
-    )
-
-    school: Mapped[School] = relationship(back_populates="admission_catalogs")
-    college: Mapped[College] = relationship(back_populates="admission_catalogs")
-    major: Mapped[Major] = relationship(back_populates="admission_catalogs")
-    directions: Mapped[list[AdmissionCatalogDirection]] = relationship(
-        back_populates="admission_catalog"
-    )
-    exam_subjects: Mapped[list[AdmissionCatalogExamSubject]] = relationship(
-        back_populates="admission_catalog"
     )

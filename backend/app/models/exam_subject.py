@@ -1,7 +1,3 @@
-from __future__ import annotations
-
-from typing import TYPE_CHECKING
-
 from sqlalchemy import (
     BigInteger,
     Boolean,
@@ -12,14 +8,10 @@ from sqlalchemy import (
     text,
     true,
 )
-from sqlalchemy.orm import Mapped, mapped_column, relationship
+from sqlalchemy.orm import Mapped, mapped_column
 
 from app.core.db_base import Base
 from app.models.mixins import TimestampMixin
-
-if TYPE_CHECKING:
-    from app.models.admission_catalog_exam_subject import AdmissionCatalogExamSubject
-    from app.models.school import School
 
 
 class ExamSubject(TimestampMixin, Base):
@@ -51,9 +43,4 @@ class ExamSubject(TimestampMixin, Base):
     name: Mapped[str] = mapped_column(String(255), nullable=False)
     is_active: Mapped[bool] = mapped_column(
         Boolean, nullable=False, server_default=true()
-    )
-
-    school: Mapped[School | None] = relationship(back_populates="exam_subjects")
-    catalog_exam_subjects: Mapped[list[AdmissionCatalogExamSubject]] = relationship(
-        back_populates="exam_subject"
     )

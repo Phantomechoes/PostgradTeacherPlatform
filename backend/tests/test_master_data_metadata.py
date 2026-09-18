@@ -191,6 +191,19 @@ def test_direction_has_no_exam_subject_fk() -> None:
     assert "exam_subject_id" not in AdmissionCatalogDirection.__table__.c
 
 
+def test_models_have_no_orm_relationships() -> None:
+    for model in (
+        School,
+        College,
+        Major,
+        AdmissionCatalog,
+        AdmissionCatalogDirection,
+        ExamSubject,
+        AdmissionCatalogExamSubject,
+    ):
+        assert list(inspect(model).relationships) == []
+
+
 def test_mapper_configuration() -> None:
     inspect(School)
     inspect(College)
