@@ -7,6 +7,11 @@
 
 ### Added
 
+- S0-05 CI（[Issue #11](https://github.com/Phantomechoes/PostgradTeacherPlatform/issues/11)），工作分支 `feature/11-ci`，已通过 [PR #12](https://github.com/Phantomechoes/PostgradTeacherPlatform/pull/12) 合并进 `main`（`0a490aa`，Done）：
+  - GitHub Actions：backend `uv sync --locked` / Ruff / pytest；admin-web frozen install / lint / format:check / build
+  - `.gitattributes`：工作区文本 LF
+  - push → main CI run `34590063714` 两个 job 均 success
+
 - S0-04 管理后台起步（[Issue #9](https://github.com/Phantomechoes/PostgradTeacherPlatform/issues/9)），工作分支 `feature/9-admin-bootstrap`，已通过 [PR #10](https://github.com/Phantomechoes/PostgradTeacherPlatform/pull/10) 合并进 `main`（`1fa1d2e`，Done）：
   - React + TypeScript + Vite，pnpm 12 / Node.js 24
   - Ant Design 6 单页内部后台壳（Loading / Error / Empty 静态演示）

@@ -5,7 +5,7 @@
 给 Agent 的短规范：[`AGENTS.md`](./AGENTS.md)。  
 调研尚未确认的事项：[`docs/product/DECISIONS_PENDING.md`](./docs/product/DECISIONS_PENDING.md)。
 
-当前对应任务：[Issue #11 — S0-05 CI](https://github.com/Phantomechoes/PostgradTeacherPlatform/issues/11)。
+当前对应任务：[Issue #13 — S1-01 Master Data Schema](https://github.com/Phantomechoes/PostgradTeacherPlatform/issues/13)。
 
 ## 必须遵守的原则
 
@@ -128,10 +128,11 @@ ci: ...
 
 ## 当前阶段不要做的事
 
-Sprint 0 尚未完成前，不要开始：
+Sprint 1 当前任务是主数据 Schema。不要开始：
 
-- FastAPI 业务接口（S0-02 只有 `/health`；业务 API 留给后续 Sprint）
-- 业务数据库表（S0-03 只有 Alembic baseline / `alembic_version`）
-- 管理后台业务 CRUD（S0-04 只做可启动骨架，不做业务页）
-- CD / Docker / E2E / branch protection（超出 S0-05 最小 CI）
+- 业务 API / Admin CRUD（S1-01 只做表结构，查询与后台另开 Issue）
+- Teacher / 师资档案（Sprint 2）
+- 导入、爬虫、支付、推荐、选师
+- CD / Docker / E2E / branch protection
 - 被调研阻塞的业务功能
+- 在 PostgreSQL Workbench 里手工 CREATE / ALTER / DROP 替代 Alembic

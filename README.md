@@ -7,14 +7,14 @@
 GitHub 是本项目的唯一事实源：代码、Issue、文档和状态都以本仓库为准。
 
 - 仓库地址：<https://github.com/Phantomechoes/PostgradTeacherPlatform>
-- 当前任务：S0-05 CI（[Issue #11](https://github.com/Phantomechoes/PostgradTeacherPlatform/issues/11)）
-- 当前工作分支：`feature/11-ci`
+- 当前任务：S1-01 主数据 Schema（[Issue #13](https://github.com/Phantomechoes/PostgradTeacherPlatform/issues/13)）
+- 当前工作分支：`feature/13-master-data-schema`
 
 ## 现在做到哪一步
 
-当前阶段：**V0.1 Foundation（工程底座） / Sprint 0**。
+当前阶段：**Sprint 1 — 院校招生主数据**（Sprint 0 工程底座已完成）。
 
-Sprint 0 只做工程底座，按顺序分为：
+Sprint 0（已完成）：
 
 | 编号 | 内容 | 状态 |
 |---|---|---|
@@ -22,7 +22,13 @@ Sprint 0 只做工程底座，按顺序分为：
 | S0-02 | 后端骨架：FastAPI、健康检查、测试与代码检查 | Done |
 | S0-03 | 数据库：PostgreSQL、SQLAlchemy、Alembic | Done |
 | S0-04 | 内部管理后台骨架 | Done |
-| S0-05 | 持续集成（CI） | 进行中 |
+| S0-05 | 持续集成（CI） | Done |
+
+Sprint 1：
+
+| 编号 | 内容 | 状态 |
+|---|---|---|
+| S1-01 | 主数据 Schema（School / College / Major / AdmissionCatalog / Direction / ExamSubject） | 进行中 |
 
 更细的进度见 [`PROJECT_STATUS.md`](./PROJECT_STATUS.md)。
 
@@ -94,7 +100,7 @@ PostgradTeacherPlatform/
 
 ## 在 Windows 上如何开始
 
-1. 用 Git 打开本仓库，开发时不要直接改 `main`。当前工作分支是 `feature/11-ci`。
+1. 用 Git 打开本仓库，开发时不要直接改 `main`。当前工作分支是 `feature/13-master-data-schema`。
 2. 先读本文件和 [`PROJECT_STATUS.md`](./PROJECT_STATUS.md)。
 3. 启动后端、配置 `.env`、跑 migration / pytest / Ruff：见 [`backend/README.md`](./backend/README.md)。
 4. 启动管理后台骨架、跑 lint / build：见 [`admin-web/README.md`](./admin-web/README.md)。
