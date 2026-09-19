@@ -3,6 +3,7 @@ from typing import Literal
 from pydantic import BaseModel
 
 DegreeType = Literal["academic", "professional"]
+StudyMode = Literal["full_time", "part_time"]
 
 
 class SchoolSummary(BaseModel):
@@ -50,7 +51,7 @@ class ExamUnitRead(BaseModel):
 class AdmissionCatalogSummary(BaseModel):
     id: int
     admission_year: int
-    study_mode: str
+    study_mode: StudyMode
     school: SchoolSummary
     college: CollegeSummary
     major: MajorSummary

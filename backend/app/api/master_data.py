@@ -1,5 +1,5 @@
 from collections.abc import Callable
-from typing import Annotated, Literal
+from typing import Annotated
 
 from fastapi import APIRouter, Depends, HTTPException, Path, Query
 from sqlalchemy.orm import Session
@@ -17,6 +17,7 @@ from app.schemas.master_data import (
     MajorSummary,
     Page,
     SchoolSummary,
+    StudyMode,
 )
 from app.services.master_data import MasterDataNotFoundError, MasterDataReadService
 
@@ -97,7 +98,7 @@ def list_catalogs(
     admission_year: int | None = None,
     college_id: Annotated[int | None, Query(gt=0)] = None,
     major_id: Annotated[int | None, Query(gt=0)] = None,
-    study_mode: Literal["full_time", "part_time"] | None = None,
+    study_mode: StudyMode | None = None,
     page: Annotated[int, Query(ge=1)] = 1,
     page_size: Annotated[int, Query(ge=1, le=100)] = 20,
 ) -> Page[AdmissionCatalogSummary]:

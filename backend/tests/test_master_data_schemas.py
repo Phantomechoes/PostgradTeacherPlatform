@@ -1,5 +1,8 @@
 from pathlib import Path
 
+import pytest
+from pydantic import ValidationError
+
 from app.schemas import master_data
 from app.schemas.master_data import (
     AdmissionCatalogDetail,
@@ -123,3 +126,25 @@ def test_schema_module_field_names_exclude_internal_columns() -> None:
     source = Path(master_data.__file__).read_text(encoding="utf-8")
     for field in FORBIDDEN_FIELDS:
         assert field not in source
+
+
+def _catalog_summary(*, study_mode: str) -> AdmissionCatalogSummary:
+    return AdmissionCatalogSummary(
+        id=10,
+        admission_year=2026,
+        study_mode=study_mode,  # type: ignore[arg-type]
+        school=SCHOOL,
+        college=COLLEGE,
+        major=MAJOR,
+    )
+
+
+def test_study_mode_accepts_full_time_and_part_time() -> None:
+    for mode in ("full_time", "part_time"):
+        summary = _catalog_summary(study_mode=mode)
+        assert summary.study_mode == mode
+
+
+def test_study_mode_rejects_night() -> None:
+    with pytest.raises(ValidationError):
+        _catalog_summary(study_mode="night")

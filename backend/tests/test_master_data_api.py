@@ -48,6 +48,20 @@ def test_openapi_contains_seven_get_paths() -> None:
             assert WRITE_METHODS.isdisjoint(operations)
 
 
+def _openapi_schema(spec: dict, node: dict) -> dict:
+    if "$ref" in node:
+        name = node["$ref"].rsplit("/", 1)[-1]
+        return spec["components"]["schemas"][name]
+    return node
+
+
+def test_openapi_study_mode_response_is_enum() -> None:
+    spec = TestClient(app).get("/openapi.json").json()
+    summary = spec["components"]["schemas"]["AdmissionCatalogSummary"]
+    study_mode = _openapi_schema(spec, summary["properties"]["study_mode"])
+    assert study_mode.get("enum") == ["full_time", "part_time"]
+
+
 def test_list_schools_active_only_and_shape(api_client: TestClient) -> None:
     response = api_client.get("/api/v1/schools", params={"q": PREFIX})
     assert response.status_code == 200
