@@ -7,12 +7,12 @@
 GitHub 是本项目的唯一事实源：代码、Issue、文档和状态都以本仓库为准。
 
 - 仓库地址：<https://github.com/Phantomechoes/PostgradTeacherPlatform>
-- 当前任务：S1-01 主数据 Schema（[Issue #13](https://github.com/Phantomechoes/PostgradTeacherPlatform/issues/13)）
-- 当前工作分支：`feature/13-master-data-schema`
+- 当前任务：S1-02 只读主数据 API（[Issue #15](https://github.com/Phantomechoes/PostgradTeacherPlatform/issues/15)）
+- 当前工作分支：`feature/15-master-data-read-api`
 
 ## 现在做到哪一步
 
-当前阶段：**Sprint 1 — 院校招生主数据**（Sprint 0 工程底座已完成）。
+当前阶段：**Sprint 1 — 院校招生主数据**（Sprint 0 工程底座已完成；Sprint 1 尚未 Done）。
 
 Sprint 0（已完成）：
 
@@ -28,16 +28,21 @@ Sprint 1：
 
 | 编号 | 内容 | 状态 |
 |---|---|---|
-| S1-01 | 主数据 Schema（School / College / Major / AdmissionCatalog / Direction / ExamSubject） | 进行中 |
+| S1-01 | 主数据 Schema（School / College / Major / AdmissionCatalog / Direction / ExamSubject） | Done（PR #14 / `a46a09c`） |
+| S1-02 | 只读主数据 API | 进行中（Issue #15，implementation complete, awaiting PR） |
+| S1-03 | 内部后台主数据维护 | Ready（未开始） |
+| S1-04 | 导入 / 种子数据 | Ready（未开始） |
 
 更细的进度见 [`PROJECT_STATUS.md`](./PROJECT_STATUS.md)。
+
+只读 API 合同见 [`docs/api/s1-02-master-data-read-api.md`](./docs/api/s1-02-master-data-read-api.md)。
 
 ## 现在还没有什么
 
 请先按这个预期来看仓库，避免误以为已经可以运行业务系统：
 
-- 已有最小 FastAPI 应用与 `GET /health`，尚无业务 API
-- 已有 PostgreSQL 连接、SQLAlchemy 与 Alembic baseline（库中只有 `alembic_version`，无业务表）
+- 已有最小 FastAPI 应用、`GET /health`，以及本分支上的 S1-02 只读主数据 API（待 PR 合并进 `main`）
+- 已有 PostgreSQL 连接、SQLAlchemy 与 Alembic；业务表已由 S1-01 建到 revision `44f5a70a766a`
 - 已有管理后台 Vite 骨架与静态演示页，尚无业务 CRUD / 登录
 - 还没有微信小程序工程
 - 还没有支付、佣金、自动推荐、学生选师等业务功能
@@ -46,7 +51,7 @@ Sprint 1：
 
 ## 当前仓库里有什么
 
-根目录说明、目录骨架、FastAPI `/health`、数据库工程底座与管理后台 Vite 骨架已落地；小程序仍只有占位说明。
+根目录说明、目录骨架、FastAPI `/health`、数据库工程底座、主数据 Schema 与管理后台 Vite 骨架已落地；小程序仍只有占位说明。
 
 现在可以直接阅读：
 
@@ -59,6 +64,7 @@ Sprint 1：
 | [`CHANGELOG.md`](./CHANGELOG.md) | 版本变化记录 |
 | [`docs/product/开发前工程规范_V0.1.md`](./docs/product/开发前工程规范_V0.1.md) | 完整工程规范（V0.1 冻结基线） |
 | [`docs/product/DECISIONS_PENDING.md`](./docs/product/DECISIONS_PENDING.md) | 调研尚未确认、禁止写死的事项 |
+| [`docs/api/s1-02-master-data-read-api.md`](./docs/api/s1-02-master-data-read-api.md) | S1-02 只读主数据 API 合同 |
 | [`.gitignore`](./.gitignore) | 哪些文件不允许提交到 GitHub |
 | [`.editorconfig`](./.editorconfig) | 统一编辑器的缩进和换行 |
 | [`.github/ISSUE_TEMPLATE/development_task.md`](./.github/ISSUE_TEMPLATE/development_task.md) | 开发任务 Issue 模板 |
@@ -71,13 +77,15 @@ Sprint 1：
 
 ```text
 PostgradTeacherPlatform/
-├─ backend/            后端（FastAPI、SQLAlchemy、Alembic）
+├─ backend/            后端（FastAPI、SQLAlchemy、Alembic、主数据 Models）
 ├─ admin-web/          内部管理后台（S0-04）
 ├─ miniprogram/        微信小程序（后续阶段）
-├─ docs/               产品、调研、架构、数据库、学习文档
-│  └─ product/         工程规范与待决策事项
+├─ docs/               产品、调研、架构、数据库、API、学习文档
+│  ├─ product/         工程规范与待决策事项
+│  ├─ database/        主数据 Schema 设计
+│  └─ api/             只读 API 合同（S1-02）
 ├─ scripts/            Windows 辅助脚本
-├─ .github/            Issue / PR 模板；CI 留给 S0-05
+├─ .github/            Issue / PR 模板与 CI
 ├─ AGENTS.md
 ├─ README.md
 ├─ PROJECT_STATUS.md
@@ -89,9 +97,9 @@ PostgradTeacherPlatform/
 
 不在本任务中新增 `docs/governance/` 或其他治理类目录。
 
-## 当前技术栈（已冻结，尚未落地）
+## 当前技术栈（已冻结）
 
-这些选择已经冻结。S0-02 已落地 Python 3.12 + uv + 最小 FastAPI（`GET /health`）。S0-03 已落地 SQLAlchemy 2.x、Alembic 与本机 PostgreSQL 18.x 连接。S0-04 已落地 React + TypeScript + Vite + Ant Design 骨架。小程序尚未落地：
+这些选择已经冻结。S0-02 已落地 Python 3.12 + uv + 最小 FastAPI（`GET /health`）。S0-03 已落地 SQLAlchemy 2.x、Alembic 与本机 PostgreSQL 18.x 连接。S0-04 已落地 React + TypeScript + Vite + Ant Design 骨架。S1-01 已落地 7 张主数据表。小程序尚未落地：
 
 - 后端：Python 3.12、FastAPI、SQLAlchemy 2.x、Alembic、Pydantic、PostgreSQL、pytest、Ruff
 - 管理后台：React、TypeScript、Vite、Ant Design、pnpm、ESLint、Prettier
@@ -100,7 +108,7 @@ PostgradTeacherPlatform/
 
 ## 在 Windows 上如何开始
 
-1. 用 Git 打开本仓库，开发时不要直接改 `main`。当前工作分支是 `feature/13-master-data-schema`。
+1. 用 Git 打开本仓库，开发时不要直接改 `main`。当前工作分支是 `feature/15-master-data-read-api`。
 2. 先读本文件和 [`PROJECT_STATUS.md`](./PROJECT_STATUS.md)。
 3. 启动后端、配置 `.env`、跑 migration / pytest / Ruff：见 [`backend/README.md`](./backend/README.md)。
 4. 启动管理后台骨架、跑 lint / build：见 [`admin-web/README.md`](./admin-web/README.md)。

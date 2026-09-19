@@ -22,6 +22,22 @@ jobs:
     defaults:
       run:
         working-directory: backend
+    env:
+      DATABASE_URL: postgresql+psycopg://postgrad_teacher_platform_test:test_password@localhost:5432/postgrad_teacher_platform_test
+    services:
+      postgres:
+        image: postgres:18
+        env:
+          POSTGRES_DB: postgrad_teacher_platform_test
+          POSTGRES_USER: postgrad_teacher_platform_test
+          POSTGRES_PASSWORD: test_password
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgrad_teacher_platform_test -d postgrad_teacher_platform_test"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
     steps:
       - name: Checkout
         uses: actions/checkout@v7
@@ -38,6 +54,11 @@ jobs:
 
       - name: Ruff
         run: uv run --locked ruff check .
+
+      - name: Apply migrations
+        run: |
+          uv run --locked alembic upgrade head
+          uv run --locked alembic current
 
       - name: Tests
         run: uv run --locked pytest
