@@ -7,6 +7,19 @@
 
 ### Added
 
+- S1-02 只读主数据 API（[Issue #15](https://github.com/Phantomechoes/PostgradTeacherPlatform/issues/15)），工作分支 `feature/15-master-data-read-api`，implementation ready for review：
+  - 7 个 `GET /api/v1` 只读接口；合同见 [`docs/api/s1-02-master-data-read-api.md`](./docs/api/s1-02-master-data-read-api.md)
+  - Pydantic read schemas、Repository、薄 Read Service
+  - 真实 PostgreSQL 集成测试（事务回滚）
+  - 现有 backend CI job 增加 PostgreSQL 18 service → `alembic upgrade head` → pytest
+  - `GET /health` 契约不变，仍不查库
+  - 尚未 merge，不标 Done
+
+- S1-01 主数据 Schema（[Issue #13](https://github.com/Phantomechoes/PostgradTeacherPlatform/issues/13)），工作分支 `feature/13-master-data-schema`，已通过 [PR #14](https://github.com/Phantomechoes/PostgradTeacherPlatform/pull/14) 合并进 `main`（`a46a09c`，Done）：
+  - 7 张表：`schools` / `colleges` / `majors` / `admission_catalogs` / `admission_catalog_directions` / `exam_subjects` / `admission_catalog_exam_subjects`
+  - Alembic revision `44f5a70a766a`；无 ORM `relationship()`
+  - push → main CI run [35330608773](https://github.com/Phantomechoes/PostgradTeacherPlatform/actions/runs/35330608773) 两个 job 均 success
+
 - S0-05 CI（[Issue #11](https://github.com/Phantomechoes/PostgradTeacherPlatform/issues/11)），工作分支 `feature/11-ci`，已通过 [PR #12](https://github.com/Phantomechoes/PostgradTeacherPlatform/pull/12) 合并进 `main`（`0a490aa`，Done）：
   - GitHub Actions：backend `uv sync --locked` / Ruff / pytest；admin-web frozen install / lint / format:check / build
   - `.gitattributes`：工作区文本 LF

@@ -1,6 +1,6 @@
 # 项目状态
 
-最后更新：2026-09-18
+最后更新：2026-09-19
 当前版本：V0.1 Foundation（未发布业务版本）
 当前 Sprint：Sprint 1 — 院校招生主数据
 主开发环境：Windows 原生
@@ -8,12 +8,12 @@ GitHub：<https://github.com/Phantomechoes/PostgradTeacherPlatform>
 
 ## 正在进行
 
-- **S1-01 Master Data Schema**
-  - Issue：[ #13](https://github.com/Phantomechoes/PostgradTeacherPlatform/issues/13)
-  - 分支：`feature/13-master-data-schema`
+- **S1-02 Read-only Master Data API**
+  - Issue：[ #15](https://github.com/Phantomechoes/PostgradTeacherPlatform/issues/15)
+  - 分支：`feature/15-master-data-read-api`
   - 状态：In Progress / implementation complete, awaiting PR review / merge
-  - 目标：School、College、Major（school-scoped）、AdmissionCatalog、AdmissionCatalogDirection、ExamSubject、AdmissionCatalogExamSubject
-  - 明确不做：API、Admin CRUD、Teacher、导入、爬虫、NationalMajor、复试科目、Direction 级初试科目
+  - 目标：只读 Repository、薄 Read Service、Pydantic read schemas、`GET /api/v1` 查询接口、PostgreSQL 集成测试、backend CI PostgreSQL service
+  - 明确不做：写接口、Admin CRUD、Teacher / Institution / Candidate、支付、推荐、seed/import、爬虫、auth、`relationship()`、AsyncSession、新业务 migration、`include_inactive`
 
 ## 已完成
 
@@ -39,10 +39,18 @@ GitHub：<https://github.com/Phantomechoes/PostgradTeacherPlatform>
 
 Sprint 0 工程底座：**Done**。
 
-## Ready（S1-01 之后，未经批准不得自行进入）
+- **S1-01 Master Data Schema**：**Done**
+  - Issue #13 已关闭
+  - PR #14 已合并进 `main`（`a46a09cd2c636eb2197e6ee01281a940069398bf`）
+  - main push CI：run [35330608773](https://github.com/Phantomechoes/PostgradTeacherPlatform/actions/runs/35330608773)，Backend success，Admin Web success
+  - 当前 DB revision：`44f5a70a766a`
+  - 交付：7 张主数据表（School / College / Major / AdmissionCatalog / AdmissionCatalogDirection / ExamSubject / AdmissionCatalogExamSubject）；无 ORM `relationship()`
 
-- S1-02 主数据只读 API / Repository
-- S1-03 内部后台主数据维护
+Sprint 1 **尚未 Done**。Schema 已合入 `main`；只读 API 实现完成，等待 PR 审查。
+
+## Ready（S1-02 之后，未经批准不得自行进入）
+
+- S1-03 内部后台主数据维护（Admin master data CRUD）
 - S1-04 导入 / 种子数据
 - Sprint 2 上岸生基础师资库
 
@@ -60,5 +68,5 @@ Sprint 0 工程底座：**Done**。
 
 ## 下一里程碑
 
-1. 完成 S1-01 主数据 Schema（Model + Alembic + 约束测试 + 文档）。
-2. 再进入 S1-02 只读 API（须单独 Issue 与批准）。
+1. 完成 S1-02 只读主数据 API 的 PR 审查与合并（尚未 merge）。
+2. 再进入 S1-03 Admin CRUD（须单独 Issue 与批准）。
