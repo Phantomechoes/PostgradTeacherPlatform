@@ -1,7 +1,9 @@
 # S1-01 主数据 Schema 设计
 
 对应 Issue：[S1-01](https://github.com/Phantomechoes/PostgradTeacherPlatform/issues/13)
-状态：implementation complete, awaiting PR review / merge
+状态：Done
+PR：[ #14](https://github.com/Phantomechoes/PostgradTeacherPlatform/pull/14)
+merge commit：`a46a09cd2c636eb2197e6ee01281a940069398bf`
 基线：Alembic `27d6bd3c881a` → `44f5a70a766a`
 
 ## 1. 设计目标

@@ -1,11 +1,13 @@
 # S1-02 只读主数据 API 合同
 
 对应 Issue：[S1-02](https://github.com/Phantomechoes/PostgradTeacherPlatform/issues/15)
-状态：implementation complete, awaiting PR review / merge
+状态：Done
+PR：[ #16](https://github.com/Phantomechoes/PostgradTeacherPlatform/pull/16)
+merge commit：`936d11f3797a0b692d7f4d47103526954af9febb`
 基线 Schema：S1-01 / Alembic `44f5a70a766a`
 基线 commit：`a46a09cd2c636eb2197e6ee01281a940069398bf`
 
-本文冻结本 Issue 的只读查询合同。实现已完成，等待 PR 审查。
+本文冻结本 Issue 的只读查询合同。
 
 ## 1. 目标
 
@@ -470,4 +472,4 @@ Catalog detail 使用三次明确查询，避免 `directions × subjects` join e
 | 3 | Router + PostgreSQL integration tests + backend CI PostgreSQL service |
 | 4 | docs / final QA / commit / push / PR |
 
-Checkpoint 1–4 实现已完成，等待 PR 审查。
+Checkpoint 1–4 已完成并合入 `main`。
