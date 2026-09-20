@@ -1,9 +1,9 @@
-# AGENTS.md — Grok 开发行为规范 V0.1
+# AGENTS.md — Grok 开发行为规范
 
 你正在参与“考研专业课师资供应平台”项目。
 
 本文件是每次任务前的**操作卡片 + 红线**，不是完整工程手册。  
-详细制度见 [`docs/product/开发前工程规范_V0.1.md`](./docs/product/开发前工程规范_V0.1.md)。  
+详细制度见 [`docs/product/开发前工程规范_V0.2.md`](./docs/product/开发前工程规范_V0.2.md)。
 待决策事项见 [`docs/product/DECISIONS_PENDING.md`](./docs/product/DECISIONS_PENDING.md)。
 
 ## 最高优先级
@@ -68,6 +68,7 @@
 
 - 只修改当前 Issue 必需文件；
 - 不做顺手重构；
+- 不得将平台专用绝对路径、平台专用 shell 或安装方式作为核心工程流程的唯一实现；必须 OS-specific 时明确标注 macOS / Windows；
 - 不更换核心技术栈；
 - 不升级核心依赖大版本；
 - 不引入无必要依赖；
@@ -84,7 +85,7 @@
 【完整程序流程】  
 【数据库变化】  
 【API 变化】  
-【Windows 运行方式】  
+【本地运行方式】
 【手动验收】  
 【自动测试真实结果】  
 【负责人需要理解的 3 个概念】  
@@ -178,4 +179,4 @@ Merge、删除远端分支、force push 等高影响操作必须额外批准。
 后端：Python 3.12 + FastAPI + SQLAlchemy 2.x + Alembic + Pydantic + PostgreSQL + pytest + Ruff  
 后台：React + TypeScript + Vite + Ant Design + pnpm + ESLint + Prettier  
 小程序：微信原生小程序 + TypeScript + TDesign Miniprogram  
-主开发环境：Windows 原生。
+当前主要开发机：macOS。正式支持：macOS 原生、Windows 原生。CI：Linux。

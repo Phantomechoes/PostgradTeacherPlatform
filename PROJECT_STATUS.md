@@ -1,19 +1,21 @@
 # 项目状态
 
-最后更新：2026-09-19
-当前版本：V0.1 Foundation（未发布业务版本）
+最后更新：2026-09-20
+当前版本：V0.1 Foundation（未发布业务版本）；工程规范当前为 V0.2
 当前 Sprint：Sprint 1 — 院校招生主数据
-主开发环境：Windows 原生
+当前主要开发机：macOS Apple Silicon
+已验证本地环境：macOS 原生、Windows 原生
+CI：Linux / GitHub Actions
 GitHub：<https://github.com/Phantomechoes/PostgradTeacherPlatform>
 
 ## 正在进行
 
-- **S1-02 Read-only Master Data API**
-  - Issue：[ #15](https://github.com/Phantomechoes/PostgradTeacherPlatform/issues/15)
-  - 分支：`feature/15-master-data-read-api`
-  - 状态：In Progress / implementation complete, awaiting PR review / merge
-  - 目标：只读 Repository、薄 Read Service、Pydantic read schemas、`GET /api/v1` 查询接口、PostgreSQL 集成测试、backend CI PostgreSQL service
-  - 明确不做：写接口、Admin CRUD、Teacher / Institution / Candidate、支付、推荐、seed/import、爬虫、auth、`relationship()`、AsyncSession、新业务 migration、`include_inactive`
+- **[Governance] Adopt cross-platform development baseline**
+  - Issue：[ #17](https://github.com/Phantomechoes/PostgradTeacherPlatform/issues/17)
+  - 分支：`docs/17-cross-platform-development`
+  - 状态：In Progress / documentation implementation
+  - 目标：macOS 为当前主要开发机；Windows 原生继续正式支持；Linux CI 保持；新增工程规范 V0.2；同步过时运行文档与 S1-02 完成状态
+  - 明确不做：业务代码、API、Admin 功能、schema/migration、依赖升级、CI matrix、S1-03 实现
 
 ## 已完成
 
@@ -46,9 +48,21 @@ Sprint 0 工程底座：**Done**。
   - 当前 DB revision：`44f5a70a766a`
   - 交付：7 张主数据表（School / College / Major / AdmissionCatalog / AdmissionCatalogDirection / ExamSubject / AdmissionCatalogExamSubject）；无 ORM `relationship()`
 
-Sprint 1 **尚未 Done**。Schema 已合入 `main`；只读 API 实现完成，等待 PR 审查。
+- **S1-02 Read-only Master Data API**：**Done**
+  - Issue #15 已关闭
+  - PR #16 已合并进 `main`（`936d11f3797a0b692d7f4d47103526954af9febb`）
+  - main push CI：run [35441128414](https://github.com/Phantomechoes/PostgradTeacherPlatform/actions/runs/35441128414)，Backend success，Admin Web success
+  - 本机验收：Ruff passed；pytest 88 passed（含 PostgreSQL 集成测试）
+  - 交付：7 个 `GET /api/v1` 只读接口；Repository / 薄 Read Service / Pydantic read schemas；backend CI PostgreSQL 18 service
 
-## Ready（S1-02 之后，未经批准不得自行进入）
+- **Mac Development Environment**：**Accepted**
+  - macOS 26.2 / Apple Silicon arm64
+  - Python 3.12.14、uv、PostgreSQL 18.6、Node 24、pnpm 12.4
+  - backend 与 admin-web 本地 QA 已通过
+
+Sprint 1 **尚未 Done**。Schema 与只读 API 已合入 `main`；内部后台主数据维护尚未开始。
+
+## Ready（未经批准不得自行进入）
 
 - S1-03 内部后台主数据维护（Admin master data CRUD）
 - S1-04 导入 / 种子数据
@@ -63,10 +77,9 @@ Sprint 1 **尚未 Done**。Schema 已合入 `main`；只读 API 实现完成，�
 - `pnpm build` 因 Ant Design 体积可能出现 >500kB chunk 提示；当前不阻塞。
 - 仍无小程序工程。
 - pytest 对 Starlette TestClient / httpx 有 DeprecationWarning（2 条）；当前不阻塞。
-- 本机未安装 GitHub CLI（`gh`）。
-- 仓库根目录可能出现 VS Code PostgreSQL Workbench 的未跟踪 `.pgsql` 查询文件，不要提交。
+- 本地临时查询 / scratch 文件（例如未跟踪的 `.pgsql`）不得误提交。
 
 ## 下一里程碑
 
-1. 完成 S1-02 只读主数据 API 的 PR 审查与合并（尚未 merge）。
+1. 完成 Governance Issue #17（跨平台开发基线文档）的审查与合并。
 2. 再进入 S1-03 Admin CRUD（须单独 Issue 与批准）。

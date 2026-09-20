@@ -1,7 +1,7 @@
 [project]
 name = "postgrad-teacher-platform-backend"
 version = "0.1.0"
-description = "Backend service for PostgradTeacherPlatform (S0-03 database bootstrap)."
+description = "Backend service for PostgradTeacherPlatform."
 requires-python = ">=3.12,<3.13"
 dependencies = [
     "alembic>=1.19.2",

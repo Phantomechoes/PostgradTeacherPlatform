@@ -1,11 +1,11 @@
 # 如何参与本项目
 
 本文说明人和开发 Agent 应如何向本仓库贡献改动。  
-完整工程规范：[`docs/product/开发前工程规范_V0.1.md`](./docs/product/开发前工程规范_V0.1.md)。  
-给 Agent 的短规范：[`AGENTS.md`](./AGENTS.md)。  
+完整工程规范：[`docs/product/开发前工程规范_V0.2.md`](./docs/product/开发前工程规范_V0.2.md)。
+给 Agent 的短规范：[`AGENTS.md`](./AGENTS.md)。
 调研尚未确认的事项：[`docs/product/DECISIONS_PENDING.md`](./docs/product/DECISIONS_PENDING.md)。
 
-当前对应任务：[Issue #13 — S1-01 Master Data Schema](https://github.com/Phantomechoes/PostgradTeacherPlatform/issues/13)。
+当前 Sprint 与当前任务以 [`PROJECT_STATUS.md`](./PROJECT_STATUS.md) 和 GitHub Issue 为准。不要把某个 Issue 写进本文件。
 
 ## 必须遵守的原则
 
@@ -110,29 +110,45 @@ ci: ...
 - 本次明确没有做什么
 - 修改了哪些文件
 - 数据库 / API 有没有变化
-- 如何在 Windows 上手工验收
+- 如何在本地手工验收（如有平台差异，分 macOS / Windows 写；不要求每个 PR 在两台机器上都人工跑）
 - 自动测试的真实命令和结果（没有测试时如实写“本阶段无自动测试”）
 - 项目负责人需要理解的 3 个概念
 - 风险与已知限制
 
 代码完成不等于任务完成。还需要文档、解释、负责人验收，以及批准后的合并。
 
-## Windows 开发注意
+## 本地开发注意
 
-- 主开发环境是 Windows 原生，不把 WSL 或容器当成当前前提。
+当前主要开发机是 macOS。正式支持 macOS 原生与 Windows 原生。CI 使用 Linux。
+
+### 通用
+
 - 文本文件使用 UTF-8；换行与缩进以 [`.editorconfig`](./.editorconfig) 为准。
 - 本地密钥只放在 `.env`，仓库只提交 `.env.example`。真实数据库口令不得进入 Git / Issue / PR。
 - 后端使用 uv 管理的 Python 3.12；不要使用 Anaconda 或系统 Python 作为本项目解释器。
-- 管理后台使用 Node.js 24 + Corepack 管理的 pnpm 12；不要用 `npm install -g pnpm`。
+- 管理后台使用 Node.js 24 + Corepack 管理的 pnpm 12.4；不要用 `npm install -g pnpm`。
 - FastAPI / SQLAlchemy / Alembic 使用应用角色 `postgrad_teacher_platform_app`，不要使用 `postgres` 超级用户作为日常 `DATABASE_URL`。
+- 核心流程优先：`git`、`uv`、`pnpm`、`alembic`、`pytest`、`ruff`。不要把平台专用绝对路径或平台专用 shell 写成唯一实现。
+
+### macOS
+
+- Homebrew 可作为安装方式，不是项目业务依赖。
+- zsh 可作为 shell，不是核心要求。
+- 不要把 `/Users/<username>/` 或 `/opt/homebrew` 写进仓库文档当强制路径。
+
+### Windows
+
+- 使用 Git for Windows；允许原生 PowerShell。
+- 不把 WSL 或容器当成当前前提。
+- Windows PostgreSQL 的服务名、`.exe` 路径以本机安装为准；文档中的 `E:\...` 只是某台已验收机器的示例，不是强制路径。
 
 ## 当前阶段不要做的事
 
-Sprint 1 当前任务是主数据 Schema。不要开始：
+当前任务范围以 [`PROJECT_STATUS.md`](./PROJECT_STATUS.md) 和对应 GitHub Issue 为准。未经批准不要开始下一 Sprint 或扩大 Issue。默认不要开始：
 
-- 业务 API / Admin CRUD（S1-01 只做表结构，查询与后台另开 Issue）
-- Teacher / 师资档案（Sprint 2）
-- 导入、爬虫、支付、推荐、选师
+- 未在当前 Issue 范围内的业务功能
+- Teacher / 师资档案（Sprint 2，除非已批准进入）
+- 导入、爬虫、支付、推荐、选师（导入见 S1-04，须单独批准）
 - CD / Docker / E2E / branch protection
 - 被调研阻塞的业务功能
 - 在 PostgreSQL Workbench 里手工 CREATE / ALTER / DROP 替代 Alembic

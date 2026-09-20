@@ -7,8 +7,10 @@
 GitHub 是本项目的唯一事实源：代码、Issue、文档和状态都以本仓库为准。
 
 - 仓库地址：<https://github.com/Phantomechoes/PostgradTeacherPlatform>
-- 当前任务：S1-02 只读主数据 API（[Issue #15](https://github.com/Phantomechoes/PostgradTeacherPlatform/issues/15)）
-- 当前工作分支：`feature/15-master-data-read-api`
+- 当前 Sprint：Sprint 1 — 院校招生主数据
+- 已完成：S1-01、S1-02
+- 下一 Ready：S1-03、S1-04（S1-03 未经批准不得自行开始）
+- 当前主要开发机：macOS；已验证本地环境：macOS / Windows；CI：Linux
 
 ## 现在做到哪一步
 
@@ -29,7 +31,7 @@ Sprint 1：
 | 编号 | 内容 | 状态 |
 |---|---|---|
 | S1-01 | 主数据 Schema（School / College / Major / AdmissionCatalog / Direction / ExamSubject） | Done（PR #14 / `a46a09c`） |
-| S1-02 | 只读主数据 API | 进行中（Issue #15，implementation complete, awaiting PR） |
+| S1-02 | 只读主数据 API | Done（PR #16 / `936d11f`） |
 | S1-03 | 内部后台主数据维护 | Ready（未开始） |
 | S1-04 | 导入 / 种子数据 | Ready（未开始） |
 
@@ -41,7 +43,7 @@ Sprint 1：
 
 请先按这个预期来看仓库，避免误以为已经可以运行业务系统：
 
-- 已有最小 FastAPI 应用、`GET /health`，以及本分支上的 S1-02 只读主数据 API（待 PR 合并进 `main`）
+- 已有最小 FastAPI 应用、`GET /health`，以及已合入 `main` 的 S1-02 只读主数据 API
 - 已有 PostgreSQL 连接、SQLAlchemy 与 Alembic；业务表已由 S1-01 建到 revision `44f5a70a766a`
 - 已有管理后台 Vite 骨架与静态演示页，尚无业务 CRUD / 登录
 - 还没有微信小程序工程
@@ -62,7 +64,8 @@ Sprint 1：
 | [`PROJECT_STATUS.md`](./PROJECT_STATUS.md) | 当前 Sprint、进行中任务和阻塞项 |
 | [`CONTRIBUTING.md`](./CONTRIBUTING.md) | 如何开 Issue、开分支、提 Pull Request |
 | [`CHANGELOG.md`](./CHANGELOG.md) | 版本变化记录 |
-| [`docs/product/开发前工程规范_V0.1.md`](./docs/product/开发前工程规范_V0.1.md) | 完整工程规范（V0.1 冻结基线） |
+| [`docs/product/开发前工程规范_V0.2.md`](./docs/product/开发前工程规范_V0.2.md) | 当前工程规范（V0.2 冻结基线） |
+| [`docs/product/开发前工程规范_V0.1.md`](./docs/product/开发前工程规范_V0.1.md) | 历史工程规范（V0.1，已由 V0.2 supersede） |
 | [`docs/product/DECISIONS_PENDING.md`](./docs/product/DECISIONS_PENDING.md) | 调研尚未确认、禁止写死的事项 |
 | [`docs/api/s1-02-master-data-read-api.md`](./docs/api/s1-02-master-data-read-api.md) | S1-02 只读主数据 API 合同 |
 | [`.gitignore`](./.gitignore) | 哪些文件不允许提交到 GitHub |
@@ -73,7 +76,7 @@ Sprint 1：
 
 ## 当前目录结构（骨架已建立）
 
-以下结构来自已冻结的 V0.1 工程规范。`backend/` 已可运行最小 FastAPI；`admin-web/` 已可启动 Vite 骨架；小程序仍只有占位说明：
+以下结构来自已冻结的工程规范。`backend/` 已可运行 FastAPI 与只读主数据 API；`admin-web/` 已可启动 Vite 骨架；小程序仍只有占位说明：
 
 ```text
 PostgradTeacherPlatform/
@@ -84,7 +87,7 @@ PostgradTeacherPlatform/
 │  ├─ product/         工程规范与待决策事项
 │  ├─ database/        主数据 Schema 设计
 │  └─ api/             只读 API 合同（S1-02）
-├─ scripts/            Windows 辅助脚本
+├─ scripts/            可选平台辅助脚本（非核心开发流程）
 ├─ .github/            Issue / PR 模板与 CI
 ├─ AGENTS.md
 ├─ README.md
@@ -104,16 +107,20 @@ PostgradTeacherPlatform/
 - 后端：Python 3.12、FastAPI、SQLAlchemy 2.x、Alembic、Pydantic、PostgreSQL、pytest、Ruff
 - 管理后台：React、TypeScript、Vite、Ant Design、pnpm、ESLint、Prettier
 - 小程序：微信原生小程序、TypeScript、TDesign Miniprogram
-- 主开发环境：Windows 原生
+- 当前主要开发机：macOS Apple Silicon
+- 已验证本地环境：macOS 原生、Windows 原生
+- CI：Linux / GitHub Actions
 
-## 在 Windows 上如何开始
+## 本地开发如何开始
 
-1. 用 Git 打开本仓库，开发时不要直接改 `main`。当前工作分支是 `feature/15-master-data-read-api`。
+1. 用 Git 打开本仓库，开发时不要直接改 `main`。当前任务以 [`PROJECT_STATUS.md`](./PROJECT_STATUS.md) 和 GitHub Issue 为准。
 2. 先读本文件和 [`PROJECT_STATUS.md`](./PROJECT_STATUS.md)。
 3. 启动后端、配置 `.env`、跑 migration / pytest / Ruff：见 [`backend/README.md`](./backend/README.md)。
 4. 启动管理后台骨架、跑 lint / build：见 [`admin-web/README.md`](./admin-web/README.md)。
 5. 若要提需求或改代码，按 [`CONTRIBUTING.md`](./CONTRIBUTING.md) 先开 GitHub Issue，再开对应分支。
 6. 不要把 `.env`、密码、Token 或真实数据库口令提交进仓库。
+
+macOS / Windows 的安装差异写在各模块 README，不在根 README 堆细节。
 
 小程序当前仍不能启动。
 
@@ -124,4 +131,4 @@ PostgradTeacherPlatform/
 - 调研尚未确认的业务规则不得写死。被阻塞的事项统一记入 [`docs/product/DECISIONS_PENDING.md`](./docs/product/DECISIONS_PENDING.md)。
 - 开发 Agent 必须分检查点推进，未经负责人明确回复“开始 / 继续”，不得修改文件、提交或 push。
 
-完整规则见 [`AGENTS.md`](./AGENTS.md) 与 [`docs/product/开发前工程规范_V0.1.md`](./docs/product/开发前工程规范_V0.1.md)。
+完整规则见 [`AGENTS.md`](./AGENTS.md) 与 [`docs/product/开发前工程规范_V0.2.md`](./docs/product/开发前工程规范_V0.2.md)。

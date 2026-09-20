@@ -7,13 +7,19 @@
 
 ### Added
 
-- S1-02 只读主数据 API（[Issue #15](https://github.com/Phantomechoes/PostgradTeacherPlatform/issues/15)），工作分支 `feature/15-master-data-read-api`，implementation ready for review：
+- 跨平台开发基线（[Issue #17](https://github.com/Phantomechoes/PostgradTeacherPlatform/issues/17)），工作分支 `docs/17-cross-platform-development`（尚未 merge）：
+  - 当前主要开发机：macOS Apple Silicon；Windows 原生继续正式支持；CI 仍为 Linux / GitHub Actions
+  - 新增当前工程规范 [`docs/product/开发前工程规范_V0.2.md`](./docs/product/开发前工程规范_V0.2.md)；V0.1 保留为历史冻结版本
+  - 修正过时的运行说明（backend / admin-web / AGENTS / CONTRIBUTING / README / PROJECT_STATUS）
+  - 同步 S1-02 已合入 `main` 的状态
+
+- S1-02 只读主数据 API（[Issue #15](https://github.com/Phantomechoes/PostgradTeacherPlatform/issues/15)），已通过 [PR #16](https://github.com/Phantomechoes/PostgradTeacherPlatform/pull/16) 合并进 `main`（`936d11f`，Done）：
   - 7 个 `GET /api/v1` 只读接口；合同见 [`docs/api/s1-02-master-data-read-api.md`](./docs/api/s1-02-master-data-read-api.md)
   - Pydantic read schemas、Repository、薄 Read Service
   - 真实 PostgreSQL 集成测试（事务回滚）
   - 现有 backend CI job 增加 PostgreSQL 18 service → `alembic upgrade head` → pytest
   - `GET /health` 契约不变，仍不查库
-  - 尚未 merge，不标 Done
+  - push → main CI run [35441128414](https://github.com/Phantomechoes/PostgradTeacherPlatform/actions/runs/35441128414) 两个 job 均 success
 
 - S1-01 主数据 Schema（[Issue #13](https://github.com/Phantomechoes/PostgradTeacherPlatform/issues/13)），工作分支 `feature/13-master-data-schema`，已通过 [PR #14](https://github.com/Phantomechoes/PostgradTeacherPlatform/pull/14) 合并进 `main`（`a46a09c`，Done）：
   - 7 张表：`schools` / `colleges` / `majors` / `admission_catalogs` / `admission_catalog_directions` / `exam_subjects` / `admission_catalog_exam_subjects`
