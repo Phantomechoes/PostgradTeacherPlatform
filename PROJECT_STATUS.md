@@ -10,12 +10,7 @@ GitHub：<https://github.com/Phantomechoes/PostgradTeacherPlatform>
 
 ## 正在进行
 
-- **[Governance] Adopt cross-platform development baseline**
-  - Issue：[ #17](https://github.com/Phantomechoes/PostgradTeacherPlatform/issues/17)
-  - 分支：`docs/17-cross-platform-development`
-  - 状态：In Progress / documentation implementation
-  - 目标：macOS 为当前主要开发机；Windows 原生继续正式支持；Linux CI 保持；新增工程规范 V0.2；同步过时运行文档与 S1-02 完成状态
-  - 明确不做：业务代码、API、Admin 功能、schema/migration、依赖升级、CI matrix、S1-03 实现
+暂无正在实施的业务任务。
 
 ## 已完成
 
@@ -60,6 +55,12 @@ Sprint 0 工程底座：**Done**。
   - Python 3.12.14、uv、PostgreSQL 18.6、Node 24、pnpm 12.4
   - backend 与 admin-web 本地 QA 已通过
 
+- **[Governance] Adopt cross-platform development baseline**：**Done**
+  - Issue #17 已关闭
+  - PR #18 已合并进 `main`（`af5c8d389d1e320ce16b3713cd0eb60210df1d59`）
+  - main push CI：run [35508339614](https://github.com/Phantomechoes/PostgradTeacherPlatform/actions/runs/35508339614)，Backend success，Admin Web success
+  - 交付：工程规范 V0.2；当前主要开发机 macOS；macOS / Windows 正式支持本地开发；CI 为 Linux
+
 Sprint 1 **尚未 Done**。Schema 与只读 API 已合入 `main`；内部后台主数据维护尚未开始。
 
 ## Ready（未经批准不得自行进入）
@@ -81,5 +82,5 @@ Sprint 1 **尚未 Done**。Schema 与只读 API 已合入 `main`；内部后台�
 
 ## 下一里程碑
 
-1. 完成 Governance Issue #17（跨平台开发基线文档）的审查与合并。
-2. 再进入 S1-03 Admin CRUD（须单独 Issue 与批准）。
+1. 进入 S1-03 Planning（须负责人批准并单独 Issue）
+2. 完成内部后台主数据维护后再进入 S1-04
