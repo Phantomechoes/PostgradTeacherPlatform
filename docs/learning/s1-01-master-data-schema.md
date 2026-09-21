@@ -111,7 +111,7 @@ College 和 Major 的组合发生在 Catalog 上，不是 Major 属于某个 Col
 
 不需要背 SQL。记住三类保护：
 
-**外键（FK）** 防止引用不存在的对象，以及删还被引用的父数据（当前是 `ON DELETE RESTRICT`）。例如目录必须指向真实存在的学校。
+**外键（FK）** 防止引用不存在的对象。例如目录必须指向真实存在的学校。删除规则见下一节的 `is_active`。
 
 **唯一（Unique）** 防止重复身份。例如同一学校不能有两个相同 `major_code`；同一条 Catalog 不能重复同一个方向代码；同一单元不能重复同一科目或同一 `option_order`。
 
@@ -123,7 +123,9 @@ College 和 Major 的组合发生在 Catalog 上，不是 Major 属于某个 Col
 
 School、College、Major、ExamSubject、AdmissionCatalog 都有 `is_active`。停用不等于从库里抹掉。
 
-历史 Catalog 可能仍引用某学院或某专业。外键是 RESTRICT，硬删会被数据库拦住；即便能删，也会毁掉「2026 当时挂的是哪个学院」这种事实。第一版用停用，让普通读取看不到，数据还在。
+当 School / College / Major / ExamSubject / Catalog 已经被历史 Catalog 或关联记录引用时，`ON DELETE RESTRICT` 会阻止删除。没有被引用的行，不一定会被这条外键拦住。
+
+但本项目第一版对稳定实体仍优先使用 `is_active` 停用，而不是 hard delete：主要是为了保留历史、降低误删风险，并与当前 active-only 只读 API 配合。不要因此理解成已经有删除 API。
 
 Direction 和 CatalogExamSubject **没有** `is_active`：它们是某年目录的子结构，调整时改该年的行。
 

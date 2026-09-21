@@ -122,15 +122,16 @@ uv run --locked uvicorn app.main:app --host 127.0.0.1 --port 8000
 ## 6. engine / SessionLocal / get_db
 
 文件：[`backend/app/core/database.py`](../../backend/app/core/database.py)。
-连接字符串来自本机 [`backend/.env`](../../backend/README.md)，由 [`backend/app/core/config.py`](../../backend/app/core/config.py) 读取。不要把真实密码写进文档。
+连接字符串来自本机 `backend/.env`。该文件不提交 Git。配置说明见 [`backend/README.md`](../../backend/README.md)。真实密码不得进入文档。读取配置的代码在 [`backend/app/core/config.py`](../../backend/app/core/config.py)。
 
 打开 `database.py` 后，看懂这三样就够了：
 
 | 名字 | 大致干什么 |
 |---|---|
 | `engine` | 应用访问 PostgreSQL 的入口配置（用 `.env` 里的 `DATABASE_URL` 建出来）。 |
-| `Session` / `SessionLocal` | 一次数据库工作上下文：在这次工作里查询、写入。 |
-| `get_db()` | FastAPI 按请求拿出一个 Session，用完关掉。Router 不自己连库，Repository 也不自己 `SessionLocal()`。 |
+| `Session` | 一次数据库工作上下文。业务查询、写入都通过它进行。 |
+| `SessionLocal` | 用来**创建** Session 的工厂。它本身不是某一次请求的 Session。 |
+| `get_db()` | 每次 FastAPI 请求通过 `SessionLocal()` 创建一个 Session，交给这次请求使用，最后关闭。Router 不自己连库，Repository 也不自己调用 `SessionLocal()`。 |
 
 不需要懂连接池内部实现。记住：**业务查询走 Session；health 不走这条链路。**
 
@@ -192,7 +193,7 @@ GET /api/v1/...
 | 症状 | 第一处 |
 |---|---|
 | FastAPI 起不来 | 是否在 `backend/` 下执行；[`backend/README.md`](../../backend/README.md)；`main.py` |
-| 提示连不上数据库 | PostgreSQL 是否在跑；[`backend/.env`](../../backend/README.md) 的应用角色（不是 `postgres` 超级用户）；`database.py` / `config.py` |
+| 提示连不上数据库 | PostgreSQL 是否在跑；本机 `backend/.env` 的应用角色（不是 `postgres` 超级用户）；`database.py` / `config.py`；配置说明见 [`backend/README.md`](../../backend/README.md) |
 | 表结构对不上 | `uv run --locked alembic current` 是否为 `44f5a70a766a`；[`backend/migrations/README.md`](../../backend/migrations/README.md) |
 | pytest 红 | 必须在 `backend/` 下：`uv run --locked pytest`；看失败的那个 `backend/tests/` 文件 |
 | Admin 页面空白 / 构建失败 | [`admin-web/README.md`](../../admin-web/README.md)；`pnpm lint` / `pnpm build` |
@@ -204,7 +205,7 @@ GET /api/v1/...
    看 `FastAPI`、`include_router`、`health`。能说出「入口在这、health 不查库、业务 API 是另挂的路由」就够。
 
 2. [`backend/app/core/database.py`](../../backend/app/core/database.py)
-   看 `engine`、`SessionLocal`、`get_db`。能说出「请求用 get_db 拿到 Session，用完关闭」就够。
+   看 `engine`、`SessionLocal`、`get_db`。能说出「SessionLocal 是工厂，get_db 每次请求用它创建一个 Session，用完关闭」就够。
 
 3. [`.github/workflows/ci.yml`](../../.github/workflows/ci.yml)
    看两个 job 各自跑什么。能说出「PR 会在 Linux 上自动跑 Ruff / 迁移 / pytest 和前端 lint/build」就够。

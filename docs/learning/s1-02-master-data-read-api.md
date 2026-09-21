@@ -159,8 +159,8 @@ ORM Model 里有 `is_active`、`created_at`、`updated_at`。当前只读 API **
 
 不需要读完全部用例。当前 backend 基线大约 88 个测试，数量以后会变。
 
-- [`backend/tests/test_master_data_api.py`](../../backend/tests/test_master_data_api.py)：走真实 HTTP（TestClient）。保护路径、状态码、JSON 形状、404/422/空列表这些合同。
-- [`backend/tests/test_master_data_repository_integration.py`](../../backend/tests/test_master_data_repository_integration.py)：连真实 PostgreSQL。保护「可见目录」过滤、排序、inactive 科目不出现等查询行为。
+- [`backend/tests/test_master_data_api.py`](../../backend/tests/test_master_data_api.py)：用 FastAPI 的 TestClient，在 **Python 进程内部模拟 HTTP 请求**经过应用。保护路由、参数校验、状态码、JSON 合同。它**不需要**真正启动 8000 端口，也不是通过真实网络去访问服务器。不要把它理解成 `curl` 打本机服务。
+- [`backend/tests/test_master_data_repository_integration.py`](../../backend/tests/test_master_data_repository_integration.py)：连**真实 PostgreSQL**。保护「可见目录」过滤、排序、inactive 科目不出现等查询行为。
 
 另外还有 Service / Schema 的单测。CI 里会 `alembic upgrade head` 再 `pytest`，所以迁移和查询是绑在一起守的。
 
