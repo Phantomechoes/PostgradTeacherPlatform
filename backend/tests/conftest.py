@@ -4,7 +4,7 @@ import pytest
 from fastapi.testclient import TestClient
 from sqlalchemy.orm import Session
 
-from app.core.database import engine, get_db
+from app.core.database import engine, get_db, get_write_db
 from app.main import app
 from app.models import (
     AdmissionCatalog,
@@ -333,10 +333,24 @@ def seeded_session(db_session: Session) -> Session:
 
 @pytest.fixture
 def api_client(seeded_session: Session) -> Generator[TestClient, None, None]:
+    # Commit the seed SAVEPOINT so a later write-request rollback
+    # cannot undo fixture data. The outer connection transaction
+    # still rolls back everything when the test ends.
+    seeded_session.commit()
+
     def _override_get_db() -> Generator[Session, None, None]:
         yield seeded_session
 
+    def _override_get_write_db() -> Generator[Session, None, None]:
+        try:
+            yield seeded_session
+            seeded_session.commit()
+        except Exception:
+            seeded_session.rollback()
+            raise
+
     app.dependency_overrides[get_db] = _override_get_db
+    app.dependency_overrides[get_write_db] = _override_get_write_db
     try:
         with TestClient(app) as test_client:
             yield test_client

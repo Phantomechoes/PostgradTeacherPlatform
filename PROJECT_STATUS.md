@@ -1,6 +1,6 @@
 # 项目状态
 
-最后更新：2026-09-20
+最后更新：2026-09-21
 当前版本：V0.1 Foundation（未发布业务版本）；工程规范当前为 V0.2
 当前 Sprint：Sprint 1 — 院校招生主数据
 当前主要开发机：macOS Apple Silicon
@@ -10,7 +10,11 @@ GitHub：<https://github.com/Phantomechoes/PostgradTeacherPlatform>
 
 ## 正在进行
 
-暂无正在实施的业务任务。
+- **S1-03A Stable Master Data Admin API**：**In Progress**
+  - Issue：[ #23](https://github.com/Phantomechoes/PostgradTeacherPlatform/issues/23)
+  - 分支：`feature/23-stable-master-data-admin-api`
+  - 范围：School / College / Major / ExamSubject 的 Admin 读（含 inactive）与 create / patch / deactivate / reactivate
+  - 明确不做：Catalog 写入、migration、auth、Admin Web、S1-03B / S1-03C
 
 ## 已完成
 
@@ -61,11 +65,12 @@ Sprint 0 工程底座：**Done**。
   - main push CI：run [35508339614](https://github.com/Phantomechoes/PostgradTeacherPlatform/actions/runs/35508339614)，Backend success，Admin Web success
   - 交付：工程规范 V0.2；当前主要开发机 macOS；macOS / Windows 正式支持本地开发；CI 为 Linux
 
-Sprint 1 **尚未 Done**。Schema 与只读 API 已合入 `main`；内部后台主数据维护尚未开始。
+Sprint 1 **尚未 Done**。Schema 与只读 API 已合入 `main`；S1-03A 进行中，Catalog 写入与 Admin Web 尚未开始。
 
 ## Ready（未经批准不得自行进入）
 
-- S1-03 内部后台主数据维护（Admin master data CRUD）
+- S1-03B AdmissionCatalog Admin API（依赖 S1-03A）
+- S1-03C Admin Web Master Data UI（依赖 S1-03B）
 - S1-04 导入 / 种子数据
 - Sprint 2 上岸生基础师资库
 
@@ -82,5 +87,5 @@ Sprint 1 **尚未 Done**。Schema 与只读 API 已合入 `main`；内部后台�
 
 ## 下一里程碑
 
-1. 进入 S1-03 Planning（须负责人批准并单独 Issue）
+1. 完成 S1-03A（Issue #23）后再进入 S1-03B
 2. 完成内部后台主数据维护后再进入 S1-04
