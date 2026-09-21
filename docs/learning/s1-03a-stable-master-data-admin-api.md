@@ -27,7 +27,7 @@ Swagger / curl / TestClient
         ↓
 Admin Router          backend/app/api/admin_master_data.py
         ↓
-get_write_db()        打开 Session，成功才 commit
+get_write_db()        function scope：打开 Session
         ↓
 AdminMasterDataService
         ↓
@@ -37,11 +37,13 @@ SQLAlchemy Session
         ↓
 INSERT，然后 flush（先问 PostgreSQL 约束）
         ↓
-PostgreSQL
-        ↑
-AdminRead JSON
-        ↑
-get_write_db() commit
+path operation 结束
+        ↓
+get_write_db() commit（成功）或 rollback（失败）
+        ↓
+close
+        ↓
+这时才把 HTTP 响应发给客户端
 ```
 
 Router 不写 SQL，也不 `commit`。它只认 URL、校验 JSON、调用 Service、把领域错误变成 HTTP。
@@ -51,17 +53,17 @@ Router 不写 SQL，也不 `commit`。它只认 URL、校验 JSON、调用 Servi
 | | `get_db()` | `get_write_db()` |
 |---|---|---|
 | 谁用 | 公开 S1-02 GET，以及 Admin GET | Admin 的 POST / PATCH / status |
-| 生命周期 | 打开 Session → 用完 close | 打开 Session → 成功 commit / 失败 rollback → close |
-| 会不会提交 | **不会** | **会**（仅本次请求） |
+| 生命周期 | 打开 Session → 用完 close | function scope：打开 Session → path 函数结束 → commit/rollback → close → **然后才发响应** |
+| 会不会提交 | **不会** | **会**，而且必须在告诉客户端成功之前完成 |
 
 读请求没有东西要提交，保持原来的只读生命周期，S1-02 行为不变。
-写请求必须有一个明确的事务主人，否则成功了数据也不落库，或失败了半截改动留在库里。
+写请求必须有一个明确的事务主人。`flush` 是在事务里提前问数据库约束；`commit` 必须在“告诉客户端成功”之前完成。如果 commit 失败，客户端不能已经拿到 201。
 
 ## 4. flush 和 commit 不一样
 
 **flush**：把当前 Session 里还没发出去的改动发给 PostgreSQL，让 unique / 外键 / CHECK 立刻报错。此时事务**还没有最终提交**，还可以 rollback。
 
-**commit**：确认本次事务，改动对后续请求可见。
+**commit**：确认本次事务，改动对后续请求可见。对 Admin 写接口，这一步发生在 HTTP 响应发出去之前（`Depends(..., scope="function")`）。
 
 例子：库里已有 `school_code = 10004`。再 POST 一个同样代码的学校：
 

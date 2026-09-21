@@ -1,7 +1,11 @@
+from collections.abc import Generator
+
 from fastapi.testclient import TestClient
 from sqlalchemy import select
+from sqlalchemy.orm import Session
 
-from app.core.database import engine
+from app.core.database import engine, get_db, get_write_db
+from app.main import app
 from app.models import School
 from tests.conftest import (
     COLLEGE_INACTIVE_ID,
@@ -22,6 +26,52 @@ LEAK_CODE = f"{WRITE_PREFIX}_LEAK"
 
 def _detail_code(response) -> str:
     return response.json()["detail"]["code"]
+
+
+def test_admin_school_q_is_trimmed_like_s1_02(api_client: TestClient) -> None:
+    padded = api_client.get(
+        f"{ADMIN}/schools",
+        params={"q": "  AlphaUniversity  "},
+    )
+    assert padded.status_code == 200
+    ids = {item["id"] for item in padded.json()["items"]}
+    assert SCHOOL_A_ID in ids
+
+    blank = api_client.get(f"{ADMIN}/schools", params={"q": "   "})
+    unfiltered = api_client.get(f"{ADMIN}/schools")
+    assert blank.status_code == 200
+    assert unfiltered.status_code == 200
+    assert blank.json()["total"] == unfiltered.json()["total"]
+    assert SCHOOL_A_ID in {item["id"] for item in blank.json()["items"]}
+
+
+def test_write_commit_failure_happens_before_success_response(
+    seeded_session: Session,
+) -> None:
+    seeded_session.commit()
+
+    def _override_get_db() -> Generator[Session, None, None]:
+        yield seeded_session
+
+    def _failing_write_db() -> Generator[Session, None, None]:
+        yield seeded_session
+        raise RuntimeError("commit failed")
+
+    app.dependency_overrides[get_db] = _override_get_db
+    app.dependency_overrides[get_write_db] = _failing_write_db
+    try:
+        with TestClient(app, raise_server_exceptions=False) as client:
+            response = client.post(
+                f"{ADMIN}/schools",
+                json={
+                    "school_code": f"{WRITE_PREFIX}_COMMITFAIL",
+                    "name": f"{WRITE_PREFIX}_CommitFail",
+                },
+            )
+        assert response.status_code != 201
+        assert response.status_code == 500
+    finally:
+        app.dependency_overrides.clear()
 
 
 def test_national_exam_subject_path_is_not_parsed_as_id(api_client: TestClient) -> None:

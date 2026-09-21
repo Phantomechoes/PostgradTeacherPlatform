@@ -1,4 +1,5 @@
 import pytest
+from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 
 from app.repositories.admin_master_data import AdminSchoolRepository
@@ -13,9 +14,12 @@ from app.schemas.admin_master_data import (
 )
 from app.services.admin_master_data import (
     AdminMasterDataService,
+    CheckViolationError,
     ConflictError,
+    InvalidReferenceError,
     NotFoundError,
     ParentInactiveError,
+    _map_integrity_error,
 )
 from tests.conftest import (
     COLLEGE_INACTIVE_ID,
@@ -163,6 +167,40 @@ def test_create_major_and_duplicate_code(seeded_session: Session) -> None:
             ),
         )
     assert exc.value.code == "duplicate_major_code"
+
+
+def _integrity(sqlstate: str, constraint_name: str) -> IntegrityError:
+    orig = type(
+        "Orig",
+        (),
+        {
+            "sqlstate": sqlstate,
+            "diag": type("Diag", (), {"constraint_name": constraint_name})(),
+        },
+    )()
+    return IntegrityError("INSERT", {}, orig)
+
+
+def test_known_constraints_map_to_domain_errors() -> None:
+    duplicate = _map_integrity_error(
+        _integrity("23505", "uq_schools_school_code")
+    )
+    assert isinstance(duplicate, ConflictError)
+    assert duplicate.code == "duplicate_school_code"
+
+    fk = _map_integrity_error(_integrity("23503", "fk_colleges_school_id"))
+    assert isinstance(fk, InvalidReferenceError)
+
+    check = _map_integrity_error(_integrity("23514", "ck_majors_degree_type"))
+    assert isinstance(check, CheckViolationError)
+
+
+def test_unknown_integrity_errors_are_not_wrapped() -> None:
+    unknown_fk = _integrity("23503", "unknown_fk")
+    assert _map_integrity_error(unknown_fk) is unknown_fk
+
+    unknown_check = _integrity("23514", "unknown_check")
+    assert _map_integrity_error(unknown_check) is unknown_check
 
 
 def test_patch_school_partial(seeded_session: Session) -> None:

@@ -19,6 +19,7 @@ from app.schemas.admin_master_data import (
     SchoolCreate,
     SchoolUpdate,
 )
+from app.services.master_data import _normalize_q
 
 DUPLICATE_CONSTRAINTS: dict[str, tuple[str, str]] = {
     "uq_schools_school_code": (
@@ -50,6 +51,8 @@ FK_CONSTRAINTS = frozenset(
         "fk_exam_subjects_school_id",
     }
 )
+
+CHECK_CONSTRAINTS = frozenset({"ck_majors_degree_type"})
 
 
 class MasterDataWriteError(Exception):
@@ -108,22 +111,14 @@ def _constraint_name(exc: IntegrityError) -> str | None:
     return str(name) if name else None
 
 
-def _sqlstate(exc: IntegrityError) -> str | None:
-    orig = getattr(exc, "orig", None)
-    if orig is None:
-        return None
-    state = getattr(orig, "sqlstate", None)
-    return str(state) if state else None
-
-
 def _map_integrity_error(exc: IntegrityError) -> Exception:
     name = _constraint_name(exc)
     if name in DUPLICATE_CONSTRAINTS:
         code, message = DUPLICATE_CONSTRAINTS[name]
         return ConflictError(code, message)
-    if name in FK_CONSTRAINTS or _sqlstate(exc) == "23503":
+    if name in FK_CONSTRAINTS:
         return InvalidReferenceError()
-    if _sqlstate(exc) == "23514":
+    if name in CHECK_CONSTRAINTS:
         return CheckViolationError()
     return exc
 
@@ -188,7 +183,7 @@ class AdminMasterDataService:
     ) -> Page[SchoolAdminRead]:
         items, total = self._repo.list_schools(
             status=status,
-            q=q,
+            q=_normalize_q(q),
             offset=(page - 1) * page_size,
             limit=page_size,
         )

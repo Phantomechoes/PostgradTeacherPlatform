@@ -53,7 +53,7 @@ def get_admin_read_service(
 
 
 def get_admin_write_service(
-    session: Annotated[Session, Depends(get_write_db)],
+    session: Annotated[Session, Depends(get_write_db, scope="function")],
 ) -> AdminMasterDataService:
     return AdminMasterDataService(AdminSchoolRepository(session))
 

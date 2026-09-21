@@ -1,7 +1,7 @@
 # S1-03A 稳定主数据 Admin API 合同
 
 对应 Issue：[S1-03A](https://github.com/Phantomechoes/PostgradTeacherPlatform/issues/23)
-状态：Checkpoint 4 — implementation complete, awaiting PR
+状态：implementation complete — PR #24 under review
 基线 Schema：S1-01 / Alembic `44f5a70a766a`
 公开只读合同：[`s1-02-master-data-read-api.md`](./s1-02-master-data-read-api.md)（**本 Issue 不修改**）
 
@@ -41,15 +41,22 @@
 
 现有 `get_db()` **保持不变**：`SessionLocal()` → yield → close，**不 commit**。S1-02 继续使用。
 
-Admin **写**路由使用新的 `get_write_db()`：
+Admin **写**路由使用新的 `get_write_db()`，并且 `Depends(get_write_db, scope="function")`。
+
+function scope 的含义：path operation 跑完后、**把响应发给客户端之前**，执行 yield 之后的 commit / rollback。客户端看到 201/200 时，事务已经提交成功。
 
 ```text
 SessionLocal()
   → yield Session
-  → 请求成功：commit
-  → 请求异常：rollback
-  → finally：close
+  → path operation（Service / Repository / flush）
+  → 成功：commit；异常：rollback
+  → close
+  → 这时才发送 HTTP 响应
 ```
+
+不要理解成：先把 201 发给客户端，再在后台 commit。那是 FastAPI yield dependency 默认 `scope="request"` 的行为，Admin 写请求不使用它。
+
+Admin **读**仍用 `get_db()`，不改成 write dependency。
 
 - Repository：query / add / update，必要时 **flush**；**不 commit**
 - Write Service：业务校验、调 Repository、把约束错误转成稳定 `code`；**不 commit**
