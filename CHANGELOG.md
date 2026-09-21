@@ -7,11 +7,12 @@
 
 ### Added
 
-- 跨平台开发基线（[Issue #17](https://github.com/Phantomechoes/PostgradTeacherPlatform/issues/17)），工作分支 `docs/17-cross-platform-development`（尚未 merge）：
+- 跨平台开发基线（[Issue #17](https://github.com/Phantomechoes/PostgradTeacherPlatform/issues/17)），已通过 [PR #18](https://github.com/Phantomechoes/PostgradTeacherPlatform/pull/18) 合并进 `main`（`af5c8d3`，Done）：
   - 当前主要开发机：macOS Apple Silicon；Windows 原生继续正式支持；CI 仍为 Linux / GitHub Actions
   - 新增当前工程规范 [`docs/product/开发前工程规范_V0.2.md`](./docs/product/开发前工程规范_V0.2.md)；V0.1 保留为历史冻结版本
   - 修正过时的运行说明（backend / admin-web / AGENTS / CONTRIBUTING / README / PROJECT_STATUS）
   - 同步 S1-02 已合入 `main` 的状态
+  - push → main CI run [35508339614](https://github.com/Phantomechoes/PostgradTeacherPlatform/actions/runs/35508339614) Backend / Admin Web success
 
 - S1-02 只读主数据 API（[Issue #15](https://github.com/Phantomechoes/PostgradTeacherPlatform/issues/15)），已通过 [PR #16](https://github.com/Phantomechoes/PostgradTeacherPlatform/pull/16) 合并进 `main`（`936d11f`，Done）：
   - 7 个 `GET /api/v1` 只读接口；合同见 [`docs/api/s1-02-master-data-read-api.md`](./docs/api/s1-02-master-data-read-api.md)
