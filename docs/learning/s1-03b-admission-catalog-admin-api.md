@@ -212,7 +212,7 @@ Service 对这个 PUT 会 flush 三次。测试让前两次照常执行。第三
 Depends(get_write_db, scope="function")
 ```
 
-POST、PUT、status 走它。三个 GET 走 `get_db()`，不提交。
+POST、PUT、status 走 `get_write_db`。两个 GET 走 `get_db`，不提交。
 
 ## 11. Reference Scope
 

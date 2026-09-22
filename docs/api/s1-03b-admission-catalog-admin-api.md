@@ -292,7 +292,20 @@ PUT 的 `directions[]` 与 `exam_units/options[]` 是**完整集合**。
 - payload 中有的 → 按新集合重建
 - 这是聚合内部的 SQL DELETE + INSERT，**没有任何** `DELETE /api/v1/admin/...`
 
-实现时（Checkpoint 2）应注意顺序：先删旧 children 并 flush，再插新 children 并 flush，避免同一 flush 里新旧相同 `direction_code` 或 `exam_unit+option_order` 的临时 unique 冲突。
+最终 aggregate replacement 顺序：
+
+1. 所有引用和 payload 先完成校验
+2. 修改 Catalog 基本五元组
+3. flush 基本字段
+4. DELETE 旧 exam options / directions
+5. flush DELETE
+6. INSERT 新 directions / options
+7. flush INSERT
+8. Service 返回
+9. `get_write_db()` commit
+10. commit 成功后才发送 HTTP success response
+
+基本字段的 flush，是为了让 `uq_admission_catalogs_offering` 在 Service 自己的 `_flush()` 里暴露并映射成 `duplicate_catalog_offering`。DELETE 之后的 flush，是为了让旧 child 的 `direction_code` 或 `exam_unit + option_order` 先离开当前事务视图，再插入相同业务键的新行，避免同一次 flush 里的临时 unique 冲突。
 
 ## 15. 原子事务
 
@@ -300,14 +313,20 @@ PUT 必须同一 Session、同一请求事务：
 
 ```text
 load Catalog
-  → validate refs
-  → update Catalog 基本字段
-  → replace directions
-  → replace exam options
-  → flush
-  → 全部成功 → get_write_db commit → HTTP
-  → 任一步失败 → rollback（基本字段与 children 全部恢复）
+  → validate stable refs
+  → bulk validate subjects
+  → update Catalog base
+  → flush base
+  → delete old options / directions
+  → flush deletes
+  → insert replacement children
+  → flush inserts
+  → Service return
+  → get_write_db commit
+  → HTTP success response
 ```
+
+任意阶段失败：rollback 整个请求事务。rollback 覆盖 Catalog 基本字段、directions 和 exam options。
 
 禁止：基本信息已改、children 失败的半完成状态。
 
