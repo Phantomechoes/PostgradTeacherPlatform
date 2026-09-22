@@ -10,11 +10,7 @@ GitHub：<https://github.com/Phantomechoes/PostgradTeacherPlatform>
 
 ## 正在进行
 
-- **S1-03C Admin Web Master Data UI**：**In Progress**
-  - Issue：[ #31](https://github.com/Phantomechoes/PostgradTeacherPlatform/issues/31)
-  - 分支：`feature/31-admin-web-master-data-ui`
-  - 范围：Admin Web routing；stable master data UI；Catalog UI；接入真实 backend
-  - 明确不做：auth、backend redesign、migration、S1-04
+暂无正在实施的业务任务。
 
 ## 已完成
 
@@ -81,7 +77,14 @@ Sprint 0 工程底座：**Done**。
   - 合同：[`docs/api/s1-03b-admission-catalog-admin-api.md`](./docs/api/s1-03b-admission-catalog-admin-api.md)
   - 学习文档：[`docs/learning/s1-03b-admission-catalog-admin-api.md`](./docs/learning/s1-03b-admission-catalog-admin-api.md)
 
-Sprint 1 **尚未 Done**。S1-03A、S1-03B 已合入 `main`；S1-03C 进行中。
+- **S1-03C Admin Web Master Data UI**：**Done**
+  - Issue #31 已关闭；PR #32 已合并进 `main`（`77cd73070e4dd02e439c26b33aebc19b1ed3e56e`）
+  - main push CI：run [35740244211](https://github.com/Phantomechoes/PostgradTeacherPlatform/actions/runs/35740244211)，Backend success，Admin Web success
+  - 交付：React Router 与内部后台布局；原生 fetch API Client；Vite `/api` 开发代理；School / College / Major 维护；全国统考及学校自命题科目维护；Catalog 列表与筛选；inactive shell 创建；完整 aggregate PUT；显式公开与取消公开；错误处理和真实浏览器联调
+  - 只新增 `react-router-dom`；无后端改动、无 migration；未引入 auth / RBAC
+  - 学习文档：[`docs/learning/s1-03c-admin-web.md`](./docs/learning/s1-03c-admin-web.md)
+
+Sprint 1 **尚未 Done**。S1-03A、S1-03B、S1-03C 已合入 `main`；S1-04 尚未实施。
 
 ## Ready（未经批准不得自行进入）
 
@@ -101,5 +104,5 @@ Sprint 1 **尚未 Done**。S1-03A、S1-03B 已合入 `main`；S1-03C 进行中�
 
 ## 下一里程碑
 
-1. 完成 S1-03C（Issue #31）后再进入 S1-04
-2. S1-03C 完成后，内部后台主数据维护闭环完成
+1. S1-04 Planning（须负责人批准并单独建立 Issue）
+2. S1-04 完成后，Sprint 1 院校招生主数据闭环完成
