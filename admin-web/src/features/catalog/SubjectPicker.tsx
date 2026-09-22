@@ -1,6 +1,14 @@
 import { Select } from 'antd'
 import type { ExamSubjectAdmin } from '../../api/types'
-import { subjectLabel } from './labels'
+import { FOREIGN_SUBJECT_HINT, subjectLabel } from './labels'
+
+function isNational(subject: ExamSubjectAdmin): boolean {
+  return subject.school_id === null
+}
+
+function isCurrentSchool(subject: ExamSubjectAdmin, schoolId: number): boolean {
+  return subject.school_id === schoolId
+}
 
 export function SubjectPicker({
   value,
@@ -15,30 +23,33 @@ export function SubjectPicker({
   extras: ExamSubjectAdmin[]
   onChange: (value: number) => void
 }) {
-  const byId = new Map<number, ExamSubjectAdmin>()
-  for (const subject of subjects) {
-    byId.set(subject.id, subject)
-  }
-  for (const extra of extras) {
-    if (extra.school_id === null || extra.school_id === schoolId) {
-      byId.set(extra.id, extra)
+  const candidates = new Map<number, ExamSubjectAdmin>()
+  for (const subject of [...subjects, ...extras]) {
+    if (isNational(subject) || isCurrentSchool(subject, schoolId)) {
+      candidates.set(subject.id, subject)
     }
   }
-  if (value !== null && !byId.has(value)) {
-    const current = extras.find((item) => item.id === value)
-    if (current) {
-      byId.set(current.id, current)
-    }
-  }
-  const national = [...byId.values()].filter((item) => item.school_id === null)
-  const school = [...byId.values()].filter((item) => item.school_id !== null)
+  const selected =
+    value === null
+      ? undefined
+      : (candidates.get(value) ??
+        extras.find((item) => item.id === value) ??
+        subjects.find((item) => item.id === value))
+  const foreign =
+    selected && !isNational(selected) && !isCurrentSchool(selected, schoolId)
+      ? selected
+      : undefined
+  const national = [...candidates.values()].filter(isNational)
+  const school = [...candidates.values()].filter((item) =>
+    isCurrentSchool(item, schoolId),
+  )
   const groups = [
     national.length
       ? {
           label: '全国统考科目',
           options: national.map((item) => ({
             value: item.id,
-            label: subjectLabel(item),
+            label: subjectLabel(item, schoolId),
           })),
         }
       : null,
@@ -47,8 +58,19 @@ export function SubjectPicker({
           label: '本校自命题科目',
           options: school.map((item) => ({
             value: item.id,
-            label: subjectLabel(item),
+            label: subjectLabel(item, schoolId),
           })),
+        }
+      : null,
+    foreign
+      ? {
+          label: FOREIGN_SUBJECT_HINT,
+          options: [
+            {
+              value: foreign.id,
+              label: subjectLabel(foreign, schoolId),
+            },
+          ],
         }
       : null,
   ].filter((group) => group !== null)

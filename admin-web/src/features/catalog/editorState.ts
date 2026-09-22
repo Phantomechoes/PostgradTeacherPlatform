@@ -87,11 +87,11 @@ export function buildPut(
   for (const row of draft.directions) {
     const code = row.direction_code.trim()
     const name = row.direction_name.trim()
-    if (!code && !name) {
-      continue
-    }
     if (!code || !name) {
-      return { ok: false, error: '研究方向的代码和名称都需要填写' }
+      return {
+        ok: false,
+        error: '请填写研究方向的代码和名称，或删除该行',
+      }
     }
     if (seenCodes.has(code)) {
       return { ok: false, error: '研究方向代码不能重复' }
@@ -103,38 +103,40 @@ export function buildPut(
   const examUnits: CatalogAggregatePut['exam_units'] = []
   const seenUnits = new Set<number>()
   for (const unit of draft.units) {
-    const filled = unit.options.filter(
-      (option) => option.exam_subject_id !== null,
-    )
-    if (filled.length === 0) {
-      continue
-    }
     if (seenUnits.has(unit.exam_unit)) {
       return { ok: false, error: '考试单元不能重复' }
     }
     seenUnits.add(unit.exam_unit)
+    if (unit.options.length === 0) {
+      return {
+        ok: false,
+        error: '请为考试单元选择科目，或删除该单元',
+      }
+    }
     const orders = new Set<number>()
     const subjects = new Set<number>()
     const options: CatalogAggregatePut['exam_units'][number]['options'] = []
-    for (const option of filled) {
+    for (const option of unit.options) {
+      if (option.exam_subject_id === null) {
+        return {
+          ok: false,
+          error: '请为每个科目选项选择科目，或删除未完成的选项',
+        }
+      }
       if (option.option_order < 1) {
         return { ok: false, error: 'option_order 必须大于等于 1' }
       }
       if (orders.has(option.option_order)) {
         return { ok: false, error: '同一考试单元的 option_order 不能重复' }
       }
-      const subjectId = option.exam_subject_id
-      if (subjectId === null) {
-        return { ok: false, error: '请为每个科目选项选择科目' }
-      }
-      if (subjects.has(subjectId)) {
+      if (subjects.has(option.exam_subject_id)) {
         return { ok: false, error: '同一考试单元不能重复选择同一科目' }
       }
       orders.add(option.option_order)
-      subjects.add(subjectId)
+      subjects.add(option.exam_subject_id)
       options.push({
         option_order: option.option_order,
-        exam_subject_id: subjectId,
+        exam_subject_id: option.exam_subject_id,
       })
     }
     examUnits.push({ exam_unit: unit.exam_unit, options })

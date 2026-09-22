@@ -5,10 +5,20 @@ export const STUDY_MODE_LABEL: Record<StudyMode, string> = {
   part_time: '非全日制',
 }
 
-export function subjectLabel(subject: ExamSubjectAdmin): string {
-  const scope = subject.school_id === null ? '全国' : '本校'
+export const FOREIGN_SUBJECT_HINT = '历史外校科目，当前院校不可用'
+
+export function subjectLabel(
+  subject: ExamSubjectAdmin,
+  schoolId?: number,
+): string {
   const status = subject.is_active ? '' : ' · 已停用'
-  return `${subject.subject_code} ${subject.name}（${scope}${status}）`
+  if (subject.school_id === null) {
+    return `${subject.subject_code} ${subject.name}（全国${status}）`
+  }
+  if (schoolId !== undefined && subject.school_id !== schoolId) {
+    return `${subject.subject_code} ${subject.name}（${FOREIGN_SUBJECT_HINT}${status}）`
+  }
+  return `${subject.subject_code} ${subject.name}（本校${status}）`
 }
 
 export function entityLabel(
