@@ -7,4 +7,4 @@
 
 - S1-02 只读主数据 API 合同：[`s1-02-master-data-read-api.md`](./s1-02-master-data-read-api.md)（Issue #15 / PR #16，Done）
 - S1-03A 稳定主数据 Admin API 合同：[`s1-03a-stable-master-data-admin-api.md`](./s1-03a-stable-master-data-admin-api.md)（Issue #23 / PR #24，Done）
-- S1-03B AdmissionCatalog Admin API：[`s1-03b-admission-catalog-admin-api.md`](./s1-03b-admission-catalog-admin-api.md)（implemented，Issue #27）
+- S1-03B AdmissionCatalog Admin API：[`s1-03b-admission-catalog-admin-api.md`](./s1-03b-admission-catalog-admin-api.md)（implemented，Issue #27 / PR #28）

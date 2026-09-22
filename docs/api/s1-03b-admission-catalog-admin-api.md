@@ -1,7 +1,7 @@
 # S1-03B 招生目录 Admin API 合同
 
 对应 Issue：[S1-03B](https://github.com/Phantomechoes/PostgradTeacherPlatform/issues/27)
-状态：Implemented in S1-03B (Issue #27)
+状态：Implemented in S1-03B (Issue #27, PR #28)
 基线 Schema：S1-01 / Alembic `44f5a70a766a`
 公开只读合同：[`s1-02-master-data-read-api.md`](./s1-02-master-data-read-api.md)（**本 Issue 不修改**）
 稳定主数据 Admin：[`s1-03a-stable-master-data-admin-api.md`](./s1-03a-stable-master-data-admin-api.md)（已合入，本 Issue 不修改其稳定实体写接口）
