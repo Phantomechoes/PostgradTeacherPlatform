@@ -10,7 +10,13 @@ GitHub：<https://github.com/Phantomechoes/PostgradTeacherPlatform>
 
 ## 正在进行
 
-暂无正在实施的业务任务。
+- **S1-03B AdmissionCatalog Admin API**：**In Progress**
+  - Issue：[ #27](https://github.com/Phantomechoes/PostgradTeacherPlatform/issues/27)
+  - 分支：`feature/27-admission-catalog-admin-api`
+  - 范围：Admin Catalog 读（含 inactive）；创建 inactive shell；PUT 聚合保存（基本字段 + directions[] + exam_units[]）；显式 activate
+  - 明确不做：Admin Web、auth、migration、row-level child REST、S1-03C
+  - 合同：[`docs/api/s1-03b-admission-catalog-admin-api.md`](./docs/api/s1-03b-admission-catalog-admin-api.md)
+  - 学习文档：[`docs/learning/s1-03b-admission-catalog-admin-api.md`](./docs/learning/s1-03b-admission-catalog-admin-api.md)
 
 ## 已完成
 
@@ -69,11 +75,10 @@ Sprint 0 工程底座：**Done**。
   - 合同：[`docs/api/s1-03a-stable-master-data-admin-api.md`](./docs/api/s1-03a-stable-master-data-admin-api.md)
   - 学习文档：[`docs/learning/s1-03a-stable-master-data-admin-api.md`](./docs/learning/s1-03a-stable-master-data-admin-api.md)
 
-Sprint 1 **尚未 Done**。S1-03A 已合入 `main`；Catalog Admin API 与 Admin Web 尚未开始。
+Sprint 1 **尚未 Done**。S1-03A 已合入 `main`；S1-03B 进行中；Admin Web 尚未开始。
 
 ## Ready（未经批准不得自行进入）
 
-- S1-03B AdmissionCatalog Admin API（依赖 S1-03A）
 - S1-03C Admin Web Master Data UI（依赖 S1-03B）
 - S1-04 导入 / 种子数据
 - Sprint 2 上岸生基础师资库
@@ -91,5 +96,5 @@ Sprint 1 **尚未 Done**。S1-03A 已合入 `main`；Catalog Admin API 与 Admin
 
 ## 下一里程碑
 
-1. 进入 S1-03B AdmissionCatalog Admin API（须单独 Issue 与批准，不得自行开始实现）
+1. 完成 S1-03B（Issue #27）后再进入 S1-03C
 2. 完成内部后台主数据维护后再进入 S1-04

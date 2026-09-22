@@ -29,10 +29,13 @@
    再看一次真实 GET 请求：从浏览器 / Swagger 走进 FastAPI，经过 Service、Repository，读到 PostgreSQL，再变成 JSON。
 
 4. [`s1-03a-stable-master-data-admin-api.md`](./s1-03a-stable-master-data-admin-api.md)
-   第一次看写请求：Admin 怎样 create / patch / 停用，以及 flush、commit、rollback 各管什么。Catalog 写入和后台页面还不在这里。
+   第一次看写请求：Admin 怎样 create / patch / 停用，以及 flush、commit、rollback 各管什么。Catalog 写入还不在这一篇。
+
+5. [`s1-03b-admission-catalog-admin-api.md`](./s1-03b-admission-catalog-admin-api.md)
+   再看招生目录为什么必须整份保存：先校验，再替换方向和科目选项，失败时整个请求一起回滚。Admin 网页还不在这里。
 
 ## 后续规则
 
 以后业务模块达到 Done 之前，必须补对应的 learning 文档。代码合进 `main` 不等于负责人已经能看懂。
 
-例如：S1-03B（招生目录 Admin API）和 S1-03C（Admin Web）完成时，必须各自补 learning，不能再只剩模板。
+S1-03C（Admin Web）开始并完成时，必须单独补 learning，不能只剩模板。
