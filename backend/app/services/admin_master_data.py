@@ -98,6 +98,24 @@ class EmptyPatchError(MasterDataWriteError):
         super().__init__("empty_patch", "PATCH body must include at least one field")
 
 
+class InactiveReferenceError(MasterDataWriteError):
+    def __init__(self, resource: str, resource_id: int) -> None:
+        self.resource = resource
+        self.resource_id = resource_id
+        super().__init__(
+            "inactive_reference",
+            f"{resource} {resource_id} is inactive",
+        )
+
+
+class ScopeMismatchError(MasterDataWriteError):
+    def __init__(
+        self,
+        message: str = "reference does not belong to the catalog school",
+    ) -> None:
+        super().__init__("reference_scope_mismatch", message)
+
+
 def _constraint_name(exc: IntegrityError) -> str | None:
     orig = getattr(exc, "orig", None)
     if orig is None:

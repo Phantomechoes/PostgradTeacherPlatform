@@ -29,6 +29,12 @@ class AdminSchoolRepository:
     def get_exam_subject(self, exam_subject_id: int) -> ExamSubject | None:
         return self._session.get(ExamSubject, exam_subject_id)
 
+    def get_exam_subjects_by_ids(self, subject_ids: list[int]) -> list[ExamSubject]:
+        if not subject_ids:
+            return []
+        stmt = select(ExamSubject).where(ExamSubject.id.in_(subject_ids))
+        return list(self._session.scalars(stmt).all())
+
     def list_schools(
         self,
         *,
