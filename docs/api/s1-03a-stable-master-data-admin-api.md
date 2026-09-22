@@ -1,7 +1,7 @@
 # S1-03A 稳定主数据 Admin API 合同
 
 对应 Issue：[S1-03A](https://github.com/Phantomechoes/PostgradTeacherPlatform/issues/23)
-状态：implementation complete — PR #24 under review
+状态：Implemented in S1-03A (PR #24)
 基线 Schema：S1-01 / Alembic `44f5a70a766a`
 公开只读合同：[`s1-02-master-data-read-api.md`](./s1-02-master-data-read-api.md)（**本 Issue 不修改**）
 
@@ -375,8 +375,12 @@ HTTP 4xx，body：
 | 同校 `major_code` 重复 | 409 | `duplicate_major_code` |
 | 全国 `subject_code` 重复 | 409 | `duplicate_national_subject_code` |
 | 同校 `subject_code` 重复 | 409 | `duplicate_school_subject_code` |
-| CHECK（如非法 `degree_type` 已由 Pydantic 拦住；其它 DB check） | 422 | `check_violation` |
+| 已知 CHECK `ck_majors_degree_type` | 422 | `check_violation` |
 | PATCH `{}` 或未包含任何字段 | 422 | `empty_patch` |
+
+非法 `degree_type` **优先**被 Pydantic 拦成 FastAPI 默认 422 数组，通常到不了 PostgreSQL。`check_violation` 只对应已知约束名 `ck_majors_degree_type`，**不**承诺所有 PostgreSQL CHECK 都会变成该 code。
+
+已知 FK（`fk_colleges_school_id` / `fk_majors_school_id` / `fk_exam_subjects_school_id`）→ 422 `invalid_reference`。未知 FK、未知 CHECK、以及其他 IntegrityError **不得**包装成业务 422，保持原始异常，走服务器故障路径。
 
 不同学校的相同 school-scoped `subject_code` **不是**冲突。
 两个 `college_code` 均为 `null` 的学院可以共存于同一学校（与 S1-01 部分唯一索引一致）。
