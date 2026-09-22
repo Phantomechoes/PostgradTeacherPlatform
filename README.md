@@ -8,8 +8,9 @@ GitHub 是本项目的唯一事实源：代码、Issue、文档和状态都以�
 
 - 仓库地址：<https://github.com/Phantomechoes/PostgradTeacherPlatform>
 - 当前 Sprint：Sprint 1 — 院校招生主数据
-- 已完成：S1-01、S1-02
-- 下一 Ready：S1-03、S1-04（S1-03 未经批准不得自行开始）
+- 已完成：S1-01、S1-02、S1-03A、S1-03B
+- 正在进行：S1-03C Admin Web Master Data UI（Issue #31）
+- 下一 Ready：S1-04（未经批准不得自行开始）
 - 当前主要开发机：macOS；已验证本地环境：macOS / Windows；CI：Linux
 
 ## 现在做到哪一步
@@ -32,7 +33,9 @@ Sprint 1：
 |---|---|---|
 | S1-01 | 主数据 Schema（School / College / Major / AdmissionCatalog / Direction / ExamSubject） | Done（PR #14 / `a46a09c`） |
 | S1-02 | 只读主数据 API | Done（PR #16 / `936d11f`） |
-| S1-03 | 内部后台主数据维护 | Ready（未开始） |
+| S1-03A | Stable Master Data Admin API | Done |
+| S1-03B | AdmissionCatalog Admin API | Done |
+| S1-03C | Admin Web Master Data UI | In Progress（Issue #31） |
 | S1-04 | 导入 / 种子数据 | Ready（未开始） |
 
 更细的进度见 [`PROJECT_STATUS.md`](./PROJECT_STATUS.md)。
@@ -43,9 +46,9 @@ Sprint 1：
 
 请先按这个预期来看仓库，避免误以为已经可以运行业务系统：
 
-- 已有最小 FastAPI 应用、`GET /health`，以及已合入 `main` 的 S1-02 只读主数据 API
+- 已有最小 FastAPI 应用、`GET /health`，以及已合入 `main` 的 S1-02 只读主数据 API 与 S1-03A / S1-03B Admin API
 - 已有 PostgreSQL 连接、SQLAlchemy 与 Alembic；业务表已由 S1-01 建到 revision `44f5a70a766a`
-- 已有管理后台 Vite 骨架与静态演示页，尚无业务 CRUD / 登录
+- 后端 Admin API 已有，Admin Web 已接院校 / 科目 / 招生目录维护；尚无登录
 - 还没有微信小程序工程
 - 还没有支付、佣金、自动推荐、学生选师等业务功能
 
@@ -53,7 +56,7 @@ Sprint 1：
 
 ## 当前仓库里有什么
 
-根目录说明、目录骨架、FastAPI `/health`、数据库工程底座、主数据 Schema 与管理后台 Vite 骨架已落地；小程序仍只有占位说明。
+根目录说明、FastAPI `/health`、数据库工程底座、主数据 Schema、Admin API 与内部管理后台已落地；小程序仍只有占位说明。
 
 现在可以直接阅读：
 
@@ -76,17 +79,17 @@ Sprint 1：
 
 ## 当前目录结构（骨架已建立）
 
-以下结构来自已冻结的工程规范。`backend/` 已可运行 FastAPI 与只读主数据 API；`admin-web/` 已可启动 Vite 骨架；小程序仍只有占位说明：
+以下结构来自已冻结的工程规范。`backend/` 已可运行 FastAPI 与主数据 Admin API；`admin-web/` 已可在本地维护院校和招生目录；小程序仍只有占位说明：
 
 ```text
 PostgradTeacherPlatform/
 ├─ backend/            后端（FastAPI、SQLAlchemy、Alembic、主数据 Models）
-├─ admin-web/          内部管理后台（S0-04）
+├─ admin-web/          内部管理后台（S1-03C 已接真实 Admin API）
 ├─ miniprogram/        微信小程序（后续阶段）
 ├─ docs/               产品、调研、架构、数据库、API、学习文档
 │  ├─ product/         工程规范与待决策事项
 │  ├─ database/        主数据 Schema 设计
-│  └─ api/             只读 API 合同（S1-02）
+│  └─ api/             只读 API 与 Admin API 合同
 ├─ scripts/            可选平台辅助脚本（非核心开发流程）
 ├─ .github/            Issue / PR 模板与 CI
 ├─ AGENTS.md
@@ -116,7 +119,7 @@ PostgradTeacherPlatform/
 1. 用 Git 打开本仓库，开发时不要直接改 `main`。当前任务以 [`PROJECT_STATUS.md`](./PROJECT_STATUS.md) 和 GitHub Issue 为准。
 2. 先读本文件和 [`PROJECT_STATUS.md`](./PROJECT_STATUS.md)。
 3. 启动后端、配置 `.env`、跑 migration / pytest / Ruff：见 [`backend/README.md`](./backend/README.md)。
-4. 启动管理后台骨架、跑 lint / build：见 [`admin-web/README.md`](./admin-web/README.md)。
+4. 启动管理后台、跑 lint / build：见 [`admin-web/README.md`](./admin-web/README.md)。需要同时启动 backend。
 5. 若要提需求或改代码，按 [`CONTRIBUTING.md`](./CONTRIBUTING.md) 先开 GitHub Issue，再开对应分支。
 6. 不要把 `.env`、密码、Token 或真实数据库口令提交进仓库。
 

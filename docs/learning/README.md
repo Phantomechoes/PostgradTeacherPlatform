@@ -32,10 +32,11 @@
    第一次看写请求：Admin 怎样 create / patch / 停用，以及 flush、commit、rollback 各管什么。Catalog 写入还不在这一篇。
 
 5. [`s1-03b-admission-catalog-admin-api.md`](./s1-03b-admission-catalog-admin-api.md)
-   再看招生目录为什么必须整份保存：先校验，再替换方向和科目选项，失败时整个请求一起回滚。Admin 网页还不在这里。
+   再看招生目录为什么必须整份保存：先校验，再替换方向和科目选项，失败时整个请求一起回滚。本篇只讲后端聚合写入。
+
+6. [`s1-03c-admin-web.md`](./s1-03c-admin-web.md)
+   最后看内部管理后台：按钮怎样变成 03A / 03B 的 Admin HTTP，保存和公开为什么是两件事。
 
 ## 后续规则
 
-以后业务模块达到 Done 之前，必须补对应的 learning 文档。代码合进 `main` 不等于负责人已经能看懂。
-
-S1-03C（Admin Web）开始并完成时，必须单独补 learning，不能只剩模板。
+以后业务模块达到 Done 之前，必须补对应的 learning 文档。代码合进 `main` 不等于负责人已经能看懂。S1-03C 的 learning 见 [`s1-03c-admin-web.md`](./s1-03c-admin-web.md)。

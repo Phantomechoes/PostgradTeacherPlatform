@@ -61,9 +61,9 @@ Issue
   → PostgreSQL
 ```
 
-**当前 Admin Web 还没有进入这条业务请求链。** 打开 `http://127.0.0.1:5173` 只是看到静态壳，不会去打 `/api/v1`。
+S1-03C 之后，Admin Web 会通过 Vite 把 `/api` 转到 FastAPI，进入这条链。细节见 [`s1-03c-admin-web.md`](./s1-03c-admin-web.md)。
 
-真正走这条链的，是对 FastAPI 的 HTTP 调用（Swagger、`curl`、以后的 Admin）。
+真正改数据库的，仍然是 FastAPI 这一侧（Swagger、`curl`、Admin 网页发出的 HTTP）。
 
 ## 3. 用真实的 S1-02 看 GitHub 在防什么
 
@@ -139,9 +139,9 @@ uv run --locked uvicorn app.main:app --host 127.0.0.1 --port 8000
 
 [`admin-web/`](../../admin-web/) 是给内部人员用的网页，不是考研生小程序。技术是 React + Vite + Ant Design。
 
-当前 [`admin-web/src/App.tsx`](../../admin-web/src/App.tsx) 自己写着：S0-04 工程骨架，尚未接入业务数据。页面上的 Loading / Error / Empty 是**静态演示**，不是真实请求失败。
+S0-04 落地的是 Vite + Ant Design 工程壳。S1-03C 已经把真实 Admin API 接到页面上：院校、科目、招生目录都可以在网页里维护。Loading / 失败 / 空表来自真实请求。说明见 [`s1-03c-admin-web.md`](./s1-03c-admin-web.md)。
 
-`http://127.0.0.1:5173` 能打开，只说明 Vite 开发服务器活着。**不等于后台已经能管理数据库。**
+`http://127.0.0.1:5173` 能打开，只说明 Vite 活着。要改数据库，还需要 FastAPI 和 PostgreSQL 同时在跑。
 
 ## 8. 当前运行关系图
 
@@ -151,7 +151,7 @@ uv run --locked uvicorn app.main:app --host 127.0.0.1 --port 8000
 Browser
   ↓
 Admin Web (5173)
-  ✕ 当前尚未接 Backend
+  → /api 代理到 FastAPI (8000)
 
 FastAPI (8000)
   ↓
@@ -173,8 +173,8 @@ GET /api/v1/...
 | 进程 | 默认端口 | 当前是否连别人 |
 |---|---|---|
 | PostgreSQL | 5432 | 被 FastAPI 连接 |
-| FastAPI | 8000 | 已连 PostgreSQL；尚未被 Admin 调用 |
-| Vite Admin | 5173 | 独立页面，不打 backend |
+| FastAPI | 8000 | 已连 PostgreSQL；接受 Vite 代理来的 `/api` |
+| Vite Admin | 5173 | 页面把 `/api` 转到 FastAPI |
 
 ## 9. CI 是第二层保障
 
@@ -214,9 +214,9 @@ GET /api/v1/...
 
 1. **解决什么问题？** 让项目能在 GitHub 上协作、在本机跑 backend 和 Admin 壳、用 CI 守 `main`。
 2. **从哪里触发？** 开发：Issue / PR。运行：本机终端启动进程；浏览器打开 8000 或 5173。
-3. **请求进入哪个文件？** 业务 HTTP 进入 `main.py` 再进路由。Admin 页面进入 `admin-web/src/main.tsx` → `App.tsx`，当前不再往下打 API。
+3. **请求进入哪个文件？** 业务 HTTP 进入 `main.py` 再进路由。Admin 页面进入 `admin-web/src/main.tsx` → 各页面 → `client.ts`，再经 Vite `/api` 代理打到 FastAPI。
 4. **数据在哪里处理？** 主数据读取在 Service / Repository；health 不处理数据。
 5. **最后存在哪里？** 业务数据在 PostgreSQL；Git 历史在 GitHub。
-6. **返回结果从哪里出来？** health 和 GET API 从 FastAPI 返回 JSON；Admin 目前只渲染静态组件。
+6. **返回结果从哪里出来？** health 和 API 从 FastAPI 返回 JSON；Admin 网页把 Admin JSON 画成表格和表单。
 7. **出问题先看什么？** 上一节的表。
 8. **读哪 3 段？** `main.py`、`database.py`、`ci.yml`。

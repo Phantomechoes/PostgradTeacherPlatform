@@ -6,14 +6,15 @@
 
 ## 当前是什么
 
-已建立可在 **macOS 原生** 与 **Windows 原生** 上运行的 React + TypeScript + Vite 工程（CI 在 Linux 上跑）：
+可在 **macOS 原生** 与 **Windows 原生** 上运行的 React + TypeScript + Vite 内部管理后台（CI 在 Linux 上跑）：
 
 - 包管理器：pnpm 12.4（由 Node.js 自带 Corepack 启用）
-- UI 组件库：Ant Design 6
-- 单页内部后台壳（无 React Router）
+- UI：Ant Design 6
+- 路由：react-router-dom
+- 用原生 `fetch` 调用 `/api/v1/admin`（Vite 把 `/api` 代理到 `http://127.0.0.1:8000`）
+- 可维护：School / College / Major / ExamSubject / AdmissionCatalog
 - ESLint + Prettier
 - GitHub Actions：frozen install / lint / format:check / build
-- 页面上的 Loading / Error / Empty 是**静态 UI 演示**，不是真实请求
 
 `package.json` 已声明：
 
@@ -22,14 +23,12 @@
 
 ## 当前没有什么业务能力
 
-- 没有登录 / 认证
-- 没有 School / Teacher / Institution 等业务 CRUD
-- 没有 React Router
-- 没有 API client，不调用后端（包括不调用 `GET /health`）
-- 不连接 PostgreSQL
-- 没有 Docker、小程序
+- 没有登录 / 认证（`/api/v1/admin` 不是安全边界，只用于 localhost）
+- 没有 Teacher / Institution、支付、小程序
+- 没有 Catalog 的 child REST，没有硬删除
+- 不直接连接 PostgreSQL；改数据必须同时启动 backend
 
-Ant Design 只提供按钮、布局、提示等 UI 零件。业务规则仍在后端；本阶段后台不复制、不实现业务逻辑。
+业务规则仍在后端。前端只组请求、展示结果和错误。
 
 本仓库的 `admin-web/` **没有** `.env`，也没有需要保密的前端环境变量。
 
@@ -104,7 +103,7 @@ pnpm install --frozen-lockfile
 pnpm dev --host 127.0.0.1 --port 5173
 ```
 
-浏览器打开 `http://127.0.0.1:5173`。期望：页面能渲染内部管理后台壳，并看到 Loading / Error / Empty 三个静态演示卡片。这是工程验证页，不是正式业务后台。用完后按 `Ctrl+C` 停止，不要留下占用 5173 的本项目进程。
+浏览器打开 `http://127.0.0.1:5173`。需要同时启动 backend（`127.0.0.1:8000`），页面才会加载真实主数据。若本机设置了 `HTTP_PROXY`，访问 `127.0.0.1` 时请排除代理，否则 Vite 可能返回 502。用完后按 `Ctrl+C` 停止，不要留下占用 5173 的本项目进程。
 
 生产构建：
 
@@ -141,4 +140,4 @@ pnpm format
 
 - 不要提交 `node_modules/`、`dist/`、`.env`、密码、Token。
 - 本模块当前没有真实 `DATABASE_URL` 或 API Key。
-- 后台不连接 backend / PostgreSQL；启动本页面不需要数据库。
+- 后台通过 `/api` 调用 localhost backend；不把数据库口令写进前端。

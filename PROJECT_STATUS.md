@@ -10,7 +10,11 @@ GitHub：<https://github.com/Phantomechoes/PostgradTeacherPlatform>
 
 ## 正在进行
 
-暂无正在实施的业务任务。
+- **S1-03C Admin Web Master Data UI**：**In Progress**
+  - Issue：[ #31](https://github.com/Phantomechoes/PostgradTeacherPlatform/issues/31)
+  - 分支：`feature/31-admin-web-master-data-ui`
+  - 范围：Admin Web routing；stable master data UI；Catalog UI；接入真实 backend
+  - 明确不做：auth、backend redesign、migration、S1-04
 
 ## 已完成
 
@@ -77,11 +81,10 @@ Sprint 0 工程底座：**Done**。
   - 合同：[`docs/api/s1-03b-admission-catalog-admin-api.md`](./docs/api/s1-03b-admission-catalog-admin-api.md)
   - 学习文档：[`docs/learning/s1-03b-admission-catalog-admin-api.md`](./docs/learning/s1-03b-admission-catalog-admin-api.md)
 
-Sprint 1 **尚未 Done**。S1-03A、S1-03B 已合入 `main`；S1-03C Admin Web 尚未开始。
+Sprint 1 **尚未 Done**。S1-03A、S1-03B 已合入 `main`；S1-03C 进行中。
 
 ## Ready（未经批准不得自行进入）
 
-- S1-03C Admin Web Master Data UI（依赖 S1-03B）
 - S1-04 导入 / 种子数据
 - Sprint 2 上岸生基础师资库
 
@@ -98,6 +101,5 @@ Sprint 1 **尚未 Done**。S1-03A、S1-03B 已合入 `main`；S1-03C Admin Web �
 
 ## 下一里程碑
 
-1. 进入 S1-03C Planning（须负责人批准并单独 Issue）
+1. 完成 S1-03C（Issue #31）后再进入 S1-04
 2. S1-03C 完成后，内部后台主数据维护闭环完成
-3. 然后进入 S1-04
