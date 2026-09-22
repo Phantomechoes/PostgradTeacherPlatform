@@ -43,8 +43,10 @@ def test_openapi_contains_seven_get_paths() -> None:
         assert "get" in paths[path]
     for path in FORBIDDEN_PATHS:
         assert path not in paths
+    for path in EXPECTED_PATHS:
+        assert WRITE_METHODS.isdisjoint(paths[path])
     for path, operations in paths.items():
-        if path.startswith("/api/v1"):
+        if path.startswith("/api/v1/") and not path.startswith("/api/v1/admin"):
             assert WRITE_METHODS.isdisjoint(operations)
 
 

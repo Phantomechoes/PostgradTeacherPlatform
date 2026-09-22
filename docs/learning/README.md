@@ -26,10 +26,13 @@
    再看 7 张主数据表：现实里的学校、学院、专业、招生年份，为什么要拆成这些表，而不是一张大表。
 
 3. [`s1-02-master-data-read-api.md`](./s1-02-master-data-read-api.md)
-   最后看一次真实 GET 请求：从浏览器 / Swagger 走进 FastAPI，经过 Service、Repository，读到 PostgreSQL，再变成 JSON。
+   再看一次真实 GET 请求：从浏览器 / Swagger 走进 FastAPI，经过 Service、Repository，读到 PostgreSQL，再变成 JSON。
+
+4. [`s1-03a-stable-master-data-admin-api.md`](./s1-03a-stable-master-data-admin-api.md)
+   第一次看写请求：Admin 怎样 create / patch / 停用，以及 flush、commit、rollback 各管什么。Catalog 写入和后台页面还不在这里。
 
 ## 后续规则
 
 以后业务模块达到 Done 之前，必须补对应的 learning 文档。代码合进 `main` 不等于负责人已经能看懂。
 
-例如：S1-03（内部后台主数据维护）完成时，必须新增 Admin CRUD 对应的 learning，不能再只剩模板。
+例如：S1-03B（招生目录 Admin API）和 S1-03C（Admin Web）完成时，必须各自补 learning，不能再只剩模板。

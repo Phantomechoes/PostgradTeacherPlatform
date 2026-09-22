@@ -18,4 +18,23 @@ def get_db() -> Generator[Session, None, None]:
         db.close()
 
 
-__all__ = ["Base", "Session", "SessionLocal", "engine", "get_db"]
+def get_write_db() -> Generator[Session, None, None]:
+    db = SessionLocal()
+    try:
+        yield db
+        db.commit()
+    except Exception:
+        db.rollback()
+        raise
+    finally:
+        db.close()
+
+
+__all__ = [
+    "Base",
+    "Session",
+    "SessionLocal",
+    "engine",
+    "get_db",
+    "get_write_db",
+]
