@@ -7,6 +7,12 @@
 
 ### Added
 
+- S1-03C Admin Web 主数据维护界面（[Issue #31](https://github.com/Phantomechoes/PostgradTeacherPlatform/issues/31)），工作分支 `feature/31-admin-web-master-data-ui`：
+  - 院校 / 学院 / 专业 / 全国统考科目 / 自命题科目的 Admin CRUD 与停用恢复
+  - 招生目录 inactive shell、整份 PUT 聚合编辑、显式公开 / 取消公开
+  - Vite 将 `/api` 代理到 FastAPI；无 auth、无新业务依赖、无 backend / migration 改动
+  - 学习文档：[`docs/learning/s1-03c-admin-web.md`](./docs/learning/s1-03c-admin-web.md)
+
 - 跨平台开发基线（[Issue #17](https://github.com/Phantomechoes/PostgradTeacherPlatform/issues/17)），已通过 [PR #18](https://github.com/Phantomechoes/PostgradTeacherPlatform/pull/18) 合并进 `main`（`af5c8d3`，Done）：
   - 当前主要开发机：macOS Apple Silicon；Windows 原生继续正式支持；CI 仍为 Linux / GitHub Actions
   - 新增当前工程规范 [`docs/product/开发前工程规范_V0.2.md`](./docs/product/开发前工程规范_V0.2.md)；V0.1 保留为历史冻结版本

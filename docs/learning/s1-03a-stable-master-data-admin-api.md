@@ -2,7 +2,7 @@
 
 这篇不是再抄一遍 API 清单，而是让负责人看懂：**第一次把数据写入 PostgreSQL 时，请求经过哪几层、谁负责提交、失败时为什么不会留下半截修改。**
 
-当前触发方式是 Swagger、`curl` 或测试里的 TestClient。**Admin 网页还不能操作这些接口**（那是 S1-03C）。`/api/v1/admin` **没有登录**，只是路径分区，仅用于 localhost 本地开发。
+当前除了 Swagger、`curl` 或测试里的 TestClient，内部管理后台（S1-03C）也可以调用这些接口。本篇仍只讲后端写路径。`/api/v1/admin` **没有登录**，只是路径分区，仅用于 localhost 本地开发。
 
 ## 1. S1-03A 解决什么
 

@@ -4,6 +4,8 @@
 
 子目录用途见各自的 `README.md`。不新增 `docs/governance/` 或其他未冻结的目录。
 
+学习文档入口：[`learning/README.md`](./learning/README.md)
+
 当前工程规范：[`product/开发前工程规范_V0.2.md`](./product/开发前工程规范_V0.2.md)
 
 历史冻结版本：[`product/开发前工程规范_V0.1.md`](./product/开发前工程规范_V0.1.md)（Superseded，保留用于历史追溯）
