@@ -7,7 +7,7 @@
 
 ### Added
 
-- S1-03C Admin Web 主数据维护界面（[Issue #31](https://github.com/Phantomechoes/PostgradTeacherPlatform/issues/31)），工作分支 `feature/31-admin-web-master-data-ui`：
+- S1-03C Admin Web 主数据维护界面（[Issue #31](https://github.com/Phantomechoes/PostgradTeacherPlatform/issues/31)），工作分支 `feature/31-admin-web-master-data-ui`，Pull Request [#32](https://github.com/Phantomechoes/PostgradTeacherPlatform/pull/32)：
   - 院校 / 学院 / 专业 / 全国统考科目 / 自命题科目的 Admin CRUD 与停用恢复
   - 招生目录 inactive shell、整份 PUT 聚合编辑、显式公开 / 取消公开
   - Vite 将 `/api` 代理到 FastAPI；无 auth、无新业务依赖、无 backend / migration 改动
