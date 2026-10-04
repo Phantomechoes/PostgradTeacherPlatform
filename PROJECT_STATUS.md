@@ -13,6 +13,7 @@ GitHub：<https://github.com/Phantomechoes/PostgradTeacherPlatform>
 - **S1-04 Master Data Import & Seed Data**：**In Progress**
   - Issue：[#35](https://github.com/Phantomechoes/PostgradTeacherPlatform/issues/35)
   - 分支：`feature/35-master-data-import-seed`
+  - PR：[#36](https://github.com/Phantomechoes/PostgradTeacherPlatform/pull/36)
   - 实现完成，等待 PR 验收 / merge
   - 范围：UTF-8 JSON + sidecar manifest；默认 dry-run；synthetic + approved 才允许 `--apply`；School / College / Major / ExamSubject apply；Catalog inactive shell + complete aggregate；create / skip / reject；whole-file transaction；synthetic development seed；自动化 PostgreSQL 测试
   - 明确不做：真实招生数据、scraping、Excel / CSV、默认 update、source metadata 表 / migration、automatic publish、Admin Web import、Public API 变更、Sprint 2
