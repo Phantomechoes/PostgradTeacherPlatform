@@ -1,6 +1,6 @@
 # 项目状态
 
-最后更新：2026-09-22
+最后更新：2026-10-04
 当前版本：V0.1 Foundation（未发布业务版本）；工程规范当前为 V0.2
 当前 Sprint：Sprint 1 — 院校招生主数据
 当前主要开发机：macOS Apple Silicon
@@ -10,7 +10,13 @@ GitHub：<https://github.com/Phantomechoes/PostgradTeacherPlatform>
 
 ## 正在进行
 
-暂无正在实施的业务任务。
+- **S1-04 Master Data Import & Seed Data**：**In Progress**
+  - Issue：[#35](https://github.com/Phantomechoes/PostgradTeacherPlatform/issues/35)
+  - 分支：`feature/35-master-data-import-seed`
+  - PR：[#36](https://github.com/Phantomechoes/PostgradTeacherPlatform/pull/36)
+  - 实现完成，等待 PR 验收 / merge
+  - 范围：UTF-8 JSON + sidecar manifest；默认 dry-run；synthetic + approved 才允许 `--apply`；School / College / Major / ExamSubject apply；Catalog inactive shell + complete aggregate；create / skip / reject；whole-file transaction；synthetic development seed；自动化 PostgreSQL 测试
+  - 明确不做：真实招生数据、scraping、Excel / CSV、默认 update、source metadata 表 / migration、automatic publish、Admin Web import、Public API 变更、Sprint 2
 
 ## 已完成
 
@@ -84,11 +90,10 @@ Sprint 0 工程底座：**Done**。
   - 只新增 `react-router-dom`；无后端改动、无 migration；未引入 auth / RBAC
   - 学习文档：[`docs/learning/s1-03c-admin-web.md`](./docs/learning/s1-03c-admin-web.md)
 
-Sprint 1 **尚未 Done**。S1-03A、S1-03B、S1-03C 已合入 `main`；S1-04 尚未实施。
+Sprint 1 **尚未 Done**。S1-03A、S1-03B、S1-03C 已合入 `main`；S1-04 实现完成，等待 PR 验收 / merge。
 
 ## Ready（未经批准不得自行进入）
 
-- S1-04 导入 / 种子数据
 - Sprint 2 上岸生基础师资库
 
 ## Research Blocked（禁止擅自正式开发）
@@ -104,5 +109,5 @@ Sprint 1 **尚未 Done**。S1-03A、S1-03B、S1-03C 已合入 `main`；S1-04 尚
 
 ## 下一里程碑
 
-1. S1-04 Planning（须负责人批准并单独建立 Issue）
-2. S1-04 完成后，Sprint 1 院校招生主数据闭环完成
+1. 完成 S1-04 PR 验收 / merge 后，再做独立 status sync
+2. Sprint 2 仍未经批准，不得自行开始

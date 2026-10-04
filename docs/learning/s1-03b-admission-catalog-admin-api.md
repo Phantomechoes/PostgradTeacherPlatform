@@ -276,9 +276,9 @@ Admin 是维护视图，要看见脏数据和停用行。Public 是发布视图�
 
 ## 16. S1-04 如何复用
 
-S1-04 导入 **还没有做**。以后如果要做，导入程序不应该 HTTP 调用自己。
+S1-04 导入已实现，说明见 [`s1-04-master-data-import-and-seed.md`](./s1-04-master-data-import-and-seed.md)。
 
-它自己持有 Session、自己 commit / rollback，然后调用同一个 `AdminCatalogService`。Service 只依赖两个 Repository，不依赖 FastAPI。这就是现在不让 Service commit 的原因：HTTP 和导入可以共用规则，但不能共用同一个事务主人。
+导入程序不 HTTP 调用自己。它自己持有 Session、自己 commit / rollback，然后调用同一个 `AdminCatalogService`。Service 只依赖两个 Repository，不依赖 FastAPI。这就是现在不让 Service commit 的原因：HTTP 和导入可以共用规则，但不能共用同一个事务主人。
 
 ## 17. 排错地图
 

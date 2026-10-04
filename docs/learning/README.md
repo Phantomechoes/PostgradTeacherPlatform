@@ -35,8 +35,11 @@
    再看招生目录为什么必须整份保存：先校验，再替换方向和科目选项，失败时整个请求一起回滚。本篇只讲后端聚合写入。
 
 6. [`s1-03c-admin-web.md`](./s1-03c-admin-web.md)
-   最后看内部管理后台：按钮怎样变成 03A / 03B 的 Admin HTTP，保存和公开为什么是两件事。
+   再看内部管理后台：按钮怎样变成 03A / 03B 的 Admin HTTP，保存和公开为什么是两件事。
+
+7. [`s1-04-master-data-import-and-seed.md`](./s1-04-master-data-import-and-seed.md)
+   最后看本地导入：默认 dry-run、业务键、create / skip / reject，以及 Catalog 为什么导入后仍未公开。
 
 ## 后续规则
 
-以后业务模块达到 Done 之前，必须补对应的 learning 文档。代码合进 `main` 不等于负责人已经能看懂。S1-03C 的 learning 见 [`s1-03c-admin-web.md`](./s1-03c-admin-web.md)。
+以后业务模块达到 Done 之前，必须补对应的 learning 文档。代码合进 `main` 不等于负责人已经能看懂。S1-04 的 learning 见 [`s1-04-master-data-import-and-seed.md`](./s1-04-master-data-import-and-seed.md)。
