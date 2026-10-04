@@ -292,7 +292,7 @@ uv run --locked ruff check .
 ## 当前明确没有什么
 
 - 没有 auth
-- 没有 Teacher / User / Institution / Candidate
+- 没有 User / Institution / Candidate；Teacher 当前只有数据 Schema，尚无 Teacher API / Admin UI / Public Teacher API
 - 没有把 `/health` 绑到数据库，也没有 `/ready`
 - 没有微信小程序、Docker
 - 没有真实招生数据导入、没有 CSV / Excel、没有网页抓取
