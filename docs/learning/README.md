@@ -38,8 +38,11 @@
    再看内部管理后台：按钮怎样变成 03A / 03B 的 Admin HTTP，保存和公开为什么是两件事。
 
 7. [`s1-04-master-data-import-and-seed.md`](./s1-04-master-data-import-and-seed.md)
-   最后看本地导入：默认 dry-run、业务键、create / skip / reject，以及 Catalog 为什么导入后仍未公开。
+   再看本地导入：默认 dry-run、业务键、create / skip / reject，以及 Catalog 为什么导入后仍未公开。
+
+8. [`s2-01-teacher-data-schema.md`](./s2-01-teacher-data-schema.md)
+   再看上岸生师资库第一版：为什么只有 TeacherProfile、AdmissionRecord、TeacherTeachSubject，以及它们怎样挂到 Sprint 1 主数据。本篇没有 API。
 
 ## 后续规则
 
-以后业务模块达到 Done 之前，必须补对应的 learning 文档。代码合进 `main` 不等于负责人已经能看懂。S1-04 的 learning 见 [`s1-04-master-data-import-and-seed.md`](./s1-04-master-data-import-and-seed.md)。
+以后业务模块达到 Done 之前，必须补对应的 learning 文档。代码合进 `main` 不等于负责人已经能看懂。

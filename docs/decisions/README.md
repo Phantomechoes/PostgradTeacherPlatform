@@ -6,3 +6,6 @@
 一条决策一份文件，命名：`ADR-XXXX-<name>.md`。
 
 这和 `docs/product/DECISIONS_PENDING.md` 不同：本目录记录**已经做出的决定**；尚未确认的事项不写在这里。
+
+- [`ADR-0001-admission-catalog-domain-model.md`](./ADR-0001-admission-catalog-domain-model.md)
+- [`ADR-0002-sprint2-teacher-foundation-model.md`](./ADR-0002-sprint2-teacher-foundation-model.md)

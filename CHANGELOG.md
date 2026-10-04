@@ -7,6 +7,17 @@
 
 ### Added
 
+- S2-01 上岸生师资数据 Schema（[Issue #40](https://github.com/Phantomechoes/PostgradTeacherPlatform/issues/40)），工作分支 `feature/40-teacher-data-schema`：
+  - TeacherProfile（内部档案；availability / verification 为 String + CHECK 状态字段）
+  - AdmissionRecord（成功录取事实；可选 AdmissionCatalog 链接；`is_active` 为档案有效状态）
+  - TeacherTeachSubject（显式可教授科目 N:M；`exam_subject_id` 反查索引）
+  - 可选结构化总分 `NUMERIC(8,2)`：`initial_total` / `retest_total` / `final_total`
+  - 无联系方式、无认证材料、无 User / auth、无 Public Teacher API
+  - Alembic revision `695107900fc3`
+  - 设计：[`docs/database/s2-01-teacher-data-schema.md`](./docs/database/s2-01-teacher-data-schema.md)
+  - ADR：[`docs/decisions/ADR-0002-sprint2-teacher-foundation-model.md`](./docs/decisions/ADR-0002-sprint2-teacher-foundation-model.md)
+  - 学习文档：[`docs/learning/s2-01-teacher-data-schema.md`](./docs/learning/s2-01-teacher-data-schema.md)
+
 - S1-04 主数据导入与合成 seed（[Issue #35](https://github.com/Phantomechoes/PostgradTeacherPlatform/issues/35)），工作分支 `feature/35-master-data-import-seed`：
   - UTF-8 JSON + sidecar manifest importer
   - 默认 dry-run；synthetic + approved 才允许显式 `--apply`

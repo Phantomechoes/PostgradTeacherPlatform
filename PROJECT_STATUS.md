@@ -2,7 +2,7 @@
 
 最后更新：2026-10-04
 当前版本：V0.1 Foundation（未发布业务版本）；工程规范当前为 V0.2
-当前 Sprint：Sprint 1 — 院校招生主数据（Done）
+当前 Sprint：Sprint 2 — 上岸生基础师资库
 当前主要开发机：macOS Apple Silicon
 已验证本地环境：macOS 原生、Windows 原生
 CI：Linux / GitHub Actions
@@ -10,7 +10,15 @@ GitHub：<https://github.com/Phantomechoes/PostgradTeacherPlatform>
 
 ## 正在进行
 
-暂无正在实施的业务任务。
+- **S2-01 Teacher Data Schema**：**In Progress**
+  - Issue：[#40](https://github.com/Phantomechoes/PostgradTeacherPlatform/issues/40)
+  - PR：[#41](https://github.com/Phantomechoes/PostgradTeacherPlatform/pull/41)
+  - 分支：`feature/40-teacher-data-schema`
+  - Planning：[#39](https://github.com/Phantomechoes/PostgradTeacherPlatform/issues/39) 已关闭；D1～D9 已冻结
+  - Schema implementation complete, waiting for PR review / merge
+  - 本 Checkpoint：Checkpoint 3 Final Docs / Learning / QA
+  - Alembic：`695107900fc3`
+  - 明确不做：API、Admin Web、Public Teacher API、auth、联系方式、敏感材料、Sprint 2 后续 Issue；本 Issue 未标 Done
 
 ## 已完成
 
@@ -95,7 +103,7 @@ Sprint 1 — 院校招生主数据：**Done**。S1-01、S1-02、S1-03A、S1-03B�
 
 ## Ready（未经批准不得自行进入）
 
-- Sprint 2 上岸生基础师资库
+- Sprint 2 后续 Issue（S2-02 及以后）须 S2-01 完成并经负责人批准后另开
 
 ## Research Blocked（禁止擅自正式开发）
 
@@ -110,5 +118,6 @@ Sprint 1 — 院校招生主数据：**Done**。S1-01、S1-02、S1-03A、S1-03B�
 
 ## 下一里程碑
 
-1. Sprint 2 Planning（须负责人批准并单独建立 Issue）
-2. Sprint 1 已完成；下一步只能先做 Sprint 2 Planning，不能直接实现业务代码
+1. 完成 S2-01 PR #41 负责人验收 / merge
+2. PR merge 且 main CI success 后，单独做 S2-01 status sync
+3. S2-02 尚未批准，不得自行创建或开始

@@ -10,7 +10,7 @@ S1-02 已合入 `main`。当前 backend 具备：
 
 - Python 3.12 + uv + FastAPI
 - SQLAlchemy 2.x + Alembic + PostgreSQL 18
-- 7 张主数据业务表；Alembic head：`44f5a70a766a`
+- 10 张业务表（7 张主数据 + 3 张师资）；Alembic head：`695107900fc3`
 - 7 个只读 `GET /api/v1` 接口
 - Admin 写接口：稳定主数据与 AdmissionCatalog
 - 本地 JSON importer（默认 dry-run；`--apply` 写合成 seed）
@@ -172,7 +172,7 @@ backend/.env
 - `config.py` 只负责读配置；`DATABASE_URL` 使用 `SecretStr`，避免无意打印。
 - `database.py` 在 import 时创建 Engine 对象，**不会**在 import 时执行 SQL。第一次真正用连接时才连库。
 - `SessionLocal` 是 Session 工厂；`get_db()` 按请求产出并关闭 Session。
-- `Base` 是 Model 的声明式基类。S1-01 已有 7 张主数据 Model。
+- `Base` 是 Model 的声明式基类。S1-01 有 7 张主数据 Model；S2-01 增加 3 张师资 Model。
 - **禁止** `Base.metadata.create_all()`。建表只走 Alembic。
 
 `GET /health` **不走**这条链路，也不 import 数据库模块。
@@ -180,7 +180,8 @@ backend/.env
 ## Alembic 迁移
 
 历史 empty baseline：`27d6bd3c881a`（只创建 `alembic_version`）。
-当前 head：`44f5a70a766a`（7 张主数据表）。
+S1-01：`44f5a70a766a`（7 张主数据表）。
+当前 head：`695107900fc3`（再加 3 张师资表）。
 
 在 `backend/` 下：
 
@@ -191,7 +192,7 @@ uv run --locked alembic history
 uv run --locked alembic upgrade head
 ```
 
-期望：`current` 与 `heads` 都是 `44f5a70a766a`。已经是 head 时，再执行 `upgrade head` 是安全的。
+期望：`current` 与 `heads` 都是 `695107900fc3`。已经是 head 时，再执行 `upgrade head` 是安全的。
 
 约定流程：
 
@@ -278,7 +279,7 @@ uv run --locked python -m app.importer \
 uv run --locked pytest
 ```
 
-当前基线 88 passed（含 health、metadata、schemas、service、repository、PostgreSQL integration、API）。数量会随测试增长。可能出现来自 Starlette / httpx 的 DeprecationWarning；当前不阻止验收。
+自动化测试覆盖 health、metadata、schemas、service、repository、PostgreSQL integration、API 与 teacher schema/constraint tests。测试数量会随功能增长，以实际 `uv run --locked pytest` 输出为准。可能出现来自 Starlette / httpx 的 DeprecationWarning（2 条）；当前不阻止验收。
 
 ## 运行 Ruff
 
@@ -291,7 +292,7 @@ uv run --locked ruff check .
 ## 当前明确没有什么
 
 - 没有 auth
-- 没有 Teacher / User / Institution / Candidate
+- 没有 User / Institution / Candidate；Teacher 当前只有数据 Schema，尚无 Teacher API / Admin UI / Public Teacher API
 - 没有把 `/health` 绑到数据库，也没有 `/ready`
 - 没有微信小程序、Docker
 - 没有真实招生数据导入、没有 CSV / Excel、没有网页抓取
