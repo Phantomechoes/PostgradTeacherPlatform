@@ -8,9 +8,9 @@ GitHub 是本项目的唯一事实源：代码、Issue、文档和状态都以�
 
 - 仓库地址：<https://github.com/Phantomechoes/PostgradTeacherPlatform>
 - 当前 Sprint：Sprint 1 — 院校招生主数据
-- 已完成：S1-01、S1-02、S1-03A、S1-03B
-- 正在进行：S1-03C Admin Web Master Data UI（Issue #31）
-- 下一 Ready：S1-04（未经批准不得自行开始）
+- 已完成：S1-01、S1-02、S1-03A、S1-03B、S1-03C
+- 正在进行：S1-04 Master Data Import & Seed Data（Issue #35）
+- 下一 Ready：Sprint 2（未经批准不得自行开始）
 - 当前主要开发机：macOS；已验证本地环境：macOS / Windows；CI：Linux
 
 ## 现在做到哪一步
@@ -35,12 +35,14 @@ Sprint 1：
 | S1-02 | 只读主数据 API | Done（PR #16 / `936d11f`） |
 | S1-03A | Stable Master Data Admin API | Done |
 | S1-03B | AdmissionCatalog Admin API | Done |
-| S1-03C | Admin Web Master Data UI | In Progress（Issue #31） |
-| S1-04 | 导入 / 种子数据 | Ready（未开始） |
+| S1-03C | Admin Web Master Data UI | Done（Issue #31 / PR #32） |
+| S1-04 | 导入 / 种子数据 | In Progress（Issue #35） |
 
 更细的进度见 [`PROJECT_STATUS.md`](./PROJECT_STATUS.md)。
 
 只读 API 合同见 [`docs/api/s1-02-master-data-read-api.md`](./docs/api/s1-02-master-data-read-api.md)。
+
+S1-04 导入合同见 [`docs/import/s1-04-import-format.md`](./docs/import/s1-04-import-format.md)。学习文档见 [`docs/learning/s1-04-master-data-import-and-seed.md`](./docs/learning/s1-04-master-data-import-and-seed.md)。本地 CLI 在 `backend/` 下运行 `uv run --locked python -m app.importer data/seeds/devseed.json`（默认 dry-run）。这是 localhost development tooling，不是生产摄取管道。
 
 ## 现在还没有什么
 
@@ -71,6 +73,8 @@ Sprint 1：
 | [`docs/product/开发前工程规范_V0.1.md`](./docs/product/开发前工程规范_V0.1.md) | 历史工程规范（V0.1，已由 V0.2 supersede） |
 | [`docs/product/DECISIONS_PENDING.md`](./docs/product/DECISIONS_PENDING.md) | 调研尚未确认、禁止写死的事项 |
 | [`docs/api/s1-02-master-data-read-api.md`](./docs/api/s1-02-master-data-read-api.md) | S1-02 只读主数据 API 合同 |
+| [`docs/import/s1-04-import-format.md`](./docs/import/s1-04-import-format.md) | S1-04 JSON 导入合同 |
+| [`docs/learning/s1-04-master-data-import-and-seed.md`](./docs/learning/s1-04-master-data-import-and-seed.md) | S1-04 导入学习文档 |
 | [`.gitignore`](./.gitignore) | 哪些文件不允许提交到 GitHub |
 | [`.editorconfig`](./.editorconfig) | 统一编辑器的缩进和换行 |
 | [`.github/ISSUE_TEMPLATE/development_task.md`](./.github/ISSUE_TEMPLATE/development_task.md) | 开发任务 Issue 模板 |
@@ -89,7 +93,9 @@ PostgradTeacherPlatform/
 ├─ docs/               产品、调研、架构、数据库、API、学习文档
 │  ├─ product/         工程规范与待决策事项
 │  ├─ database/        主数据 Schema 设计
-│  └─ api/             只读 API 与 Admin API 合同
+│  ├─ api/             只读 API 与 Admin API 合同
+│  ├─ import/          S1-04 导入合同
+│  └─ learning/        给负责人看的学习文档
 ├─ scripts/            可选平台辅助脚本（非核心开发流程）
 ├─ .github/            Issue / PR 模板与 CI
 ├─ AGENTS.md

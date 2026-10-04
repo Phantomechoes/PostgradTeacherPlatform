@@ -1,0 +1,10 @@
+{
+  "schema_version": 1,
+  "dataset_id": "devseed-v1",
+  "data_kind": "development_seed",
+  "source_type": "synthetic",
+  "source_description": "Minimal synthetic seed for local development. Not real admission data.",
+  "publisher": "PostgradTeacherPlatform",
+  "retrieved_at": "2026-09-22",
+  "verification_status": "approved"
+}

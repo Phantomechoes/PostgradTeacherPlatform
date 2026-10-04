@@ -49,6 +49,24 @@ class AdminCatalogRepository:
     def get_catalog(self, catalog_id: int) -> AdmissionCatalog | None:
         return self._session.get(AdmissionCatalog, catalog_id)
 
+    def get_catalog_by_offering(
+        self,
+        *,
+        school_id: int,
+        college_id: int,
+        major_id: int,
+        admission_year: int,
+        study_mode: str,
+    ) -> AdmissionCatalog | None:
+        stmt = select(AdmissionCatalog).where(
+            AdmissionCatalog.school_id == school_id,
+            AdmissionCatalog.college_id == college_id,
+            AdmissionCatalog.major_id == major_id,
+            AdmissionCatalog.admission_year == admission_year,
+            AdmissionCatalog.study_mode == study_mode,
+        )
+        return self._session.scalars(stmt).one_or_none()
+
     def get_catalog_row(self, catalog_id: int) -> AdminCatalogRow | None:
         row = self._session.execute(
             self._joined(select(AdmissionCatalog, School, College, Major)).where(

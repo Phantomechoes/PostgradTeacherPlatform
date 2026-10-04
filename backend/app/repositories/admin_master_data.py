@@ -35,6 +35,50 @@ class AdminSchoolRepository:
         stmt = select(ExamSubject).where(ExamSubject.id.in_(subject_ids))
         return list(self._session.scalars(stmt).all())
 
+    def get_school_by_code(self, school_code: str) -> School | None:
+        stmt = select(School).where(School.school_code == school_code)
+        return self._session.scalars(stmt).one_or_none()
+
+    def get_college_by_school_and_code(
+        self,
+        school_id: int,
+        college_code: str,
+    ) -> College | None:
+        stmt = select(College).where(
+            College.school_id == school_id,
+            College.college_code == college_code,
+        )
+        return self._session.scalars(stmt).one_or_none()
+
+    def get_major_by_school_and_code(
+        self,
+        school_id: int,
+        major_code: str,
+    ) -> Major | None:
+        stmt = select(Major).where(
+            Major.school_id == school_id,
+            Major.major_code == major_code,
+        )
+        return self._session.scalars(stmt).one_or_none()
+
+    def get_national_subject_by_code(self, subject_code: str) -> ExamSubject | None:
+        stmt = select(ExamSubject).where(
+            ExamSubject.school_id.is_(None),
+            ExamSubject.subject_code == subject_code,
+        )
+        return self._session.scalars(stmt).one_or_none()
+
+    def get_school_subject_by_school_and_code(
+        self,
+        school_id: int,
+        subject_code: str,
+    ) -> ExamSubject | None:
+        stmt = select(ExamSubject).where(
+            ExamSubject.school_id == school_id,
+            ExamSubject.subject_code == subject_code,
+        )
+        return self._session.scalars(stmt).one_or_none()
+
     def list_schools(
         self,
         *,

@@ -7,6 +7,16 @@
 
 ### Added
 
+- S1-04 主数据导入与合成 seed（[Issue #35](https://github.com/Phantomechoes/PostgradTeacherPlatform/issues/35)），工作分支 `feature/35-master-data-import-seed`：
+  - UTF-8 JSON + sidecar manifest importer
+  - 默认 dry-run；synthetic + approved 才允许显式 `--apply`
+  - 稳定主数据 create / skip / reject
+  - Catalog inactive shell + 完整 aggregate；不自动公开
+  - 整份文件一笔事务
+  - 合成 development seed
+  - 合同：[`docs/import/s1-04-import-format.md`](./docs/import/s1-04-import-format.md)
+  - 学习文档：[`docs/learning/s1-04-master-data-import-and-seed.md`](./docs/learning/s1-04-master-data-import-and-seed.md)
+
 - S1-03C Admin Web 主数据维护界面（[Issue #31](https://github.com/Phantomechoes/PostgradTeacherPlatform/issues/31)），工作分支 `feature/31-admin-web-master-data-ui`，Pull Request [#32](https://github.com/Phantomechoes/PostgradTeacherPlatform/pull/32)：
   - 院校 / 学院 / 专业 / 全国统考科目 / 自命题科目的 Admin CRUD 与停用恢复
   - 招生目录 inactive shell、整份 PUT 聚合编辑、显式公开 / 取消公开

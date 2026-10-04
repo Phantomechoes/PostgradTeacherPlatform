@@ -6,6 +6,10 @@
 
 学习文档入口：[`learning/README.md`](./learning/README.md)
 
+S1-04 导入合同：[`import/s1-04-import-format.md`](./import/s1-04-import-format.md)
+
+S1-04 学习文档：[`learning/s1-04-master-data-import-and-seed.md`](./learning/s1-04-master-data-import-and-seed.md)
+
 当前工程规范：[`product/开发前工程规范_V0.2.md`](./product/开发前工程规范_V0.2.md)
 
 历史冻结版本：[`product/开发前工程规范_V0.1.md`](./product/开发前工程规范_V0.1.md)（Superseded，保留用于历史追溯）

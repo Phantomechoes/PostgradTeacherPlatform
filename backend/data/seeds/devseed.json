@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "schools": [
+    {
+      "school_code": "DEVSEED_S1",
+      "name": "DEVSEED University"
+    }
+  ],
+  "colleges": [
+    {
+      "school_code": "DEVSEED_S1",
+      "college_code": "DEVSEED_CS",
+      "name": "DEVSEED College"
+    }
+  ],
+  "majors": [
+    {
+      "school_code": "DEVSEED_S1",
+      "major_code": "DEVSEED_081200",
+      "name": "DEVSEED Computer Science",
+      "degree_type": "academic"
+    }
+  ],
+  "exam_subjects": [
+    {
+      "scope": "national",
+      "subject_code": "DEVSEED_101",
+      "name": "DEVSEED Politics"
+    },
+    {
+      "scope": "school",
+      "school_code": "DEVSEED_S1",
+      "subject_code": "DEVSEED_801",
+      "name": "DEVSEED School Subject"
+    }
+  ],
+  "catalogs": [
+    {
+      "school_code": "DEVSEED_S1",
+      "college_code": "DEVSEED_CS",
+      "major_code": "DEVSEED_081200",
+      "admission_year": 2026,
+      "study_mode": "full_time",
+      "directions": [
+        {
+          "direction_code": "01",
+          "direction_name": "DEVSEED Direction"
+        }
+      ],
+      "exam_units": [
+        {
+          "exam_unit": 1,
+          "options": [
+            {
+              "option_order": 1,
+              "subject_scope": "national",
+              "subject_code": "DEVSEED_101"
+            }
+          ]
+        },
+        {
+          "exam_unit": 2,
+          "options": [
+            {
+              "option_order": 1,
+              "subject_scope": "national",
+              "subject_code": "DEVSEED_101"
+            },
+            {
+              "option_order": 3,
+              "subject_scope": "school",
+              "school_code": "DEVSEED_S1",
+              "subject_code": "DEVSEED_801"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

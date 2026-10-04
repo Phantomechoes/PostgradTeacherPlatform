@@ -12,9 +12,11 @@ S1-02 已合入 `main`。当前 backend 具备：
 - SQLAlchemy 2.x + Alembic + PostgreSQL 18
 - 7 张主数据业务表；Alembic head：`44f5a70a766a`
 - 7 个只读 `GET /api/v1` 接口
+- Admin 写接口：稳定主数据与 AdmissionCatalog
+- 本地 JSON importer（默认 dry-run；`--apply` 写合成 seed）
 - 分层：`Router → Service → Repository → Model → PostgreSQL`
 - `GET /health` 仍返回 `{"status":"ok"}`，**不查库**
-- 自动化测试（当前基线 88 passed，数量会随测试增长）
+- 自动化测试（数量会随测试增长）
 - CI：Ubuntu + PostgreSQL 18 + Ruff + Alembic + pytest
 
 约定的分层：
@@ -243,6 +245,33 @@ http://127.0.0.1:8000/docs
 
 用完后在运行 uvicorn 的窗口按 `Ctrl+C` 停止。不要留下占用 8000 的本项目进程。
 
+## 本地导入合成 seed（S1-04）
+
+这是 localhost development tooling，不是生产 ingestion pipeline。当前只接受合成 JSON。
+
+导入合同：[`docs/import/s1-04-import-format.md`](../docs/import/s1-04-import-format.md)
+
+学习文档：[`docs/learning/s1-04-master-data-import-and-seed.md`](../docs/learning/s1-04-master-data-import-and-seed.md)
+
+canonical seed：[`data/seeds/devseed.json`](./data/seeds/devseed.json)
+
+默认 dry-run，不写数据库：
+
+```text
+uv run --locked python -m app.importer \
+  data/seeds/devseed.json
+```
+
+真实写入必须显式 `--apply`，且 manifest 为 `source_type=synthetic`、`verification_status=approved`：
+
+```text
+uv run --locked python -m app.importer \
+  data/seeds/devseed.json \
+  --apply
+```
+
+新 Catalog 导入后保持 inactive，不会自动公开。
+
 ## 运行 pytest
 
 ```text
@@ -261,10 +290,11 @@ uv run --locked ruff check .
 
 ## 当前明确没有什么
 
-- 没有写接口、没有 Admin CRUD、没有 auth
+- 没有 auth
 - 没有 Teacher / User / Institution / Candidate
 - 没有把 `/health` 绑到数据库，也没有 `/ready`
 - 没有微信小程序、Docker
+- 没有真实招生数据导入、没有 CSV / Excel、没有网页抓取
 - 管理后台在 `admin-web/`，本目录不包含 React
 
 ## Secret 安全注意事项
