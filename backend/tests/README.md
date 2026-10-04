@@ -7,7 +7,7 @@
 - 一条正常路径
 - 一条关键异常路径
 
-当前包含：health、metadata、schemas、service、repository、PostgreSQL integration、API tests。当前基线 88 passed（数量会随测试增长）。
+当前包含：health、metadata、schemas、service、repository、PostgreSQL integration、API tests、S2-01 teacher schema/constraint tests。数量会随测试增长。
 
 在 `backend/` 下：
 

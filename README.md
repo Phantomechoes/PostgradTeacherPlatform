@@ -49,7 +49,7 @@ S1-04 导入合同见 [`docs/import/s1-04-import-format.md`](./docs/import/s1-04
 请先按这个预期来看仓库，避免误以为已经可以运行业务系统：
 
 - 已有最小 FastAPI 应用、`GET /health`，以及已合入 `main` 的 S1-02 只读主数据 API 与 S1-03A / S1-03B Admin API
-- 已有 PostgreSQL 连接、SQLAlchemy 与 Alembic；业务表已由 S1-01 建到 revision `44f5a70a766a`
+- 已有 PostgreSQL 连接、SQLAlchemy 与 Alembic；当前 Alembic head `695107900fc3`（S1-01 7 张主数据表 + S2-01 3 张师资表）
 - 后端 Admin API 已有，Admin Web 已接院校 / 科目 / 招生目录维护；尚无登录
 - 还没有微信小程序工程
 - 还没有支付、佣金、自动推荐、学生选师等业务功能

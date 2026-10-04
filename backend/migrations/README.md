@@ -11,6 +11,7 @@
 ```
 
 历史 empty baseline：`27d6bd3c881a`（只创建 `alembic_version`，没有业务表）。
-当前 head：`44f5a70a766a`（create master data schema，7 张业务表）。
+S1-01：`44f5a70a766a`（7 张主数据表）。
+当前 head：`695107900fc3`（create teacher data schema，再加 3 张师资表，业务表共 10 张）。
 
 可能丢数据的迁移必须再次请负责人确认。

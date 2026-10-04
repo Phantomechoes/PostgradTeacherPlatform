@@ -6,3 +6,5 @@
 正式表结构以 PostgreSQL 为准；schema 由 SQLAlchemy Models 与 Alembic migration 管理，本目录只放给人读的设计说明。
 
 S1-01 主数据 Schema 设计：[`s1-01-master-data-schema.md`](./s1-01-master-data-schema.md)。对应 revision：`44f5a70a766a`。
+
+S2-01 师资数据 Schema 设计：[`s2-01-teacher-data-schema.md`](./s2-01-teacher-data-schema.md)。对应 revision：`695107900fc3`。

@@ -12,11 +12,11 @@ S0-01 到 S0-05 合在一起，建立的是**工程底座**，不是五个互相
 - FastAPI 后端（程序入口在 [`backend/app/main.py`](../../backend/app/main.py)）
 - 本机 PostgreSQL 18，应用库名 `postgrad_teacher_platform`
 - SQLAlchemy：用 Python 描述表、通过 Session 查库
-- Alembic：记录并应用数据库结构变化；当前 head 是 `44f5a70a766a`
+- Alembic：记录并应用数据库结构变化；当前 head 是 `695107900fc3`
 - pytest 与 Ruff
 - GitHub Actions CI（[`.github/workflows/ci.yml`](../../.github/workflows/ci.yml)）
 - React + TypeScript + Vite + Ant Design 的内部后台壳（[`admin-web/`](../../admin-web/)）
-- 7 张院校招生主数据表
+- 7 张院校招生主数据表，以及 S2-01 3 张师资表（当前 head `695107900fc3`）
 - 7 个只读 `GET /api/v1` 接口（会查 PostgreSQL）
 
 ### 还没有
@@ -117,7 +117,7 @@ uv run --locked uvicorn app.main:app --host 127.0.0.1 --port 8000
 
 **改了 Model，数据库不会自动变。** 必须有对应 migration，并且执行过 `alembic upgrade head`。
 
-当前 head：`44f5a70a766a`（7 张主数据表）。更早的 `27d6bd3c881a` 只是空 baseline，当时还没有业务表。
+当前 head：`695107900fc3`（7 张主数据表 + 3 张师资表）。S1-01 的 `44f5a70a766a` 建主数据；更早的 `27d6bd3c881a` 只是空 baseline。
 
 ## 6. engine / SessionLocal / get_db
 
@@ -194,7 +194,7 @@ GET /api/v1/...
 |---|---|
 | FastAPI 起不来 | 是否在 `backend/` 下执行；[`backend/README.md`](../../backend/README.md)；`main.py` |
 | 提示连不上数据库 | PostgreSQL 是否在跑；本机 `backend/.env` 的应用角色（不是 `postgres` 超级用户）；`database.py` / `config.py`；配置说明见 [`backend/README.md`](../../backend/README.md) |
-| 表结构对不上 | `uv run --locked alembic current` 是否为 `44f5a70a766a`；[`backend/migrations/README.md`](../../backend/migrations/README.md) |
+| 表结构对不上 | `uv run --locked alembic current` 是否为 `695107900fc3`；[`backend/migrations/README.md`](../../backend/migrations/README.md) |
 | pytest 红 | 必须在 `backend/` 下：`uv run --locked pytest`；看失败的那个 `backend/tests/` 文件 |
 | Admin 页面空白 / 构建失败 | [`admin-web/README.md`](../../admin-web/README.md)；`pnpm lint` / `pnpm build` |
 | GitHub CI 红 | Actions 里看是 Backend 还是 Admin Web；不要只在本机再点一次「能打开」就当过了 |
