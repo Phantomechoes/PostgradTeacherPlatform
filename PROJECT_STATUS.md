@@ -2,7 +2,7 @@
 
 最后更新：2026-10-04
 当前版本：V0.1 Foundation（未发布业务版本）；工程规范当前为 V0.2
-当前 Sprint：Sprint 1 — 院校招生主数据
+当前 Sprint：Sprint 1 — 院校招生主数据（Done）
 当前主要开发机：macOS Apple Silicon
 已验证本地环境：macOS 原生、Windows 原生
 CI：Linux / GitHub Actions
@@ -10,13 +10,7 @@ GitHub：<https://github.com/Phantomechoes/PostgradTeacherPlatform>
 
 ## 正在进行
 
-- **S1-04 Master Data Import & Seed Data**：**In Progress**
-  - Issue：[#35](https://github.com/Phantomechoes/PostgradTeacherPlatform/issues/35)
-  - 分支：`feature/35-master-data-import-seed`
-  - PR：[#36](https://github.com/Phantomechoes/PostgradTeacherPlatform/pull/36)
-  - 实现完成，等待 PR 验收 / merge
-  - 范围：UTF-8 JSON + sidecar manifest；默认 dry-run；synthetic + approved 才允许 `--apply`；School / College / Major / ExamSubject apply；Catalog inactive shell + complete aggregate；create / skip / reject；whole-file transaction；synthetic development seed；自动化 PostgreSQL 测试
-  - 明确不做：真实招生数据、scraping、Excel / CSV、默认 update、source metadata 表 / migration、automatic publish、Admin Web import、Public API 变更、Sprint 2
+暂无正在实施的业务任务。
 
 ## 已完成
 
@@ -90,7 +84,14 @@ Sprint 0 工程底座：**Done**。
   - 只新增 `react-router-dom`；无后端改动、无 migration；未引入 auth / RBAC
   - 学习文档：[`docs/learning/s1-03c-admin-web.md`](./docs/learning/s1-03c-admin-web.md)
 
-Sprint 1 **尚未 Done**。S1-03A、S1-03B、S1-03C 已合入 `main`；S1-04 实现完成，等待 PR 验收 / merge。
+- **S1-04 Master Data Import & Seed Data**：**Done**
+  - Issue #35 已关闭；PR #36 已合并进 `main`（`1c3aee7e9b779226e7bc4afb6ac102107f1af8c3`）
+  - main push CI：run [37181033025](https://github.com/Phantomechoes/PostgradTeacherPlatform/actions/runs/37181033025)，Backend success，Admin Web success
+  - 交付：UTF-8 JSON + sidecar manifest；默认 dry-run；synthetic + approved 显式 `--apply`；business-key import；create / equivalent skip / different reject；Stable Master Data apply；Catalog inactive shell + complete aggregate；never auto publish；whole-file transaction；rollback flushed writes；canonical synthetic development seed；PostgreSQL importer tests；无 migration；无新依赖
+  - 合同：[`docs/import/s1-04-import-format.md`](./docs/import/s1-04-import-format.md)
+  - 学习文档：[`docs/learning/s1-04-master-data-import-and-seed.md`](./docs/learning/s1-04-master-data-import-and-seed.md)
+
+Sprint 1 — 院校招生主数据：**Done**。S1-01、S1-02、S1-03A、S1-03B、S1-03C、S1-04 均已合入 `main`。Sprint 1 已形成 Schema → Public Read API → Admin Write API → Admin Web → Import / Seed 的完整院校招生主数据闭环。
 
 ## Ready（未经批准不得自行进入）
 
@@ -109,5 +110,5 @@ Sprint 1 **尚未 Done**。S1-03A、S1-03B、S1-03C 已合入 `main`；S1-04 实
 
 ## 下一里程碑
 
-1. 完成 S1-04 PR 验收 / merge 后，再做独立 status sync
-2. Sprint 2 仍未经批准，不得自行开始
+1. Sprint 2 Planning（须负责人批准并单独建立 Issue）
+2. Sprint 1 已完成；下一步只能先做 Sprint 2 Planning，不能直接实现业务代码
