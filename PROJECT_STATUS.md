@@ -118,6 +118,6 @@ Sprint 1 — 院校招生主数据：**Done**。S1-01、S1-02、S1-03A、S1-03B�
 
 ## 下一里程碑
 
-1. 完成 S2-01 Checkpoint 1 设计验收
-2. 未经批准不得进入 Checkpoint 2（Models + Alembic Migration）
-3. 不得自行创建 S2-02 / S2-03 / S2-04
+1. 完成 S2-01 PR #41 负责人验收 / merge
+2. PR merge 且 main CI success 后，单独做 S2-01 status sync
+3. S2-02 尚未批准，不得自行创建或开始

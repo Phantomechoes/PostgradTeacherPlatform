@@ -21,13 +21,13 @@ S0-01 到 S0-05 合在一起，建立的是**工程底座**，不是五个互相
 
 ### 还没有
 
-- Admin 真正调用 backend
-- Admin CRUD（增删改页面）
-- 登录 / 鉴权（auth）
-- 师资档案（Teacher）
-- 种子数据 / 导入
+- 登录 / auth / RBAC
+- Teacher Admin API / Teacher Admin Web UI / Public Teacher API（目前已有 S2-01 Teacher 数据 Schema）
 - 微信小程序业务功能
-- S1-03 尚未开始
+- Institution / Demand / Match
+- 推荐
+- 支付
+- IM
 
 ## 2. 两条不同的“流程”
 

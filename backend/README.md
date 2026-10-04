@@ -279,7 +279,7 @@ uv run --locked python -m app.importer \
 uv run --locked pytest
 ```
 
-当前基线 88 passed（含 health、metadata、schemas、service、repository、PostgreSQL integration、API）。数量会随测试增长。可能出现来自 Starlette / httpx 的 DeprecationWarning；当前不阻止验收。
+自动化测试覆盖 health、metadata、schemas、service、repository、PostgreSQL integration、API 与 teacher schema/constraint tests。测试数量会随功能增长，以实际 `uv run --locked pytest` 输出为准。可能出现来自 Starlette / httpx 的 DeprecationWarning（2 条）；当前不阻止验收。
 
 ## 运行 Ruff
 
