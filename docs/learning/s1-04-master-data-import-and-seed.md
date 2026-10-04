@@ -254,7 +254,7 @@ CLI 先打印横幅，再打印 JSON 报告。
 - `reference_scope_mismatch`
 - `apply_source_not_allowed`
 
-dry-run 成功时 `database_written` 仍为 false。apply 被拒绝时也是 false，并且已经 rollback。
+dry-run 成功时 `database_written` 仍为 false。apply 被拒绝时也是 false，并且已经 rollback。成功但全部 skip 时 `database_written` 仍为 false，`committed` 为 true；只有实际 create 时才是 `DATABASE WRITTEN`。
 
 ## 18. 数据最后在哪
 

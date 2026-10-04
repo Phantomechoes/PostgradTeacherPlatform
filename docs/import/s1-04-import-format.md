@@ -230,7 +230,9 @@ uv run --locked python -m app.importer \
 
 真实招生数据：当前禁止 apply。
 
-成功横幅：`APPLY COMPLETE` / `DATABASE WRITTEN`。失败横幅：`APPLY REJECTED` / `ROLLED BACK`。
+成功且有 create：`APPLY COMPLETE` / `DATABASE WRITTEN`（`database_written=true`，`committed=true`）。
+成功但全量 skip（或合法空 document）：`APPLY COMPLETE` / `NO DATABASE CHANGES`（`database_written=false`，`committed=true`）。
+失败横幅：`APPLY REJECTED` / `ROLLED BACK`（`database_written=false`，`committed=false`）。
 
 这是 localhost 开发工具，不是生产 ingestion pipeline。
 

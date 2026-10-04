@@ -84,6 +84,15 @@ def _write(tmp_path: Path, payload: dict[str, object]) -> Path:
     return data
 
 
+def _cli_report(output: str) -> dict[str, object]:
+    return json.loads(output[output.index("{") :])
+
+
+def _bind_cli_session(monkeypatch: pytest.MonkeyPatch, session: Session) -> None:
+    monkeypatch.setattr("app.importer.cli.SessionLocal", lambda: session)
+    monkeypatch.setattr(session, "close", lambda: None)
+
+
 def _base_doc(**overrides: object) -> dict[str, object]:
     doc: dict[str, object] = {
         "schema_version": 1,
@@ -441,11 +450,50 @@ def test_cli_default_is_dry_run(tmp_path: Path) -> None:
     assert main([str(path)]) == 0
 
 
-def test_cli_apply_rejected(tmp_path: Path) -> None:
+def test_cli_apply_rejected(
+    tmp_path: Path, capsys: pytest.CaptureFixture[str]
+) -> None:
     doc = _base_doc()
     doc["catalogs"][0]["school_code"] = "MISSING_SCHOOL"
     path = _write(tmp_path, doc)
     assert main([str(path), "--apply"]) == 1
+    output = capsys.readouterr().out
+    assert "APPLY REJECTED" in output
+    assert "ROLLED BACK" in output
+    payload = _cli_report(output)
+    assert payload["database_written"] is False
+    assert payload["committed"] is False
+
+
+def test_cli_apply_create_then_all_skip(
+    db_session: Session,
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+    capsys: pytest.CaptureFixture[str],
+) -> None:
+    _bind_cli_session(monkeypatch, db_session)
+    path = _write(tmp_path, _master_doc())
+    assert main([str(path), "--apply"]) == 0
+    first_out = capsys.readouterr().out
+    assert "APPLY COMPLETE" in first_out
+    assert "DATABASE WRITTEN" in first_out
+    assert "NO DATABASE CHANGES" not in first_out
+    first = _cli_report(first_out)
+    assert first["planned"]["create_count"] > 0
+    assert first["database_written"] is True
+    assert first["committed"] is True
+    counts = _counts(db_session)
+    assert main([str(path), "--apply"]) == 0
+    second_out = capsys.readouterr().out
+    assert "APPLY COMPLETE" in second_out
+    assert "NO DATABASE CHANGES" in second_out
+    assert "DATABASE WRITTEN" not in second_out
+    second = _cli_report(second_out)
+    assert second["planned"]["create_count"] == 0
+    assert second["planned"]["skip_count"] > 0
+    assert second["database_written"] is False
+    assert second["committed"] is True
+    assert _counts(db_session) == counts
 
 
 def _master_doc() -> dict[str, object]:
@@ -458,6 +506,7 @@ def test_apply_creates_stable_master(db_session: Session, tmp_path: Path) -> Non
     report = run_apply(path, db_session)
     assert report.ok
     assert report.mode == "apply"
+    assert report.create_count > 0
     assert report.database_written is True
     assert report.create_count == 5
     school = db_session.scalar(select(School).where(School.school_code == "NEW_S"))
@@ -518,12 +567,39 @@ def test_second_apply_all_skip(db_session: Session, tmp_path: Path) -> None:
     path = _write(tmp_path, _master_doc())
     first = run_apply(path, db_session)
     assert first.ok
+    assert first.create_count > 0
+    assert first.database_written is True
     counts = _counts(db_session)
     second = run_apply(path, db_session)
     assert second.ok
     assert second.create_count == 0
     assert second.skip_count == 5
+    assert second.skip_count > 0
+    assert second.database_written is False
     assert _counts(db_session) == counts
+
+
+def test_apply_empty_document_reports_no_write(
+    db_session: Session, tmp_path: Path
+) -> None:
+    before = _counts(db_session)
+    path = _write(
+        tmp_path,
+        {
+            "schema_version": 1,
+            "schools": [],
+            "colleges": [],
+            "majors": [],
+            "exam_subjects": [],
+            "catalogs": [],
+        },
+    )
+    report = run_apply(path, db_session)
+    assert report.ok
+    assert report.create_count == 0
+    assert report.skip_count == 0
+    assert report.database_written is False
+    assert _counts(db_session) == before
 
 
 def test_apply_conflict_writes_nothing(seeded_session: Session, tmp_path: Path) -> None:
@@ -926,6 +1002,8 @@ def test_seed_document_apply_creates_catalog(db_session: Session) -> None:
     first = run_apply(seed, db_session)
     assert first.ok
     assert first.create_count == 6
+    assert first.create_count > 0
+    assert first.database_written is True
     catalog = _catalog_by_offering(
         db_session, "DEVSEED_S1", "DEVSEED_CS", "DEVSEED_081200", 2026, "full_time"
     )
@@ -938,6 +1016,8 @@ def test_seed_document_apply_creates_catalog(db_session: Session) -> None:
     assert second.ok
     assert second.create_count == 0
     assert second.skip_count == 6
+    assert second.skip_count > 0
+    assert second.database_written is False
     assert second.as_dict()["skipped"]["catalog"] == 1
     again = _catalog_by_offering(
         db_session, "DEVSEED_S1", "DEVSEED_CS", "DEVSEED_081200", 2026, "full_time"
@@ -980,6 +1060,8 @@ def test_second_apply_catalog_idempotent(db_session: Session, tmp_path: Path) ->
     path = _write(tmp_path, _base_doc())
     first = run_apply(path, db_session)
     assert first.ok
+    assert first.create_count > 0
+    assert first.database_written is True
     catalog = _catalog_by_offering(
         db_session, "NEW_S", "CS", "081200", 2026, "full_time"
     )
@@ -989,6 +1071,8 @@ def test_second_apply_catalog_idempotent(db_session: Session, tmp_path: Path) ->
     second = run_apply(path, db_session)
     assert second.ok
     assert second.create_count == 0
+    assert second.skip_count > 0
+    assert second.database_written is False
     assert second.as_dict()["skipped"]["catalog"] == 1
     again = _catalog_by_offering(
         db_session, "NEW_S", "CS", "081200", 2026, "full_time"

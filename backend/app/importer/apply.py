@@ -73,7 +73,7 @@ def run_apply(data_path: Path, session: Session) -> ImportReport:
             )
         )
         return report
-    report.database_written = True
+    report.database_written = report.create_count > 0
     return report
 
 

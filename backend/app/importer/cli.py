@@ -11,8 +11,15 @@ from app.importer.engine import run_dry_run
 from app.importer.report import ImportReport
 
 DRY_BANNER = "DRY RUN\nNO DATABASE WRITES"
-APPLY_OK_BANNER = "APPLY COMPLETE\nDATABASE WRITTEN"
+APPLY_WRITTEN_BANNER = "APPLY COMPLETE\nDATABASE WRITTEN"
+APPLY_NOOP_BANNER = "APPLY COMPLETE\nNO DATABASE CHANGES"
 APPLY_REJECTED_BANNER = "APPLY REJECTED\nROLLED BACK"
+
+
+def apply_success_banner(report: ImportReport) -> str:
+    if report.database_written:
+        return APPLY_WRITTEN_BANNER
+    return APPLY_NOOP_BANNER
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -45,9 +52,8 @@ def main(argv: list[str] | None = None) -> int:
             report = run_apply(args.data_json, session)
             if report.ok:
                 session.commit()
-                report.database_written = True
                 report.committed = True
-                print_report(report, APPLY_OK_BANNER)
+                print_report(report, apply_success_banner(report))
                 return 0
             session.rollback()
             report.database_written = False
