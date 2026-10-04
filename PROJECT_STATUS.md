@@ -12,6 +12,7 @@ GitHub：<https://github.com/Phantomechoes/PostgradTeacherPlatform>
 
 - **S2-01 Teacher Data Schema**：**In Progress**
   - Issue：[#40](https://github.com/Phantomechoes/PostgradTeacherPlatform/issues/40)
+  - PR：[#41](https://github.com/Phantomechoes/PostgradTeacherPlatform/pull/41)
   - 分支：`feature/40-teacher-data-schema`
   - Planning：[#39](https://github.com/Phantomechoes/PostgradTeacherPlatform/issues/39) 已关闭；D1～D9 已冻结
   - Schema implementation complete, waiting for PR review / merge
