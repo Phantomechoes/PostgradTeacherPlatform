@@ -1,6 +1,6 @@
 # 项目状态
 
-最后更新：2026-10-04
+最后更新：2026-10-05
 当前版本：V0.1 Foundation（未发布业务版本）；工程规范当前为 V0.2
 当前 Sprint：Sprint 2 — 上岸生基础师资库
 当前主要开发机：macOS Apple Silicon
@@ -10,15 +10,7 @@ GitHub：<https://github.com/Phantomechoes/PostgradTeacherPlatform>
 
 ## 正在进行
 
-- **S2-01 Teacher Data Schema**：**In Progress**
-  - Issue：[#40](https://github.com/Phantomechoes/PostgradTeacherPlatform/issues/40)
-  - PR：[#41](https://github.com/Phantomechoes/PostgradTeacherPlatform/pull/41)
-  - 分支：`feature/40-teacher-data-schema`
-  - Planning：[#39](https://github.com/Phantomechoes/PostgradTeacherPlatform/issues/39) 已关闭；D1～D9 已冻结
-  - Schema implementation complete, waiting for PR review / merge
-  - 本 Checkpoint：Checkpoint 3 Final Docs / Learning / QA
-  - Alembic：`695107900fc3`
-  - 明确不做：API、Admin Web、Public Teacher API、auth、联系方式、敏感材料、Sprint 2 后续 Issue；本 Issue 未标 Done
+暂无正在实施的业务任务。
 
 ## 已完成
 
@@ -101,9 +93,20 @@ Sprint 0 工程底座：**Done**。
 
 Sprint 1 — 院校招生主数据：**Done**。S1-01、S1-02、S1-03A、S1-03B、S1-03C、S1-04 均已合入 `main`。Sprint 1 已形成 Schema → Public Read API → Admin Write API → Admin Web → Import / Seed 的完整院校招生主数据闭环。
 
+- **S2-01 Teacher Data Schema**：**Done**
+  - Issue #40 已关闭；PR #41 已合并进 `main`（`5508e55dfaf341a7cc8ac5872f5a0c067b130258`）
+  - main push CI：run [37205327226](https://github.com/Phantomechoes/PostgradTeacherPlatform/actions/runs/37205327226)，Backend success，Admin Web success
+  - Alembic：`695107900fc3`
+  - 交付：3 张新业务表 `teacher_profiles` / `admission_records` / `teacher_teach_subjects`；TeacherProfile（`availability_status` / `verification_status`）；AdmissionRecord（成功录取事实、optional AdmissionCatalog 链接、School / College / Major same-school constraints、`NUMERIC(8,2)` 结构化总分、`is_active`）；TeacherTeachSubject（显式可教授科目，不自动生成）；无 ORM `relationship()`；无联系方式 / 认证材料；无 Teacher API / Admin Teacher UI / Public Teacher API
+  - 设计：[`docs/database/s2-01-teacher-data-schema.md`](./docs/database/s2-01-teacher-data-schema.md)
+  - ADR：[`docs/decisions/ADR-0002-sprint2-teacher-foundation-model.md`](./docs/decisions/ADR-0002-sprint2-teacher-foundation-model.md)
+  - 学习文档：[`docs/learning/s2-01-teacher-data-schema.md`](./docs/learning/s2-01-teacher-data-schema.md)
+
+Sprint 2 — 上岸生基础师资库：**In Progress**。S2-01 已完成。整个 Sprint 2 尚未 Done。
+
 ## Ready（未经批准不得自行进入）
 
-- Sprint 2 后续 Issue（S2-02 及以后）须 S2-01 完成并经负责人批准后另开
+- S2-02 Planning — 待负责人批准；不得自行进入 implementation
 
 ## Research Blocked（禁止擅自正式开发）
 
@@ -118,6 +121,6 @@ Sprint 1 — 院校招生主数据：**Done**。S1-01、S1-02、S1-03A、S1-03B�
 
 ## 下一里程碑
 
-1. 完成 S2-01 PR #41 负责人验收 / merge
-2. PR merge 且 main CI success 后，单独做 S2-01 status sync
-3. S2-02 尚未批准，不得自行创建或开始
+1. S2-02 Planning：冻结 Teacher Admin API 范围与 Service 规则
+2. 须负责人明确批准后，才能创建 S2-02 implementation Issue
+3. 不得自行进入 Admin Web / Public Teacher API / S2-03
