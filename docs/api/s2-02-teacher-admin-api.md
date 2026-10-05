@@ -119,6 +119,36 @@ Checkpoint 1 不实现 Service / Repository；上述规则在 Checkpoint 2 落�
 
 Write schema：`extra="forbid"`。未知字段 → FastAPI 默认 422 数组。
 
+### 5.1 Success responses
+
+Read：
+
+```text
+GET /teacher-profiles
+→ 200 Page[TeacherAdminSummary]
+
+GET /teacher-profiles/{teacher_profile_id}
+→ 200 TeacherAdminDetail
+```
+
+Write：
+
+| Method / endpoint | Success response |
+|---|---|
+| `POST /teacher-profiles` | `201 TeacherAdminDetail` |
+| `PATCH /teacher-profiles/{teacher_profile_id}` | `200 TeacherAdminSummary` |
+| `PATCH /teacher-profiles/{teacher_profile_id}/status` | `200 TeacherAdminSummary` |
+| `PATCH /teacher-profiles/{teacher_profile_id}/availability` | `200 TeacherAdminSummary` |
+| `PATCH /teacher-profiles/{teacher_profile_id}/verification` | `200 TeacherAdminSummary` |
+| `POST /teacher-profiles/{teacher_profile_id}/admission-records` | `201 AdmissionRecordAdminRead` |
+| `PATCH /admission-records/{admission_record_id}` | `200 AdmissionRecordAdminRead` |
+| `PATCH /admission-records/{admission_record_id}/status` | `200 AdmissionRecordAdminRead` |
+| `PUT /teacher-profiles/{teacher_profile_id}/teach-subjects` | `200 TeacherAdminDetail` |
+
+Teacher 档案头 PATCH / `/status` / `/availability` / `/verification` 返回 `TeacherAdminSummary`，不返回 `TeacherAdminDetail`。
+
+`PUT .../teach-subjects` 返回完整 `TeacherAdminDetail`（含替换后的 `teach_subjects` 与全部 `admission_records`）。不得返回裸 `ExamSubjectAdminRead[]`。不新建额外 response schema。
+
 ## 6. TeacherProfile create
 
 ```text
@@ -168,7 +198,7 @@ Schema 必须让 `model_dump(exclude_unset=True)` 区分 omitted 与 explicit nu
 
 普通 PATCH 不得接受 `is_active` / `availability_status` / `verification_status`。
 
-不存在 → 404。inactive 目标仍可 PATCH 档案头（200）。
+不存在 → 404。inactive 目标仍可 PATCH 档案头。成功 **200** `TeacherAdminSummary`。
 
 ## 8. 三个状态（正交）
 
@@ -189,7 +219,7 @@ Schema 必须让 `model_dump(exclude_unset=True)` 区分 omitted 与 explicit nu
 { "is_active": true }
 ```
 
-`is_active` 必填 boolean。已是目标状态 → 200 幂等。
+`is_active` 必填 boolean。已是目标状态 → 200 幂等。成功 **200** `TeacherAdminSummary`。
 
 ```text
 PATCH /api/v1/admin/teacher-profiles/{teacher_profile_id}/status
@@ -205,7 +235,7 @@ PATCH /api/v1/admin/teacher-profiles/{teacher_profile_id}/availability
 { "availability_status": "available" }
 ```
 
-仅 `unknown` / `available` / `unavailable`。字段必填。非法 literal → FastAPI 422 数组。`extra="forbid"`。
+仅 `unknown` / `available` / `unavailable`。字段必填。非法 literal → FastAPI 422 数组。`extra="forbid"`。成功 **200** `TeacherAdminSummary`。
 
 ### VerificationUpdate
 
@@ -217,7 +247,7 @@ PATCH /api/v1/admin/teacher-profiles/{teacher_profile_id}/verification
 { "verification_status": "verified" }
 ```
 
-仅 `unverified` / `verified` / `rejected`。`pending` 非法。字段必填。`extra="forbid"`。
+仅 `unverified` / `verified` / `rejected`。`pending` 非法。字段必填。`extra="forbid"`。成功 **200** `TeacherAdminSummary`。
 
 ## 9. Teacher list
 
@@ -242,7 +272,7 @@ GET /api/v1/admin/teacher-profiles
 
 非法 query → FastAPI 默认 422 数组。
 
-响应：`Page[TeacherAdminSummary]`。
+成功 **200** `Page[TeacherAdminSummary]`。
 
 排序（确定性，不新增 index）：
 
@@ -291,7 +321,7 @@ Summary 字段 +：
 - `admission_records`：全部录取，含 inactive（API-D6 = B）
 - `teach_subjects`：`ExamSubjectAdminRead[]`
 
-inactive Teacher：GET detail **200**，不得当 404。
+GET detail 成功 **200** `TeacherAdminDetail`。inactive Teacher 仍 **200**，不得当 404。
 
 Admission 排序：
 
@@ -399,7 +429,7 @@ Service 必须：
 
 Unique 撞到另一行（含 inactive 占用）→ 409 `duplicate_admission`。
 
-不存在的 Admission → 404 `not_found`。Teacher inactive **不**把已有 Admission 变成 404。
+不存在的 Admission → 404 `not_found`。Teacher inactive **不**把已有 Admission 变成 404。成功 **200** `AdmissionRecordAdminRead`。
 
 ## 14. AdmissionRecordAdminRead
 
@@ -432,7 +462,7 @@ PATCH /api/v1/admin/admission-records/{admission_record_id}/status
 { "is_active": true }
 ```
 
-复用 `StatusUpdate`。不存在 → 404。
+复用 `StatusUpdate`。不存在 → 404。成功 **200** `AdmissionRecordAdminRead`。
 
 - deactivate（`false`）：允许；Unique 仍占该五元组
 - reactivate（`true`）：重新校验引用存在、College / Major 同校、Catalog 非空时五元组一致
@@ -465,7 +495,7 @@ PUT /api/v1/admin/teacher-profiles/{teacher_profile_id}/teach-subjects
 | 读取顺序 | `exam_subject_id ASC` |
 | Teacher 不存在 | 404 `not_found` |
 
-`extra="forbid"`。成功 200，body 为该 Teacher 的 `teach_subjects`（`ExamSubjectAdminRead[]`）或 `TeacherAdminDetail`；Checkpoint 2 实现时与 GET detail 的科目部分一致。推荐返回 `TeacherAdminDetail` 以便客户端一次拿到当前集合。
+`extra="forbid"`。成功 **200** `TeacherAdminDetail`。body 含替换后的 `teach_subjects` 与全部 `admission_records`，与 GET detail 同一 schema。不得返回裸 `ExamSubjectAdminRead[]`。
 
 全国统考（`school_id IS NULL`）与任意学校自命题都允许作为教学标签。不根据 Teacher Admission school 限制 TeachSubject scope。
 
