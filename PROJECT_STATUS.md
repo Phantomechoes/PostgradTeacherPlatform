@@ -10,11 +10,13 @@ GitHub：<https://github.com/Phantomechoes/PostgradTeacherPlatform>
 
 ## 正在进行
 
-- **S2-03 Teacher Admin Web**：**In Progress（Checkpoint 1）**
+- **S2-03 Teacher Admin Web**：**In Progress（Checkpoint 2）**
   - Planning Issue #49：Frozen / CLOSED
   - Implementation Issue #50
-  - 当前 checkpoint：API types/client + Router/sidebar + Teacher list/create + minimal read-only detail landing
+  - 当前 checkpoint：Teacher detail + profile edit + is_active + availability + verification
+  - 三状态正交；Summary merge 保留 Admission / TeachSubject
   - backend 未修改；无 migration；无新依赖；不含 Public Teacher API；不含 auth
+  - Checkpoint 3 尚未批准
 
 ## 已完成
 
@@ -116,13 +118,13 @@ Sprint 1 — 院校招生主数据：**Done**。S1-01、S1-02、S1-03A、S1-03B�
   - 合同：[`docs/api/s2-02-teacher-admin-api.md`](./docs/api/s2-02-teacher-admin-api.md)
   - 学习文档：[`docs/learning/s2-02-teacher-admin-api.md`](./docs/learning/s2-02-teacher-admin-api.md)
 
-Sprint 2 — 上岸生基础师资库：**In Progress**。S2-01 已完成。S2-02 已完成。S2-03 Teacher Admin Web 处于 Checkpoint 1。整个 Sprint 2 尚未 Done。
+Sprint 2 — 上岸生基础师资库：**In Progress**。S2-01 已完成。S2-02 已完成。S2-03 Teacher Admin Web 处于 Checkpoint 2。整个 Sprint 2 尚未 Done。
 
 ## Ready（未经批准不得自行进入）
 
-- S2-03 Checkpoint 1 review gate：完成后等待 Owner / Reviewer 验收。
-- 验收通过后才允许进入 Checkpoint 2。Checkpoint 2 尚未批准。
-- 后续依次为 Admission、TeachSubject、browser regression / PR。
+- S2-03 Checkpoint 2 review gate：完成后等待 Owner / Reviewer 验收。
+- 验收通过后才允许进入 Checkpoint 3 Admission。Checkpoint 3 尚未批准。
+- 后续依次为 TeachSubject、browser regression / learning / PR。
 - 未经批准不得自行进入 Public Teacher API / S2-04。
 - Research Blocked 项目仍按 [`docs/product/DECISIONS_PENDING.md`](./docs/product/DECISIONS_PENDING.md) 执行。
 
@@ -139,7 +141,7 @@ Sprint 2 — 上岸生基础师资库：**In Progress**。S2-01 已完成。S2-0
 
 ## 下一里程碑
 
-1. S2-03 Checkpoint 1 完成后等待 Owner / Reviewer 验收
-2. 验收通过后才允许进入 Checkpoint 2
-3. 后续依次为 Admission、TeachSubject、browser regression / PR
-4. 未经批准不得自行进入 Public Teacher API / S2-04
+1. Checkpoint 2 完成后等待 Owner / Reviewer
+2. 验收通过才允许进入 Checkpoint 3 Admission
+3. 后续 Checkpoint 4 TeachSubject
+4. Checkpoint 5 browser regression / learning / PR

@@ -1,4 +1,4 @@
-import { getJson, postJson, type RequestOptions } from './client'
+import { getJson, patchJson, postJson, type RequestOptions } from './client'
 import type {
   AvailabilityStatus,
   Page,
@@ -82,4 +82,56 @@ export function createTeacher(
   body: TeacherCreateBody,
 ): Promise<TeacherAdminDetail> {
   return postJson(`${ADMIN}/teacher-profiles`, body)
+}
+
+export type TeacherProfilePatch = {
+  display_name?: string
+  bio?: string | null
+}
+
+export type TeacherStatusPatch = {
+  is_active: boolean
+}
+
+export type TeacherAvailabilityPatch = {
+  availability_status: AvailabilityStatus
+}
+
+export type TeacherVerificationPatch = {
+  verification_status: VerificationStatus
+}
+
+export function updateTeacherProfile(
+  teacherId: number,
+  body: TeacherProfilePatch,
+): Promise<TeacherAdminSummary> {
+  return patchJson(`${ADMIN}/teacher-profiles/${teacherId}`, body)
+}
+
+export function setTeacherStatus(
+  teacherId: number,
+  isActive: boolean,
+): Promise<TeacherAdminSummary> {
+  const body: TeacherStatusPatch = { is_active: isActive }
+  return patchJson(`${ADMIN}/teacher-profiles/${teacherId}/status`, body)
+}
+
+export function setTeacherAvailability(
+  teacherId: number,
+  availabilityStatus: AvailabilityStatus,
+): Promise<TeacherAdminSummary> {
+  const body: TeacherAvailabilityPatch = {
+    availability_status: availabilityStatus,
+  }
+  return patchJson(`${ADMIN}/teacher-profiles/${teacherId}/availability`, body)
+}
+
+export function setTeacherVerification(
+  teacherId: number,
+  verificationStatus: VerificationStatus,
+): Promise<TeacherAdminSummary> {
+  const body: TeacherVerificationPatch = {
+    verification_status: verificationStatus,
+  }
+  return patchJson(`${ADMIN}/teacher-profiles/${teacherId}/verification`, body)
 }
