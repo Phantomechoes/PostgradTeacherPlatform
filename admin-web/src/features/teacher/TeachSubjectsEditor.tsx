@@ -208,6 +208,7 @@ export function TeachSubjectsEditor({
                 <Checkbox
                   key={subject.id}
                   checked={requestedIds.includes(subject.id)}
+                  disabled={saving}
                   onChange={(event) =>
                     setRetained(subject.id, event.target.checked)
                   }
