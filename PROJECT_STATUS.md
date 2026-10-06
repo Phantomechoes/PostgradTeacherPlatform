@@ -1,6 +1,6 @@
 # 项目状态
 
-最后更新：2026-10-05
+最后更新：2026-10-06
 当前版本：V0.1 Foundation（未发布业务版本）；工程规范当前为 V0.2
 当前 Sprint：Sprint 2 — 上岸生基础师资库
 当前主要开发机：macOS Apple Silicon
@@ -10,7 +10,13 @@ GitHub：<https://github.com/Phantomechoes/PostgradTeacherPlatform>
 
 ## 正在进行
 
-暂无正在实施的业务任务。
+- **S2-02 Teacher Admin API**：**In Progress（Checkpoint 3C）**
+  - Implementation Issue [#45](https://github.com/Phantomechoes/PostgradTeacherPlatform/issues/45)
+  - Planning Issue [#44](https://github.com/Phantomechoes/PostgradTeacherPlatform/issues/44)：**Frozen / CLOSED**
+  - API-D1～API-D18 已冻结（含负责人修正后的 API-D7）
+  - 当前 checkpoint：Checkpoint 3C — final full QA + PR
+  - PR 获批后才允许 merge；merge 后必须等待 main CI PASS；main CI PASS 后再走独立 status-sync；只有 status-sync 完成后才正式 Done
+  - 无 migration；无 Admin Teacher Web；无 Public Teacher API；无 auth
 
 ## 已完成
 
@@ -102,11 +108,16 @@ Sprint 1 — 院校招生主数据：**Done**。S1-01、S1-02、S1-03A、S1-03B�
   - ADR：[`docs/decisions/ADR-0002-sprint2-teacher-foundation-model.md`](./docs/decisions/ADR-0002-sprint2-teacher-foundation-model.md)
   - 学习文档：[`docs/learning/s2-01-teacher-data-schema.md`](./docs/learning/s2-01-teacher-data-schema.md)
 
-Sprint 2 — 上岸生基础师资库：**In Progress**。S2-01 已完成。整个 Sprint 2 尚未 Done。
+Sprint 2 — 上岸生基础师资库：**In Progress**。S2-01 已完成。S2-02 正在实施 Checkpoint 3C。整个 Sprint 2 尚未 Done。
 
 ## Ready（未经批准不得自行进入）
 
-- S2-02 Planning — 待负责人批准；不得自行进入 implementation
+- Checkpoint 3C 完成后等待 Owner / Reviewer PR review
+- PR 获批后才允许 merge
+- merge 后必须等待 main CI PASS
+- main CI PASS 后再走独立 status-sync
+- 只有 status-sync 完成后 S2-02 才正式 Done
+- 不得自行进入 Admin Teacher Web / Public Teacher API / S2-03
 
 ## Research Blocked（禁止擅自正式开发）
 
@@ -121,6 +132,9 @@ Sprint 2 — 上岸生基础师资库：**In Progress**。S2-01 已完成。整�
 
 ## 下一里程碑
 
-1. S2-02 Planning：冻结 Teacher Admin API 范围与 Service 规则
-2. 须负责人明确批准后，才能创建 S2-02 implementation Issue
-3. 不得自行进入 Admin Web / Public Teacher API / S2-03
+1. Checkpoint 3C 完成后等待 Owner / Reviewer PR review
+2. PR 获批后才允许 merge
+3. merge 后必须等待 main CI PASS
+4. main CI PASS 后再走独立 status-sync
+5. 只有 status-sync 完成后才正式 Done
+6. 不得自行进入 Admin Teacher Web / Public Teacher API / S2-03
