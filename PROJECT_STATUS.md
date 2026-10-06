@@ -10,13 +10,7 @@ GitHub：<https://github.com/Phantomechoes/PostgradTeacherPlatform>
 
 ## 正在进行
 
-- **S2-02 Teacher Admin API**：**In Progress（Checkpoint 3C）**
-  - Implementation Issue [#45](https://github.com/Phantomechoes/PostgradTeacherPlatform/issues/45)
-  - Planning Issue [#44](https://github.com/Phantomechoes/PostgradTeacherPlatform/issues/44)：**Frozen / CLOSED**
-  - API-D1～API-D18 已冻结（含负责人修正后的 API-D7）
-  - 当前 checkpoint：Checkpoint 3C — final full QA + PR
-  - PR 获批后才允许 merge；merge 后必须等待 main CI PASS；main CI PASS 后再走独立 status-sync；只有 status-sync 完成后才正式 Done
-  - 无 migration；无 Admin Teacher Web；无 Public Teacher API；无 auth
+暂无正在实施的业务任务。
 
 ## 已完成
 
@@ -108,16 +102,24 @@ Sprint 1 — 院校招生主数据：**Done**。S1-01、S1-02、S1-03A、S1-03B�
   - ADR：[`docs/decisions/ADR-0002-sprint2-teacher-foundation-model.md`](./docs/decisions/ADR-0002-sprint2-teacher-foundation-model.md)
   - 学习文档：[`docs/learning/s2-01-teacher-data-schema.md`](./docs/learning/s2-01-teacher-data-schema.md)
 
-Sprint 2 — 上岸生基础师资库：**In Progress**。S2-01 已完成。S2-02 正在实施 Checkpoint 3C。整个 Sprint 2 尚未 Done。
+- **S2-02 Teacher Admin API**：**Done**
+  - Implementation Issue #45 已关闭；PR #46 已合并进 `main`（`94a015596d28fc2431eca13ba5820988be0dd183`）
+  - main push CI：run [37429780647](https://github.com/Phantomechoes/PostgradTeacherPlatform/actions/runs/37429780647)，Backend success，Admin Web success
+  - Alembic：`695107900fc3`（无 migration）
+  - 交付：Teacher Admin schemas；AdminTeacherRepository；AdminTeacherService；Admin Teacher Router；11 个冻结 Admin HTTP operations；Teacher / AdmissionRecord / TeachSubject 管理规则；Schema / Repository / Service / HTTP integration tests
+  - 关键合同：Teacher `is_active` / availability / verification 三状态正交；Admission list filters 使用同一条 active AdmissionRecord 的 correlated EXISTS；Teacher detail 包含 inactive AdmissionRecord；Admission PATCH 校验完整 effective target；Catalog 使用五元组 identity 校验，不以 active 状态决定匹配；inactive Teacher 可保留或删除已有 TeachSubject，但不可新增；existing subject 后来 inactive 可保留或删除，新的 inactive subject 不可新增；无 DELETE；无 standalone Admission GET；无 Public Teacher API；无 auth / JWT / RBAC
+  - 最终 QA：Teacher vertical 119 passed；full backend 378 passed；Admin API regression 54 passed；Public API regression 11 passed；Ruff passed
+  - 合同：[`docs/api/s2-02-teacher-admin-api.md`](./docs/api/s2-02-teacher-admin-api.md)
+  - 学习文档：[`docs/learning/s2-02-teacher-admin-api.md`](./docs/learning/s2-02-teacher-admin-api.md)
+
+Sprint 2 — 上岸生基础师资库：**In Progress**。S2-01 已完成。S2-02 已完成。整个 Sprint 2 尚未 Done。
 
 ## Ready（未经批准不得自行进入）
 
-- Checkpoint 3C 完成后等待 Owner / Reviewer PR review
-- PR 获批后才允许 merge
-- merge 后必须等待 main CI PASS
-- main CI PASS 后再走独立 status-sync
-- 只有 status-sync 完成后 S2-02 才正式 Done
-- 不得自行进入 Admin Teacher Web / Public Teacher API / S2-03
+- S2-02 已完成并进入 main。
+- 下一业务任务须由 Owner 单独批准后，先确认对应 Issue / Planning / Research 状态。
+- 不得自行进入 Admin Teacher Web / Public Teacher API / S2-03。
+- Research Blocked 项目仍按 [`docs/product/DECISIONS_PENDING.md`](./docs/product/DECISIONS_PENDING.md) 执行。
 
 ## Research Blocked（禁止擅自正式开发）
 
@@ -132,9 +134,6 @@ Sprint 2 — 上岸生基础师资库：**In Progress**。S2-01 已完成。S2-0
 
 ## 下一里程碑
 
-1. Checkpoint 3C 完成后等待 Owner / Reviewer PR review
-2. PR 获批后才允许 merge
-3. merge 后必须等待 main CI PASS
-4. main CI PASS 后再走独立 status-sync
-5. 只有 status-sync 完成后才正式 Done
-6. 不得自行进入 Admin Teacher Web / Public Teacher API / S2-03
+1. S2-02 status-sync 合并并通过 main CI
+2. Owner 决定 Sprint 2 下一项工作
+3. 未经批准不得自行进入 Admin Teacher Web / Public Teacher API / S2-03
