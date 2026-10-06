@@ -43,6 +43,9 @@
 8. [`s2-01-teacher-data-schema.md`](./s2-01-teacher-data-schema.md)
    再看上岸生师资库第一版：为什么只有 TeacherProfile、AdmissionRecord、TeacherTeachSubject，以及它们怎样挂到 Sprint 1 主数据。本篇没有 API。
 
+9. [`s2-02-teacher-admin-api.md`](./s2-02-teacher-admin-api.md)
+   再看内部怎样维护这份档案：四层分别干什么、写请求何时提交、三个状态为什么不联动，以及筛选、改录取、停用后改科目时最容易看反的规则。没有管理页面，也没有公开师资接口。
+
 ## 后续规则
 
 以后业务模块达到 Done 之前，必须补对应的 learning 文档。代码合进 `main` 不等于负责人已经能看懂。
