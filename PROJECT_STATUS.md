@@ -10,7 +10,11 @@ GitHub：<https://github.com/Phantomechoes/PostgradTeacherPlatform>
 
 ## 正在进行
 
-暂无正在实施的业务任务。
+- **S2-03 Teacher Admin Web**：**In Progress（Checkpoint 1）**
+  - Planning Issue #49：Frozen / CLOSED
+  - Implementation Issue #50
+  - 当前 checkpoint：API types/client + Router/sidebar + Teacher list/create + minimal read-only detail landing
+  - backend 未修改；无 migration；无新依赖；不含 Public Teacher API；不含 auth
 
 ## 已完成
 
@@ -112,13 +116,14 @@ Sprint 1 — 院校招生主数据：**Done**。S1-01、S1-02、S1-03A、S1-03B�
   - 合同：[`docs/api/s2-02-teacher-admin-api.md`](./docs/api/s2-02-teacher-admin-api.md)
   - 学习文档：[`docs/learning/s2-02-teacher-admin-api.md`](./docs/learning/s2-02-teacher-admin-api.md)
 
-Sprint 2 — 上岸生基础师资库：**In Progress**。S2-01 已完成。S2-02 已完成。整个 Sprint 2 尚未 Done。
+Sprint 2 — 上岸生基础师资库：**In Progress**。S2-01 已完成。S2-02 已完成。S2-03 Teacher Admin Web 处于 Checkpoint 1。整个 Sprint 2 尚未 Done。
 
 ## Ready（未经批准不得自行进入）
 
-- S2-02 已完成并进入 main。
-- 下一业务任务须由 Owner 单独批准后，先确认对应 Issue / Planning / Research 状态。
-- 不得自行进入 Admin Teacher Web / Public Teacher API / S2-03。
+- S2-03 Checkpoint 1 review gate：完成后等待 Owner / Reviewer 验收。
+- 验收通过后才允许进入 Checkpoint 2。Checkpoint 2 尚未批准。
+- 后续依次为 Admission、TeachSubject、browser regression / PR。
+- 未经批准不得自行进入 Public Teacher API / S2-04。
 - Research Blocked 项目仍按 [`docs/product/DECISIONS_PENDING.md`](./docs/product/DECISIONS_PENDING.md) 执行。
 
 ## Research Blocked（禁止擅自正式开发）
@@ -134,6 +139,7 @@ Sprint 2 — 上岸生基础师资库：**In Progress**。S2-01 已完成。S2-0
 
 ## 下一里程碑
 
-1. S2-02 status-sync 合并并通过 main CI
-2. Owner 决定 Sprint 2 下一项工作
-3. 未经批准不得自行进入 Admin Teacher Web / Public Teacher API / S2-03
+1. S2-03 Checkpoint 1 完成后等待 Owner / Reviewer 验收
+2. 验收通过后才允许进入 Checkpoint 2
+3. 后续依次为 Admission、TeachSubject、browser regression / PR
+4. 未经批准不得自行进入 Public Teacher API / S2-04

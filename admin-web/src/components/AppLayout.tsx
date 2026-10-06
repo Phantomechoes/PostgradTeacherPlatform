@@ -13,6 +13,9 @@ function selectedKey(pathname: string): string {
   if (pathname.startsWith('/schools')) {
     return '/schools'
   }
+  if (pathname.startsWith('/teachers')) {
+    return '/teachers'
+  }
   return ''
 }
 
@@ -48,6 +51,7 @@ export function AppLayout() {
               label: '招生目录',
               children: [{ key: '/catalogs', label: '招生目录' }],
             },
+            { key: '/teachers', label: '师资' },
           ]}
         />
       </Sider>
