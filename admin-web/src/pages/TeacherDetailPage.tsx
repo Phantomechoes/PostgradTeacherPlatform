@@ -17,6 +17,7 @@ import {
   setTeacherAvailability,
   setTeacherStatus,
   setTeacherVerification,
+  replaceTeacherTeachSubjects,
   updateAdmissionRecord,
   updateTeacherProfile,
   type AdmissionRecordCreateBody,
@@ -32,6 +33,8 @@ import type {
 } from '../api/types'
 import { AdmissionRecordsPanel } from '../features/teacher/AdmissionRecordsPanel'
 import { upsertAdmissionRecord } from '../features/teacher/admissionRecordHelpers'
+import { TeachSubjectsPanel } from '../features/teacher/TeachSubjectsPanel'
+import { sortTeachSubjects } from '../features/teacher/teachSubjectHelpers'
 import { mergeTeacherSummary } from '../features/teacher/mergeTeacherSummary'
 import { TeacherProfileEditModal } from '../features/teacher/TeacherProfileEditModal'
 import {
@@ -56,8 +59,10 @@ export function TeacherDetailPage() {
     useState<TeacherHeaderMutation | null>(null)
   const [editing, setEditing] = useState(false)
   const [admissionSaving, setAdmissionSaving] = useState<string | null>(null)
+  const [teachSubjectSaving, setTeachSubjectSaving] = useState(false)
   const savingRef = useRef(false)
   const admissionLock = useRef(false)
+  const teachSubjectLock = useRef(false)
   if (seenKey !== requestKey) {
     setSeenKey(requestKey)
     setLoading(true)
@@ -67,6 +72,7 @@ export function TeacherDetailPage() {
     setEditing(false)
     setHeaderSaving(null)
     setAdmissionSaving(null)
+    setTeachSubjectSaving(false)
   }
 
   useEffect(() => {
@@ -214,6 +220,30 @@ export function TeacherDetailPage() {
     )
   }
 
+  async function saveTeachSubjects(examSubjectIds: number[]) {
+    if (teachSubjectLock.current) {
+      return false
+    }
+    teachSubjectLock.current = true
+    setTeachSubjectSaving(true)
+    try {
+      const detail = await replaceTeacherTeachSubjects(id, examSubjectIds)
+      setTeacher((current) =>
+        current && current.id === detail.id
+          ? {
+              ...current,
+              teach_subjects: sortTeachSubjects(detail.teach_subjects),
+            }
+          : current,
+      )
+      message.success('可教授科目已保存')
+      return true
+    } finally {
+      teachSubjectLock.current = false
+      setTeachSubjectSaving(false)
+    }
+  }
+
   async function changeVerification(value: VerificationStatus) {
     try {
       await runHeader(
@@ -304,6 +334,12 @@ export function TeacherDetailPage() {
         onCreate={createAdmission}
         onUpdate={updateAdmission}
         onStatus={changeAdmissionStatus}
+      />
+      <TeachSubjectsPanel
+        teacherActive={teacher.is_active}
+        subjects={teacher.teach_subjects}
+        saving={teachSubjectSaving}
+        onSave={saveTeachSubjects}
       />
       <TeacherProfileEditModal
         open={editing}

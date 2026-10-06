@@ -1,4 +1,10 @@
-import { getJson, patchJson, postJson, type RequestOptions } from './client'
+import {
+  getJson,
+  patchJson,
+  postJson,
+  putJson,
+  type RequestOptions,
+} from './client'
 import type {
   AdmissionRecordAdmin,
   AvailabilityStatus,
@@ -187,4 +193,24 @@ export function setAdmissionRecordStatus(
     `${ADMIN}/admission-records/${admissionRecordId}/status`,
     body,
   )
+}
+
+export type TeachSubjectsPutBody = {
+  exam_subject_ids: number[]
+}
+
+function uniqueExamSubjectIds(ids: readonly number[]): number[] {
+  return [...new Set(ids.filter((id) => Number.isInteger(id) && id > 0))].sort(
+    (left, right) => left - right,
+  )
+}
+
+export function replaceTeacherTeachSubjects(
+  teacherId: number,
+  examSubjectIds: number[],
+): Promise<TeacherAdminDetail> {
+  const body: TeachSubjectsPutBody = {
+    exam_subject_ids: uniqueExamSubjectIds(examSubjectIds),
+  }
+  return putJson(`${ADMIN}/teacher-profiles/${teacherId}/teach-subjects`, body)
 }

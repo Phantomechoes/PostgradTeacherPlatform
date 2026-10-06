@@ -10,15 +10,18 @@ GitHub：<https://github.com/Phantomechoes/PostgradTeacherPlatform>
 
 ## 正在进行
 
-- **S2-03 Teacher Admin Web**：**In Progress（Checkpoint 3）**
+- **S2-03 Teacher Admin Web**：**In Progress（Checkpoint 4）**
   - Planning Issue #49：Frozen / CLOSED
   - Implementation Issue #50
-  - 当前 checkpoint：AdmissionRecord management + historical inactive refs + Catalog five-tuple UI
-  - inactive Teacher 不可新增 Admission；inactive Teacher 可维护已有 Admission
-  - historical inactive master refs 可保留；new / changed refs 必须 active
-  - Catalog 可 inactive，但五元组必须匹配；explicit score null = 清空；无 DELETE
+  - 当前 checkpoint：TeachSubject management + whole-set PUT + D7 / D12 + independent subject-school selector
+  - existing inactive subject 可保留 / 删除
+  - inactive Teacher 只能保留 / 删除 / 清空 existing subject；不可新增
+  - new subject 必须 active
+  - Admission school 与 TeachSubject school 不绑定
+  - PUT failure 不得破坏 persisted set
+  - 无 row-level POST/DELETE
   - backend 未修改；无 migration；无新依赖；不含 Public Teacher API；不含 auth
-  - Checkpoint 4 尚未批准
+  - Checkpoint 5 尚未批准
 
 ## 已完成
 
@@ -120,13 +123,12 @@ Sprint 1 — 院校招生主数据：**Done**。S1-01、S1-02、S1-03A、S1-03B�
   - 合同：[`docs/api/s2-02-teacher-admin-api.md`](./docs/api/s2-02-teacher-admin-api.md)
   - 学习文档：[`docs/learning/s2-02-teacher-admin-api.md`](./docs/learning/s2-02-teacher-admin-api.md)
 
-Sprint 2 — 上岸生基础师资库：**In Progress**。S2-01 已完成。S2-02 已完成。S2-03 Teacher Admin Web 处于 Checkpoint 3。整个 Sprint 2 尚未 Done。
+Sprint 2 — 上岸生基础师资库：**In Progress**。S2-01 已完成。S2-02 已完成。S2-03 Teacher Admin Web 处于 Checkpoint 4。整个 Sprint 2 尚未 Done。
 
 ## Ready（未经批准不得自行进入）
 
-- S2-03 Checkpoint 3 review gate：完成后等待 Owner / Reviewer 验收。
-- 验收通过后才允许进入 Checkpoint 4 TeachSubject。Checkpoint 4 尚未批准。
-- 后续为 browser regression / learning / full QA / PR。
+- S2-03 Checkpoint 4 review gate：完成后等待 Owner / Reviewer 验收。
+- 验收通过后才允许进入 Checkpoint 5 browser regression / learning / full QA / PR。Checkpoint 5 尚未批准。
 - 未经批准不得自行进入 Public Teacher API / S2-04。
 - Research Blocked 项目仍按 [`docs/product/DECISIONS_PENDING.md`](./docs/product/DECISIONS_PENDING.md) 执行。
 
@@ -143,7 +145,6 @@ Sprint 2 — 上岸生基础师资库：**In Progress**。S2-01 已完成。S2-0
 
 ## 下一里程碑
 
-1. Checkpoint 3 完成后等待 Owner / Reviewer
-2. 验收通过才允许进入 Checkpoint 4 TeachSubject
-3. Checkpoint 5 browser regression / learning / full QA / PR
-4. 不进入 Public Teacher API / S2-04
+1. Checkpoint 4 完成后等待 Owner / Reviewer
+2. 验收通过才允许进入 Checkpoint 5 browser regression / learning / full QA / PR
+3. 未经批准不得进入 Public Teacher API / S2-04
