@@ -11,19 +11,27 @@ import { useEffect, useRef, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { ApiError, isAbortError } from '../api/client'
 import {
+  createAdmissionRecord,
   getTeacherProfile,
+  setAdmissionRecordStatus,
   setTeacherAvailability,
   setTeacherStatus,
   setTeacherVerification,
+  updateAdmissionRecord,
   updateTeacherProfile,
+  type AdmissionRecordCreateBody,
+  type AdmissionRecordPatch,
   type TeacherProfilePatch,
 } from '../api/teacher'
 import type {
+  AdmissionRecordAdmin,
   AvailabilityStatus,
   TeacherAdminDetail,
   TeacherAdminSummary,
   VerificationStatus,
 } from '../api/types'
+import { AdmissionRecordsPanel } from '../features/teacher/AdmissionRecordsPanel'
+import { upsertAdmissionRecord } from '../features/teacher/admissionRecordHelpers'
 import { mergeTeacherSummary } from '../features/teacher/mergeTeacherSummary'
 import { TeacherProfileEditModal } from '../features/teacher/TeacherProfileEditModal'
 import {
@@ -47,7 +55,9 @@ export function TeacherDetailPage() {
   const [headerSaving, setHeaderSaving] =
     useState<TeacherHeaderMutation | null>(null)
   const [editing, setEditing] = useState(false)
+  const [admissionSaving, setAdmissionSaving] = useState<string | null>(null)
   const savingRef = useRef(false)
+  const admissionLock = useRef(false)
   if (seenKey !== requestKey) {
     setSeenKey(requestKey)
     setLoading(true)
@@ -56,6 +66,7 @@ export function TeacherDetailPage() {
     setTeacher(null)
     setEditing(false)
     setHeaderSaving(null)
+    setAdmissionSaving(null)
   }
 
   useEffect(() => {
@@ -148,6 +159,61 @@ export function TeacherDetailPage() {
     }
   }
 
+  async function runAdmission(
+    kind: string,
+    action: () => Promise<AdmissionRecordAdmin>,
+    successText: string,
+  ): Promise<boolean> {
+    if (admissionLock.current) {
+      return false
+    }
+    admissionLock.current = true
+    setAdmissionSaving(kind)
+    try {
+      const admission = await action()
+      setTeacher((current) =>
+        current && current.id === admission.teacher_profile_id
+          ? upsertAdmissionRecord(current, admission)
+          : current,
+      )
+      message.success(successText)
+      return true
+    } finally {
+      admissionLock.current = false
+      setAdmissionSaving(null)
+    }
+  }
+
+  async function createAdmission(body: AdmissionRecordCreateBody) {
+    return runAdmission(
+      'create',
+      () => createAdmissionRecord(id, body),
+      '录取记录已创建',
+    )
+  }
+
+  async function updateAdmission(
+    admissionRecordId: number,
+    patch: AdmissionRecordPatch,
+  ) {
+    return runAdmission(
+      `edit:${admissionRecordId}`,
+      () => updateAdmissionRecord(admissionRecordId, patch),
+      '录取记录已保存',
+    )
+  }
+
+  async function changeAdmissionStatus(
+    admissionRecordId: number,
+    active: boolean,
+  ) {
+    return runAdmission(
+      `status:${admissionRecordId}`,
+      () => setAdmissionRecordStatus(admissionRecordId, active),
+      active ? '录取记录已恢复' : '录取记录已停用',
+    )
+  }
+
   async function changeVerification(value: VerificationStatus) {
     try {
       await runHeader(
@@ -231,6 +297,14 @@ export function TeacherDetailPage() {
           {teacher.teach_subjects.length}
         </Descriptions.Item>
       </Descriptions>
+      <AdmissionRecordsPanel
+        teacherActive={teacher.is_active}
+        records={teacher.admission_records}
+        saving={admissionSaving}
+        onCreate={createAdmission}
+        onUpdate={updateAdmission}
+        onStatus={changeAdmissionStatus}
+      />
       <TeacherProfileEditModal
         open={editing}
         displayName={teacher.display_name}

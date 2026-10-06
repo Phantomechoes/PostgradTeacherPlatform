@@ -1,5 +1,6 @@
 import { getJson, patchJson, postJson, type RequestOptions } from './client'
 import type {
+  AdmissionRecordAdmin,
   AvailabilityStatus,
   Page,
   StatusFilter,
@@ -134,4 +135,56 @@ export function setTeacherVerification(
     verification_status: verificationStatus,
   }
   return patchJson(`${ADMIN}/teacher-profiles/${teacherId}/verification`, body)
+}
+
+export type AdmissionRecordCreateBody = {
+  school_id: number
+  college_id: number
+  major_id: number
+  admission_year: number
+  study_mode: StudyMode
+  admission_catalog_id?: number | null
+  initial_total?: number | null
+  retest_total?: number | null
+  final_total?: number | null
+}
+
+export type AdmissionRecordPatch = {
+  school_id?: number
+  college_id?: number
+  major_id?: number
+  admission_year?: number
+  study_mode?: StudyMode
+  admission_catalog_id?: number | null
+  initial_total?: number | null
+  retest_total?: number | null
+  final_total?: number | null
+}
+
+export function createAdmissionRecord(
+  teacherId: number,
+  body: AdmissionRecordCreateBody,
+): Promise<AdmissionRecordAdmin> {
+  return postJson(
+    `${ADMIN}/teacher-profiles/${teacherId}/admission-records`,
+    body,
+  )
+}
+
+export function updateAdmissionRecord(
+  admissionRecordId: number,
+  body: AdmissionRecordPatch,
+): Promise<AdmissionRecordAdmin> {
+  return patchJson(`${ADMIN}/admission-records/${admissionRecordId}`, body)
+}
+
+export function setAdmissionRecordStatus(
+  admissionRecordId: number,
+  isActive: boolean,
+): Promise<AdmissionRecordAdmin> {
+  const body: { is_active: boolean } = { is_active: isActive }
+  return patchJson(
+    `${ADMIN}/admission-records/${admissionRecordId}/status`,
+    body,
+  )
 }
