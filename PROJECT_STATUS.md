@@ -10,13 +10,13 @@ GitHub：<https://github.com/Phantomechoes/PostgradTeacherPlatform>
 
 ## 正在进行
 
-- **S2-02 Teacher Admin API**：**In Progress（Checkpoint 1）**
+- **S2-02 Teacher Admin API**：**In Progress（Checkpoint 2）**
   - Implementation Issue [#45](https://github.com/Phantomechoes/PostgradTeacherPlatform/issues/45)
   - Planning Issue [#44](https://github.com/Phantomechoes/PostgradTeacherPlatform/issues/44)：**Frozen / CLOSED**
   - API-D1～API-D18 已冻结（含负责人修正后的 API-D7）
-  - 当前 checkpoint：Checkpoint 1 — API contract + Pydantic schemas
-  - Checkpoint 2（Repository + Service）须负责人验收 Checkpoint 1 后明确批准
-  - 无 migration；无 Admin Teacher Web；无 Public Teacher API；无 auth
+  - 当前 checkpoint：Checkpoint 2 — Repository + Service + PostgreSQL tests
+  - Checkpoint 3（Router + API tests）须 Owner / Reviewer 验收 Checkpoint 2 后明确批准
+  - 无 migration；无 Admin Teacher Web；无 Public Teacher API；无 auth；无 Router
 
 ## 已完成
 
@@ -108,11 +108,11 @@ Sprint 1 — 院校招生主数据：**Done**。S1-01、S1-02、S1-03A、S1-03B�
   - ADR：[`docs/decisions/ADR-0002-sprint2-teacher-foundation-model.md`](./docs/decisions/ADR-0002-sprint2-teacher-foundation-model.md)
   - 学习文档：[`docs/learning/s2-01-teacher-data-schema.md`](./docs/learning/s2-01-teacher-data-schema.md)
 
-Sprint 2 — 上岸生基础师资库：**In Progress**。S2-01 已完成。S2-02 正在实施 Checkpoint 1。整个 Sprint 2 尚未 Done。
+Sprint 2 — 上岸生基础师资库：**In Progress**。S2-01 已完成。S2-02 正在实施 Checkpoint 2。整个 Sprint 2 尚未 Done。
 
 ## Ready（未经批准不得自行进入）
 
-- S2-02 Checkpoint 2 — Repository + Service + PostgreSQL tests；须负责人验收 Checkpoint 1 后明确批准
+- S2-02 Checkpoint 3 — Router + API integration/regression + learning + PR；须 Owner / Reviewer 验收 Checkpoint 2 后明确批准
 - 不得自行进入 Admin Teacher Web / Public Teacher API / S2-03
 
 ## Research Blocked（禁止擅自正式开发）
@@ -128,6 +128,6 @@ Sprint 2 — 上岸生基础师资库：**In Progress**。S2-01 已完成。S2-0
 
 ## 下一里程碑
 
-1. S2-02 Checkpoint 1 验收（API 合同 + schemas）
-2. Checkpoint 2 须负责人验收 Checkpoint 1 后明确批准
+1. S2-02 Checkpoint 2 验收（Repository + Service + PostgreSQL tests）
+2. Checkpoint 3 须 Owner / Reviewer 验收 Checkpoint 2 后明确批准
 3. 不得自行进入 Admin Teacher Web / Public Teacher API / S2-03
