@@ -1,6 +1,6 @@
 # 项目状态
 
-最后更新：2026-10-06
+最后更新：2026-10-07
 当前版本：V0.1 Foundation（未发布业务版本）；工程规范当前为 V0.2
 当前 Sprint：Sprint 2 — 上岸生基础师资库
 当前主要开发机：macOS Apple Silicon
@@ -10,23 +10,7 @@ GitHub：<https://github.com/Phantomechoes/PostgradTeacherPlatform>
 
 ## 正在进行
 
-- **S2-03 Teacher Admin Web**：**In Progress（Checkpoint 5 — final QA + PR）**
-  - Planning Issue #49：Frozen / CLOSED
-  - Implementation Issue #50：OPEN
-  - CP1：Teacher list / create / minimal detail（`c795147`）
-  - CP2：profile edit + three orthogonal states（`66386aa`）
-  - CP3：AdmissionRecord create / edit / status（`3339778`）
-  - CP4：TeachSubject whole-set PUT + D7 / D12 + independent subject-school selector（`9a76c3b`）
-  - CP4 review fix：保存期间锁定已有科目复选框（`ecd25b3`）
-  - CP5：final browser regression、learning 文档、full QA、PR review gate
-  - existing inactive subject 可保留 / 删除；删除后的 inactive subject 不能重新加入
-  - inactive Teacher 只能保留 / 删除 / 清空 existing subject；不可新增
-  - new subject 必须 active
-  - Admission school 与 TeachSubject school 不绑定
-  - PUT failure 不得破坏 persisted set
-  - 无 row-level POST/DELETE
-  - backend 未修改；无 migration；无新依赖；无 API contract 变化；不含 Public Teacher API；不含 auth
-  - 尚未 Done：还需要 PR review、approved merge、main CI PASS、separate status-sync
+- 暂无正在实施的业务任务。
 
 ## 已完成
 
@@ -128,13 +112,26 @@ Sprint 1 — 院校招生主数据：**Done**。S1-01、S1-02、S1-03A、S1-03B�
   - 合同：[`docs/api/s2-02-teacher-admin-api.md`](./docs/api/s2-02-teacher-admin-api.md)
   - 学习文档：[`docs/learning/s2-02-teacher-admin-api.md`](./docs/learning/s2-02-teacher-admin-api.md)
 
-Sprint 2 — 上岸生基础师资库：**In Progress**。S2-01 已完成。S2-02 已完成。S2-03 Teacher Admin Web 处于 Checkpoint 5 — final QA + PR。整个 Sprint 2 尚未 Done。S2-03 尚未 Done。
+- **S2-03 Teacher Admin Web**：**Done**
+  - Planning Issue #49：CLOSED / Frozen
+  - Implementation Issue #50：CLOSED
+  - Feature PR #51：MERGED
+  - merge commit：`12161a0a0a101feaf52f95fb7d4229da73ebb334`
+  - main push CI：run [37593246640](https://github.com/Phantomechoes/PostgradTeacherPlatform/actions/runs/37593246640)，Backend success，Admin Web success
+  - Alembic：`695107900fc3`（无 migration）
+  - 交付：Teacher list / filters / pagination；Teacher create / detail；profile edit；`is_active` / availability / verification 三状态正交；AdmissionRecord create / edit / status；historical inactive refs；optional Catalog five-tuple UI；score null semantics；TeachSubject whole-set PUT；D7 / D12；independent subject-school selector；Teacher-specific error handling；final browser regression；learning documentation
+  - 明确未做：no backend changes；no migration；no API contract changes；no new dependency；no Public Teacher API；no auth / JWT / RBAC
+  - 合同：[`docs/api/s2-02-teacher-admin-api.md`](./docs/api/s2-02-teacher-admin-api.md)
+  - 学习文档：[`docs/learning/s2-03-teacher-admin-web.md`](./docs/learning/s2-03-teacher-admin-web.md)
+
+Sprint 2 — 上岸生基础师资库：**In Progress**。S2-01、S2-02、S2-03 已完成。整个 Sprint 2 尚未 Done。
 
 ## Ready（未经批准不得自行进入）
 
-- S2-03 PR review gate：PR approval → merge → main CI PASS → separate status-sync → Done。未经批准不得 merge，不得把 S2-03 标 Done。
+- 当前暂无已批准、正在实施的下一业务任务。
+- 下一任务必须由 Owner 单独批准后，先确认 Planning / Issue / Research 状态。
 - 未经批准不得自行进入 Public Teacher API / S2-04。
-- Research Blocked 项目仍按 [`docs/product/DECISIONS_PENDING.md`](./docs/product/DECISIONS_PENDING.md) 执行。
+- Research Blocked 事项继续受 [`docs/product/DECISIONS_PENDING.md`](./docs/product/DECISIONS_PENDING.md) 约束。
 
 ## Research Blocked（禁止擅自正式开发）
 
@@ -149,9 +146,6 @@ Sprint 2 — 上岸生基础师资库：**In Progress**。S2-01 已完成。S2-0
 
 ## 下一里程碑
 
-1. S2-03 final QA + PR
-2. Owner / Reviewer PR review
-3. approved merge
-4. main CI PASS
-5. separate status-sync
-6. 才能 S2-03 Done
+1. Owner 决定 Sprint 2 下一项工作
+2. 下一任务先确认对应 Planning / Issue / Research 状态
+3. 未经批准不得自行进入 Public Teacher API / S2-04
