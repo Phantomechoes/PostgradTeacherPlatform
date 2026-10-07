@@ -100,3 +100,36 @@ export type CatalogAggregatePut = CatalogShellCreate & {
   directions: DirectionWrite[]
   exam_units: ExamUnitWrite[]
 }
+
+export type AvailabilityStatus = 'unknown' | 'available' | 'unavailable'
+
+export type VerificationStatus = 'unverified' | 'verified' | 'rejected'
+
+export type TeacherAdminSummary = {
+  id: number
+  display_name: string
+  bio: string | null
+  is_active: boolean
+  availability_status: AvailabilityStatus
+  verification_status: VerificationStatus
+}
+
+export type AdmissionRecordAdmin = {
+  id: number
+  teacher_profile_id: number
+  school: SchoolAdmin
+  college: CollegeAdmin
+  major: MajorAdmin
+  admission_year: number
+  study_mode: StudyMode
+  admission_catalog_id: number | null
+  initial_total: number | null
+  retest_total: number | null
+  final_total: number | null
+  is_active: boolean
+}
+
+export type TeacherAdminDetail = TeacherAdminSummary & {
+  admission_records: AdmissionRecordAdmin[]
+  teach_subjects: ExamSubjectAdmin[]
+}

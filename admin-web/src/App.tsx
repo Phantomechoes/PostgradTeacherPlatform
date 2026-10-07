@@ -6,6 +6,8 @@ import { NationalSubjectsPage } from './pages/NationalSubjectsPage'
 import { NotFoundPage } from './pages/NotFoundPage'
 import { SchoolDetailPage } from './pages/SchoolDetailPage'
 import { SchoolsPage } from './pages/SchoolsPage'
+import { TeacherDetailPage } from './pages/TeacherDetailPage'
+import { TeachersPage } from './pages/TeachersPage'
 
 export default function App() {
   return (
@@ -20,6 +22,8 @@ export default function App() {
         />
         <Route path="catalogs" element={<CatalogsPage />} />
         <Route path="catalogs/:catalogId" element={<CatalogEditorPage />} />
+        <Route path="teachers" element={<TeachersPage />} />
+        <Route path="teachers/:teacherId" element={<TeacherDetailPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Route>
     </Routes>
