@@ -7,6 +7,24 @@
 
 ### Added
 
+- S2-03 Teacher Admin Web（[Issue #50](https://github.com/Phantomechoes/PostgradTeacherPlatform/issues/50)），已通过 [PR #51](https://github.com/Phantomechoes/PostgradTeacherPlatform/pull/51) 合并进 `main`（`12161a0a0a101feaf52f95fb7d4229da73ebb334`）：
+  - `/teachers`、`/teachers/:id`
+  - Teacher list / filters / pagination
+  - create / profile edit
+  - `is_active` / availability / verification 正交状态
+  - Admission management；historical inactive refs；score null semantics
+  - TeachSubject whole-set PUT；D7 / D12；independent subject-school selector
+  - no backend change；no migration；no Public Teacher API；no auth
+  - 学习文档：[`docs/learning/s2-03-teacher-admin-web.md`](./docs/learning/s2-03-teacher-admin-web.md)
+
+- S2-02 Teacher Admin API（[Issue #45](https://github.com/Phantomechoes/PostgradTeacherPlatform/issues/45)），已通过 [PR #46](https://github.com/Phantomechoes/PostgradTeacherPlatform/pull/46) 合并进 `main`（`94a015596d28fc2431eca13ba5820988be0dd183`）：
+  - Teacher Admin schemas、repository、service、router
+  - 11 个冻结 Admin operations
+  - Teacher / Admission / TeachSubject 管理规则与测试
+  - no Public Teacher API；no auth；no migration
+  - API：[`docs/api/s2-02-teacher-admin-api.md`](./docs/api/s2-02-teacher-admin-api.md)
+  - 学习文档：[`docs/learning/s2-02-teacher-admin-api.md`](./docs/learning/s2-02-teacher-admin-api.md)
+
 - S2-01 上岸生师资数据 Schema（[Issue #40](https://github.com/Phantomechoes/PostgradTeacherPlatform/issues/40)），工作分支 `feature/40-teacher-data-schema`：
   - TeacherProfile（内部档案；availability / verification 为 String + CHECK 状态字段）
   - AdmissionRecord（成功录取事实；可选 AdmissionCatalog 链接；`is_active` 为档案有效状态）
