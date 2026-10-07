@@ -2,7 +2,7 @@
 
 最后更新：2026-10-07
 当前版本：V0.1 Foundation（未发布业务版本）；工程规范当前为 V0.2
-当前 Sprint：Sprint 2 — 上岸生基础师资库
+当前 Sprint：Sprint 2 — 上岸生基础师资库（Done；下一阶段调研尚未开始）
 当前主要开发机：macOS Apple Silicon
 已验证本地环境：macOS 原生、Windows 原生
 CI：Linux / GitHub Actions
@@ -124,14 +124,18 @@ Sprint 1 — 院校招生主数据：**Done**。S1-01、S1-02、S1-03A、S1-03B�
   - 合同：[`docs/api/s2-02-teacher-admin-api.md`](./docs/api/s2-02-teacher-admin-api.md)
   - 学习文档：[`docs/learning/s2-03-teacher-admin-web.md`](./docs/learning/s2-03-teacher-admin-web.md)
 
-Sprint 2 — 上岸生基础师资库：**In Progress**。S2-01、S2-02、S2-03 已完成。整个 Sprint 2 尚未 Done。
+Sprint 2 — 上岸生基础师资库：**Done**。S2-01、S2-02、S2-03 均已完成并进入 `main`。已形成 Teacher schema → Admin API → Admin Web 的完整内部师资管理闭环。没有 Public Teacher API、Teacher login、小程序师资页、机构端或学生端。
+
+Sprint 2 closure baseline：`main` `85893d0c19537f347008fc62b4c3ee6fa51fb882`；main CI run [37595148318](https://github.com/Phantomechoes/PostgradTeacherPlatform/actions/runs/37595148318)，Backend success，Admin Web success。
 
 ## Ready（未经批准不得自行进入）
 
-- 当前暂无已批准、正在实施的下一业务任务。
-- 下一任务必须由 Owner 单独批准后，先确认 Planning / Issue / Research 状态。
-- 未经批准不得自行进入 Public Teacher API / S2-04。
-- Research Blocked 事项继续受 [`docs/product/DECISIONS_PENDING.md`](./docs/product/DECISIONS_PENDING.md) 约束。
+- Sprint 2 已完成。
+- 下一阶段是调研汇合点，但调研尚未开始。
+- 启动调研必须由 Owner 单独明确批准。
+- 在批准调研之前，不创建正式 Research / Planning 工作。
+- 调研完成并形成已批准决策之前，不进入 Sprint 3 / S2-04 / Public Teacher API。
+- [`docs/product/DECISIONS_PENDING.md`](./docs/product/DECISIONS_PENDING.md) 中的 Research Blocked 项继续保持 Research Blocked。
 
 ## Research Blocked（禁止擅自正式开发）
 
@@ -146,6 +150,6 @@ Sprint 2 — 上岸生基础师资库：**In Progress**。S2-01、S2-02、S2-03 
 
 ## 下一里程碑
 
-1. Owner 决定 Sprint 2 下一项工作
-2. 下一任务先确认对应 Planning / Issue / Research 状态
-3. 未经批准不得自行进入 Public Teacher API / S2-04
+1. 等待 Owner 明确批准启动调研阶段
+2. 批准前不创建调研任务、不产出正式调研结论
+3. 调研完成并形成已批准决策后，再决定下一 Sprint

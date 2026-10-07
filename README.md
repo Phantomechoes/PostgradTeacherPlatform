@@ -7,15 +7,18 @@
 GitHub 是本项目的唯一事实源：代码、Issue、文档和状态都以本仓库为准。
 
 - 仓库地址：<https://github.com/Phantomechoes/PostgradTeacherPlatform>
-- 当前 Sprint：Sprint 1 — 院校招生主数据
-- 已完成：S1-01、S1-02、S1-03A、S1-03B、S1-03C
-- 正在进行：S1-04 Master Data Import & Seed Data（Issue #35）
-- 下一 Ready：Sprint 2（未经批准不得自行开始）
+- 当前最近完成 Sprint：Sprint 2 — 上岸生基础师资库
+- Sprint 0：Done
+- Sprint 1：Done
+- Sprint 2：Done
+- 当前正在进行：暂无业务任务
+- 下一阶段：调研阶段，但尚未开始
+- 启动调研：需 Owner 单独批准
 - 当前主要开发机：macOS；已验证本地环境：macOS / Windows；CI：Linux
 
 ## 现在做到哪一步
 
-当前阶段：**Sprint 1 — 院校招生主数据**（Sprint 0 工程底座已完成；Sprint 1 尚未 Done）。
+当前阶段：Sprint 0、Sprint 1、Sprint 2 均已 **Done**。下一阶段是调研汇合点，但调研尚未开始。未经 Owner 单独批准，不创建下一产品阶段实现，不进入 Sprint 3，不实现 Public Teacher API / S2-04。
 
 Sprint 0（已完成）：
 
@@ -27,7 +30,7 @@ Sprint 0（已完成）：
 | S0-04 | 内部管理后台骨架 | Done |
 | S0-05 | 持续集成（CI） | Done |
 
-Sprint 1：
+Sprint 1（已完成）：
 
 | 编号 | 内容 | 状态 |
 |---|---|---|
@@ -36,7 +39,15 @@ Sprint 1：
 | S1-03A | Stable Master Data Admin API | Done |
 | S1-03B | AdmissionCatalog Admin API | Done |
 | S1-03C | Admin Web Master Data UI | Done（Issue #31 / PR #32） |
-| S1-04 | 导入 / 种子数据 | In Progress（Issue #35） |
+| S1-04 | 导入 / 种子数据 | Done（Issue #35 / PR #36） |
+
+Sprint 2（已完成）：
+
+| 编号 | 内容 | 状态 |
+|---|---|---|
+| S2-01 | Teacher Data Schema | Done |
+| S2-02 | Teacher Admin API | Done |
+| S2-03 | Teacher Admin Web | Done |
 
 更细的进度见 [`PROJECT_STATUS.md`](./PROJECT_STATUS.md)。
 
@@ -48,17 +59,19 @@ S1-04 导入合同见 [`docs/import/s1-04-import-format.md`](./docs/import/s1-04
 
 请先按这个预期来看仓库，避免误以为已经可以运行业务系统：
 
-- 已有最小 FastAPI 应用、`GET /health`，以及已合入 `main` 的 S1-02 只读主数据 API 与 S1-03A / S1-03B Admin API
-- 已有 PostgreSQL 连接、SQLAlchemy 与 Alembic；当前 Alembic head `695107900fc3`（S1-01 7 张主数据表 + S2-01 3 张师资表）
-- 后端 Admin API 已有，Admin Web 已接院校 / 科目 / 招生目录维护；尚无登录
-- 还没有微信小程序工程
-- 还没有支付、佣金、自动推荐、学生选师等业务功能
+- 已有 FastAPI、PostgreSQL / SQLAlchemy / Alembic；当前 Alembic head `695107900fc3`
+- 已有 Sprint 1 Master Data：Public Read API、Admin API、Admin Web、导入 / seed
+- 已有 Teacher foundation schema、Teacher Admin API、Teacher Admin Web
+- 仍没有 auth / login
+- 仍没有 Public Teacher API
+- 仍没有可运行的微信小程序工程
+- 仍没有 payment、commission、automatic matching、student selection、完整机构端、完整考研生端、IM
 
 这些不是遗漏，而是按冻结的 V0.1 边界，有意留到后续 Sprint。
 
 ## 当前仓库里有什么
 
-根目录说明、FastAPI `/health`、数据库工程底座、主数据 Schema、Admin API 与内部管理后台已落地；小程序仍只有占位说明。
+根目录说明已落地。`backend/` 含 Master Data 与 Teacher Admin API。`admin-web/` 含 Master Data 与 Teacher Admin Web。`miniprogram/` 仍只有占位 README，尚未初始化可运行工程。
 
 现在可以直接阅读：
 
@@ -75,6 +88,10 @@ S1-04 导入合同见 [`docs/import/s1-04-import-format.md`](./docs/import/s1-04
 | [`docs/api/s1-02-master-data-read-api.md`](./docs/api/s1-02-master-data-read-api.md) | S1-02 只读主数据 API 合同 |
 | [`docs/import/s1-04-import-format.md`](./docs/import/s1-04-import-format.md) | S1-04 JSON 导入合同 |
 | [`docs/learning/s1-04-master-data-import-and-seed.md`](./docs/learning/s1-04-master-data-import-and-seed.md) | S1-04 导入学习文档 |
+| [`docs/api/s2-02-teacher-admin-api.md`](./docs/api/s2-02-teacher-admin-api.md) | S2-02 Teacher Admin API 合同 |
+| [`docs/learning/s2-01-teacher-data-schema.md`](./docs/learning/s2-01-teacher-data-schema.md) | S2-01 师资 Schema 学习文档 |
+| [`docs/learning/s2-02-teacher-admin-api.md`](./docs/learning/s2-02-teacher-admin-api.md) | S2-02 Teacher Admin API 学习文档 |
+| [`docs/learning/s2-03-teacher-admin-web.md`](./docs/learning/s2-03-teacher-admin-web.md) | S2-03 Teacher Admin Web 学习文档 |
 | [`.gitignore`](./.gitignore) | 哪些文件不允许提交到 GitHub |
 | [`.editorconfig`](./.editorconfig) | 统一编辑器的缩进和换行 |
 | [`.github/ISSUE_TEMPLATE/development_task.md`](./.github/ISSUE_TEMPLATE/development_task.md) | 开发任务 Issue 模板 |
@@ -83,13 +100,13 @@ S1-04 导入合同见 [`docs/import/s1-04-import-format.md`](./docs/import/s1-04
 
 ## 当前目录结构（骨架已建立）
 
-以下结构来自已冻结的工程规范。`backend/` 已可运行 FastAPI 与主数据 Admin API；`admin-web/` 已可在本地维护院校和招生目录；小程序仍只有占位说明：
+以下结构来自已冻结的工程规范。`backend/` 已可运行 FastAPI、主数据与 Teacher Admin API；`admin-web/` 已可在本地维护主数据与师资；小程序仍只有占位说明，尚未初始化可运行工程：
 
 ```text
 PostgradTeacherPlatform/
-├─ backend/            后端（FastAPI、SQLAlchemy、Alembic、主数据 Models）
-├─ admin-web/          内部管理后台（S1-03C 已接真实 Admin API）
-├─ miniprogram/        微信小程序（后续阶段）
+├─ backend/            后端（Master Data + Teacher Admin API）
+├─ admin-web/          内部管理后台（Master Data + Teacher Admin Web）
+├─ miniprogram/        微信小程序（仍只有占位 README / 尚未初始化可运行工程）
 ├─ docs/               产品、调研、架构、数据库、API、学习文档
 │  ├─ product/         工程规范与待决策事项
 │  ├─ database/        主数据 Schema 设计
