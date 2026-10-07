@@ -46,6 +46,9 @@
 9. [`s2-02-teacher-admin-api.md`](./s2-02-teacher-admin-api.md)
    再看内部怎样维护这份档案：四层分别干什么、写请求何时提交、三个状态为什么不联动，以及筛选、改录取、停用后改科目时最容易看反的规则。没有管理页面，也没有公开师资接口。
 
+10. [`s2-03-teacher-admin-web.md`](./s2-03-teacher-admin-web.md)
+   再看内部管理员怎样通过网页维护 Teacher 档案、三个状态、录取和可教授科目，以及历史 inactive refs、whole-set PUT、D7/D12。没有公开师资页面。
+
 ## 后续规则
 
 以后业务模块达到 Done 之前，必须补对应的 learning 文档。代码合进 `main` 不等于负责人已经能看懂。
