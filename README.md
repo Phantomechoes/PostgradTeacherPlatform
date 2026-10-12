@@ -11,14 +11,14 @@ GitHub 是本项目的唯一事实源：代码、Issue、文档和状态都以�
 - Sprint 0：Done
 - Sprint 1：Done
 - Sprint 2：Done
-- 当前正在进行：暂无业务任务
-- 下一阶段：调研阶段，但尚未开始
-- 启动调研：需 Owner 单独批准
+- 当前正在进行：暂无业务任务；现有业务功能开发暂停
+- 当前阶段：调研准备（提纲正在校准，正式结论尚未形成）
+- 下一业务 Sprint：未获批准
 - 当前主要开发机：macOS；已验证本地环境：macOS / Windows；CI：Linux
 
 ## 现在做到哪一步
 
-当前阶段：Sprint 0、Sprint 1、Sprint 2 均已 **Done**。下一阶段是调研汇合点，但调研尚未开始。未经 Owner 单独批准，不创建下一产品阶段实现，不进入 Sprint 3，不实现 Public Teacher API / S2-04。
+当前阶段：Sprint 0、Sprint 1、Sprint 2 均已 **Done**。项目处于调研准备阶段，现有业务功能开发暂停。调研提纲正在校准，正式调研结论尚未形成。正式调研/访谈尚未启动，启动需 Owner 单独批准。下一业务 Sprint 未获批准。未经 Owner 批准，不进入 Sprint 3，不实现 Public Teacher API / S2-04，也不开始新的业务开发。
 
 Sprint 0（已完成）：
 

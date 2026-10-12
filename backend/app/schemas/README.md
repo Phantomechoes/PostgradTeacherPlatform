@@ -2,7 +2,9 @@
 
 **职责：描述 API 的输入和输出长什么样。**
 
-以后这里放 Pydantic Schema。可以把它理解成对外的“表格格式”：
+这里已经有 Pydantic Schema，包括主数据读模型（`master_data.py`）、主数据 Admin（`admin_master_data.py`）、招生目录 Admin（`admin_catalog.py`）和 Teacher Admin（`admin_teacher.py`）。Teacher Admin Schema 只服务 `/api/v1/admin`，不表示已经有 Public Teacher API。没有 StudentDemand、Institution、Candidate 或 Match Schema。
+
+Schema 是对外的“表格格式”：
 
 - 请求里允许填哪些字段
 - 响应里返回哪些字段
