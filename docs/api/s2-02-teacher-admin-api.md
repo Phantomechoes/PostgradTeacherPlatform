@@ -2,7 +2,7 @@
 
 对应 Issue：[S2-02](https://github.com/Phantomechoes/PostgradTeacherPlatform/issues/45)
 Planning 冻结：[Issue #44](https://github.com/Phantomechoes/PostgradTeacherPlatform/issues/44)（CLOSED / COMPLETED）
-状态：Checkpoint 1 — 合同与 Pydantic schemas（尚未实现 Router / Service / Repository）
+状态：Done — S2-02 Teacher Admin API 已完整实现并合入 main（Issue #45 CLOSED / PR #46 MERGED）；11 个 Admin HTTP operations 均位于 `/api/v1/admin`。下文 Checkpoint 1–3 为当时的分阶段实施记录。
 基线 Schema：S2-01 / Alembic `695107900fc3`
 ADR：[`ADR-0002-sprint2-teacher-foundation-model.md`](../decisions/ADR-0002-sprint2-teacher-foundation-model.md)
 稳定主数据 Admin：[`s1-03a-stable-master-data-admin-api.md`](./s1-03a-stable-master-data-admin-api.md)
