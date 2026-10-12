@@ -4,30 +4,36 @@
 
 S0-01 到 S0-05 合在一起，建立的是**工程底座**，不是五个互相独立的业务模块。所以这里写成一篇，而不是五篇。
 
+Sprint 0–2 已完成。当前处于调研准备阶段，现有业务功能开发暂停。调研提纲正在校准；正式调研/访谈尚未启动，启动仍需 Owner 单独批准；正式结论尚未形成，下一业务 Sprint 未批准。Research Blocked 保持不变。进度以 [`PROJECT_STATUS.md`](../../PROJECT_STATUS.md) 为准。
+
 ## 1. 现在到底已经有什么
 
 ### 已经有
 
 - GitHub 工作流：Issue → 分支 → PR → CI → 合进 `main`
-- FastAPI 后端（程序入口在 [`backend/app/main.py`](../../backend/app/main.py)）
+- Python 3.12 + FastAPI 后端（程序入口在 [`backend/app/main.py`](../../backend/app/main.py)）
 - 本机 PostgreSQL 18，应用库名 `postgrad_teacher_platform`
-- SQLAlchemy：用 Python 描述表、通过 Session 查库
+- SQLAlchemy 2.x：用 Python 描述表、通过 Session 查库
 - Alembic：记录并应用数据库结构变化；当前 head 是 `695107900fc3`
 - pytest 与 Ruff
-- GitHub Actions CI（[`.github/workflows/ci.yml`](../../.github/workflows/ci.yml)）
-- React + TypeScript + Vite + Ant Design 的内部后台壳（[`admin-web/`](../../admin-web/)）
-- 7 张院校招生主数据表，以及 S2-01 3 张师资表（当前 head `695107900fc3`）
-- 7 个只读 `GET /api/v1` 接口（会查 PostgreSQL）
+- GitHub Actions CI（[`.github/workflows/ci.yml`](../../.github/workflows/ci.yml)）：Backend 与 Admin Web
+- React + TypeScript + Vite + Ant Design 的内部后台（[`admin-web/`](../../admin-web/)）
+- 7 张院校招生主数据表，以及 3 张师资表（当前 head `695107900fc3`，共 10 张业务表）。师资表见 [`s2-01-teacher-data-schema.md`](./s2-01-teacher-data-schema.md)
+- 7 个主数据 Public Read：`GET /api/v1`（会查 PostgreSQL）
+- Master Data Admin API 与 AdmissionCatalog Admin API（`/api/v1/admin`）
+- Teacher Admin API：11 个冻结操作，都在 `/api/v1/admin`。说明见 [`s2-02-teacher-admin-api.md`](./s2-02-teacher-admin-api.md)
+- Teacher Admin Web：`/teachers`、`/teachers/:teacherId`。已有列表、筛选、分页、创建、详情、档案编辑、`is_active` / availability / verification、录取记录，以及可教授科目整集合替换。说明见 [`s2-03-teacher-admin-web.md`](./s2-03-teacher-admin-web.md)
+- S1-04 主数据 Import / Seed
 
 ### 还没有
 
-- 登录 / auth / RBAC
-- Teacher Admin API / Teacher Admin Web UI / Public Teacher API（目前已有 S2-01 Teacher 数据 Schema）
-- 微信小程序业务功能
-- Institution / Demand / Match
-- 推荐
-- 支付
-- IM
+- Public Teacher API、Teacher login、auth / JWT / RBAC
+- User / Institution、Demand / Match / Candidate 正式业务模块
+- 完整机构端、完整考研生端
+- 可运行的微信小程序工程
+- 自动推荐、在线支付、佣金结算、IM
+
+`availability` 与 `verification` 只是已实现的师资基础状态，不是排班、核验材料、撮合或自动推荐。
 
 ## 2. 两条不同的“流程”
 
@@ -61,7 +67,7 @@ Issue
   → PostgreSQL
 ```
 
-S1-03C 之后，Admin Web 会通过 Vite 把 `/api` 转到 FastAPI，进入这条链。细节见 [`s1-03c-admin-web.md`](./s1-03c-admin-web.md)。
+S1-03C 起，Admin Web 通过 Vite 把 `/api` 转到 FastAPI，进入这条链。细节见 [`s1-03c-admin-web.md`](./s1-03c-admin-web.md)。
 
 真正改数据库的，仍然是 FastAPI 这一侧（Swagger、`curl`、Admin 网页发出的 HTTP）。
 
@@ -78,15 +84,16 @@ S1-03C 之后，Admin Web 会通过 Vite 把 `/api` 转到 FastAPI，进入这�
 
 ## 4. Backend 是什么
 
-[`backend/app/main.py`](../../backend/app/main.py) 是 FastAPI 程序入口：创建 `app`，挂上主数据路由，并提供健康检查。
+[`backend/app/main.py`](../../backend/app/main.py) 是 FastAPI 程序入口：创建 `app`，挂上多组路由，并提供健康检查。
 
-打开后重点看三件事：
+打开后重点看这些事：
 
 1. `app = FastAPI(...)`：这就是 Web 服务本身。
-2. `app.include_router(master_data_router)`：7 个只读 API 从这里接进来。
-3. `GET /health`：返回 `{"status":"ok"}`。
+2. `app.include_router(master_data_router)`：7 个主数据只读 API 从这里接进来。
+3. `app.include_router(admin_master_data_router)`、`admin_catalog_router`、`admin_teacher_router`：Admin API，前缀都是 `/api/v1/admin`。Teacher Admin 的 11 个操作见 [`s2-02-teacher-admin-api.md`](./s2-02-teacher-admin-api.md)，这里不逐条展开。
+4. `GET /health`：直接返回 `{"status":"ok"}`。
 
-**`GET /health` 故意不访问数据库。** 它只回答「进程还活着吗」。数据库挂了，health 仍可能是 200。主数据 GET 则会真实查 PostgreSQL。
+没有 Public Teacher 路由。**`GET /health` 故意不访问数据库。** 它只回答「进程还活着吗」。数据库挂了，health 仍可能是 200。主数据 GET 与 Admin API 则会真实访问 PostgreSQL。
 
 本地启动（必须先进入 `backend/`）：
 
@@ -133,13 +140,15 @@ uv run --locked uvicorn app.main:app --host 127.0.0.1 --port 8000
 | `SessionLocal` | 用来**创建** Session 的工厂。它本身不是某一次请求的 Session。 |
 | `get_db()` | 每次 FastAPI 请求通过 `SessionLocal()` 创建一个 Session，交给这次请求使用，最后关闭。Router 不自己连库，Repository 也不自己调用 `SessionLocal()`。 |
 
-不需要懂连接池内部实现。记住：**业务查询走 Session；health 不走这条链路。**
+不需要懂连接池内部实现。记住：**业务查询走 Session；health 不走这条链路。** 只读用 `get_db()`，结束时关闭、不提交。Admin 写入用 `get_write_db()`，成功时 `commit`，异常时 `rollback`。
 
 ## 7. Admin Web 是什么
 
 [`admin-web/`](../../admin-web/) 是给内部人员用的网页，不是考研生小程序。技术是 React + Vite + Ant Design。
 
-S0-04 落地的是 Vite + Ant Design 工程壳。S1-03C 已经把真实 Admin API 接到页面上：院校、科目、招生目录都可以在网页里维护。Loading / 失败 / 空表来自真实请求。说明见 [`s1-03c-admin-web.md`](./s1-03c-admin-web.md)。
+S0-04 落地的是 Vite + Ant Design 工程壳。S1-03C 已经把真实 Admin API 接到页面上：院校、科目、招生目录都可以在网页里维护。S2-03 的 Teacher Admin Web 也已完成：同一内部后台可以维护 TeacherProfile、AdmissionRecord 和 TeacherTeachSubject，页面在 `/teachers` 与 `/teachers/:teacherId`。Loading / 失败 / 空表来自真实请求。说明见 [`s1-03c-admin-web.md`](./s1-03c-admin-web.md) 与 [`s2-03-teacher-admin-web.md`](./s2-03-teacher-admin-web.md)。
+
+这是内部 Admin Web，不是公开选师平台。没有登录 / auth / JWT / RBAC。`/api/v1/admin` 只用于本机，不是生产安全边界，也没有机构登录。
 
 `http://127.0.0.1:5173` 能打开，只说明 Vite 活着。要改数据库，还需要 FastAPI 和 PostgreSQL 同时在跑。
 
@@ -168,6 +177,10 @@ GET /api/v1/...
   → FastAPI
   → Service / Repository
   → 真实读取 PostgreSQL
+
+/api/v1/admin 写请求
+  → 同一条 FastAPI → Service / Repository 链路
+  → 写入 PostgreSQL（get_write_db 成功时提交）
 ```
 
 | 进程 | 默认端口 | 当前是否连别人 |
@@ -202,7 +215,7 @@ GET /api/v1/...
 ## 11. 负责人至少要读懂的关键代码
 
 1. [`backend/app/main.py`](../../backend/app/main.py)
-   看 `FastAPI`、`include_router`、`health`。能说出「入口在这、health 不查库、业务 API 是另挂的路由」就够。
+   看 `FastAPI`、四次 `include_router`、`health`。能说出「入口在这、health 不查库、业务 API 是另挂的路由」就够。
 
 2. [`backend/app/core/database.py`](../../backend/app/core/database.py)
    看 `engine`、`SessionLocal`、`get_db`。能说出「SessionLocal 是工厂，get_db 每次请求用它创建一个 Session，用完关闭」就够。
@@ -215,7 +228,7 @@ GET /api/v1/...
 1. **解决什么问题？** 让项目能在 GitHub 上协作、在本机跑 backend 和 Admin 壳、用 CI 守 `main`。
 2. **从哪里触发？** 开发：Issue / PR。运行：本机终端启动进程；浏览器打开 8000 或 5173。
 3. **请求进入哪个文件？** 业务 HTTP 进入 `main.py` 再进路由。Admin 页面进入 `admin-web/src/main.tsx` → 各页面 → `client.ts`，再经 Vite `/api` 代理打到 FastAPI。
-4. **数据在哪里处理？** 主数据读取在 Service / Repository；health 不处理数据。
+4. **数据在哪里处理？** 主数据与师资的读写在 Service / Repository；health 不处理数据。
 5. **最后存在哪里？** 业务数据在 PostgreSQL；Git 历史在 GitHub。
 6. **返回结果从哪里出来？** health 和 API 从 FastAPI 返回 JSON；Admin 网页把 Admin JSON 画成表格和表单。
 7. **出问题先看什么？** 上一节的表。

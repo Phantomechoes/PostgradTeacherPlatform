@@ -144,11 +144,15 @@ ci: ...
 
 ## 当前阶段不要做的事
 
-当前任务范围以 [`PROJECT_STATUS.md`](./PROJECT_STATUS.md) 和对应 GitHub Issue 为准。未经批准不要开始下一 Sprint 或扩大 Issue。默认不要开始：
+当前任务范围以 [`PROJECT_STATUS.md`](./PROJECT_STATUS.md) 和对应 GitHub Issue 为准。未经批准不要开始下一 Sprint 或扩大 Issue。
+
+Sprint 0、Sprint 1、Sprint 2 已完成。现有业务功能开发暂停。项目处于调研准备阶段：调研提纲正在校准，正式调研结论尚未形成。下一业务 Sprint 未获批准，必须依据调研结果，并经过 Planning 与 Owner 批准后才能启动。
+
+默认不要开始：
 
 - 未在当前 Issue 范围内的业务功能
-- Teacher / 师资档案（Sprint 2，除非已批准进入）
-- 导入、爬虫、支付、推荐、选师（导入见 S1-04，须单独批准）
+- Sprint 3、S2-04、Public Teacher API，以及任何新的业务开发
+- 爬虫、支付、推荐、选师；真实招生数据导入仍须负责人另开决策（S1-04 的合成导入工具已经完成）
 - CD / Docker / E2E / branch protection
 - 被调研阻塞的业务功能
 - 在 PostgreSQL Workbench 里手工 CREATE / ALTER / DROP 替代 Alembic

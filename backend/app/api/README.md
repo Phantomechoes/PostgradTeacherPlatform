@@ -2,7 +2,14 @@
 
 **职责：接收外部请求，调用 Service，返回 HTTP 响应。**
 
-以后这里放 FastAPI 的路由（Router）。例如健康检查 `GET /health`、后续的院校查询接口，都会先进入这一层。
+这一层现在已经有 FastAPI Router。`main.py` 挂上这些模块：
+
+- `master_data.py`：主数据 Public Read，前缀 `/api/v1`，例如 `GET /api/v1/schools`
+- `admin_master_data.py`：主数据 Admin，前缀 `/api/v1/admin`
+- `admin_catalog.py`：招生目录 Admin，前缀 `/api/v1/admin`
+- `admin_teacher.py`：Teacher Admin，前缀 `/api/v1/admin`，例如 `GET /api/v1/admin/teacher-profiles` 与 `PUT /api/v1/admin/teacher-profiles/{teacher_profile_id}/teach-subjects`
+
+`GET /health` 在 `main.py`，不在这些 router 文件里。没有 Public Teacher 路由。
 
 这一层应该做的事：
 

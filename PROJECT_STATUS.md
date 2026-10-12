@@ -1,8 +1,8 @@
 # 项目状态
 
-最后更新：2026-10-07
+最后更新：2026-10-12
 当前版本：V0.1 Foundation（未发布业务版本）；工程规范当前为 V0.2
-当前 Sprint：Sprint 2 — 上岸生基础师资库（Done；下一阶段调研尚未开始）
+当前阶段：调研准备（Sprint 0–2 已 Done；现有业务功能开发暂停）
 当前主要开发机：macOS Apple Silicon
 已验证本地环境：macOS 原生、Windows 原生
 CI：Linux / GitHub Actions
@@ -10,7 +10,7 @@ GitHub：<https://github.com/Phantomechoes/PostgradTeacherPlatform>
 
 ## 正在进行
 
-- 暂无正在实施的业务任务。
+- 暂无正在实施的业务任务。当前处于调研准备阶段，现有业务功能开发暂停。调研提纲正在校准，正式调研结论尚未形成。下一业务 Sprint 未获批准。
 
 ## 已完成
 
@@ -126,15 +126,18 @@ Sprint 1 — 院校招生主数据：**Done**。S1-01、S1-02、S1-03A、S1-03B�
 
 Sprint 2 — 上岸生基础师资库：**Done**。S2-01、S2-02、S2-03 均已完成并进入 `main`。已形成 Teacher schema → Admin API → Admin Web 的完整内部师资管理闭环。没有 Public Teacher API、Teacher login、小程序师资页、机构端或学生端。
 
-Sprint 2 closure baseline：`main` `85893d0c19537f347008fc62b4c3ee6fa51fb882`；main CI run [37595148318](https://github.com/Phantomechoes/PostgradTeacherPlatform/actions/runs/37595148318)，Backend success，Admin Web success。
+Sprint 2 实现基线（Closure 文档合并前的 `main`）：`85893d0c19537f347008fc62b4c3ee6fa51fb882`；该基线的 main CI run [37595148318](https://github.com/Phantomechoes/PostgradTeacherPlatform/actions/runs/37595148318)，Backend success，Admin Web success。
+
+Sprint 2 Closure 已进入 `main`：`5a71e74e7d0d7a4ab1c4c7231c31acf096261ef5`（PR #55）。对应 main CI run [37598111236](https://github.com/Phantomechoes/PostgradTeacherPlatform/actions/runs/37598111236)，Backend success，Admin Web success。
 
 ## Ready（未经批准不得自行进入）
 
-- Sprint 2 已完成。
-- 下一阶段是调研汇合点，但调研尚未开始。
-- 启动调研必须由 Owner 单独明确批准。
-- 在批准调研之前，不创建正式 Research / Planning 工作。
-- 调研完成并形成已批准决策之前，不进入 Sprint 3 / S2-04 / Public Teacher API。
+- Sprint 0、Sprint 1、Sprint 2 已完成。现有业务功能开发暂停。
+- 当前处于调研准备阶段。调研提纲正在校准，正式调研结论尚未形成。
+- 正式调研/访谈尚未启动，启动仍需 Owner 单独明确批准。
+- 预调研材料不是已验证事实。不得把调研准备写成调研已经完成。
+- 下一业务 Sprint 未获批准。必须依据调研结果，经过 Planning 与 Owner 批准后才能启动。
+- 未经批准不得进入 Sprint 3 / S2-04 / Public Teacher API，也不得开始新的业务开发。
 - [`docs/product/DECISIONS_PENDING.md`](./docs/product/DECISIONS_PENDING.md) 中的 Research Blocked 项继续保持 Research Blocked。
 
 ## Research Blocked（禁止擅自正式开发）
@@ -150,6 +153,6 @@ Sprint 2 closure baseline：`main` `85893d0c19537f347008fc62b4c3ee6fa51fb882`；
 
 ## 下一里程碑
 
-1. 等待 Owner 明确批准启动调研阶段
-2. 批准前不创建调研任务、不产出正式调研结论
-3. 调研完成并形成已批准决策后，再决定下一 Sprint
+1. 继续校准调研提纲；正式调研结论尚未形成
+2. 结论形成并经过 Planning 与 Owner 批准之前，不启动下一业务 Sprint
+3. 未经批准不得进入 Sprint 3 / S2-04 / Public Teacher API

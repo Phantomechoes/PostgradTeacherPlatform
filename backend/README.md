@@ -6,13 +6,14 @@
 
 ## 当前状态
 
-S1-02 已合入 `main`。当前 backend 具备：
+Sprint 1 与 Sprint 2 的后端部分已合入 `main`。当前 backend 具备：
 
 - Python 3.12 + uv + FastAPI
 - SQLAlchemy 2.x + Alembic + PostgreSQL 18
 - 10 张业务表（7 张主数据 + 3 张师资）；Alembic head：`695107900fc3`
-- 7 个只读 `GET /api/v1` 接口
-- Admin 写接口：稳定主数据与 AdmissionCatalog
+- 7 个只读 `GET /api/v1` 主数据接口
+- Admin API（`/api/v1/admin`）：稳定主数据、AdmissionCatalog、Teacher Admin
+- Teacher Admin API：11 个冻结操作。列表与详情、创建与档案修改、`is_active` / availability / verification、录取新增 / 修改 / 状态、可教授科目整集合 PUT
 - 本地 JSON importer（默认 dry-run；`--apply` 写合成 seed）
 - 分层：`Router → Service → Repository → Model → PostgreSQL`
 - `GET /health` 仍返回 `{"status":"ok"}`，**不查库**
@@ -242,7 +243,7 @@ Invoke-WebRequest -Uri http://127.0.0.1:8000/health -UseBasicParsing
 http://127.0.0.1:8000/docs
 ```
 
-这是 FastAPI 自动生成的 Swagger 页面，应返回 HTTP 200，并包含 `/health` 与 7 个 `GET /api/v1` 只读接口。
+这是 FastAPI 自动生成的 Swagger 页面，应返回 HTTP 200。页面包含已实现的 `/health`、7 个主数据 `GET /api/v1`、主数据与招生目录 Admin API，以及 11 个 Teacher Admin API。Teacher 接口都在 `/api/v1/admin`，不是 Public Teacher API。
 
 用完后在运行 uvicorn 的窗口按 `Ctrl+C` 停止。不要留下占用 8000 的本项目进程。
 
@@ -279,7 +280,7 @@ uv run --locked python -m app.importer \
 uv run --locked pytest
 ```
 
-自动化测试覆盖 health、metadata、schemas、service、repository、PostgreSQL integration、API 与 teacher schema/constraint tests。测试数量会随功能增长，以实际 `uv run --locked pytest` 输出为准。可能出现来自 Starlette / httpx 的 DeprecationWarning（2 条）；当前不阻止验收。
+自动化测试覆盖 health、metadata、主数据与 Admin 的 schema / service / repository / API、PostgreSQL integration、Teacher schema/constraint，以及 Teacher Admin 的 schema、repository、service、HTTP integration。测试数量会随功能增长，以实际 `uv run --locked pytest` 输出为准。可能出现来自 Starlette / httpx 的 DeprecationWarning（2 条）；当前不阻止验收。
 
 ## 运行 Ruff
 
@@ -291,8 +292,9 @@ uv run --locked ruff check .
 
 ## 当前明确没有什么
 
-- 没有 auth
-- 没有 User / Institution / Candidate；Teacher 当前只有数据 Schema，尚无 Teacher API / Admin UI / Public Teacher API
+- 没有 auth / JWT / RBAC。`/api/v1/admin` 只用于本机开发，不是生产级权限边界
+- 已有 Teacher Admin API。Teacher Admin Web 在 `admin-web/`。仍没有 Public Teacher API，仍没有 Teacher login
+- 没有 User / Institution / Demand / Match / Candidate 正式业务模块。availability 与 verification 只是基础状态，不是排班或核验材料系统
 - 没有把 `/health` 绑到数据库，也没有 `/ready`
 - 没有微信小程序、Docker
 - 没有真实招生数据导入、没有 CSV / Excel、没有网页抓取

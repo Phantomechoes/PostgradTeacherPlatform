@@ -12,7 +12,9 @@
 - UI：Ant Design 6
 - 路由：react-router-dom
 - 用原生 `fetch` 调用 `/api/v1/admin`（Vite 把 `/api` 代理到 `http://127.0.0.1:8000`）
-- 可维护：School / College / Major / ExamSubject / AdmissionCatalog
+- 可维护主数据：School / College / Major / ExamSubject / AdmissionCatalog
+- 可维护师资：`/teachers`、`/teachers/:teacherId`。包括列表、筛选、分页、创建、详情、档案编辑、`is_active` / availability / verification、录取记录，以及可教授科目的整集合替换
+- 这是内部 Admin Web，不是公开选师网站。页面调用 localhost 的 `/api/v1/admin`，没有 auth / JWT / RBAC，不能当成已可上线的安全业务系统
 - ESLint + Prettier
 - GitHub Actions：frozen install / lint / format:check / build
 
@@ -24,7 +26,7 @@
 ## 当前没有什么业务能力
 
 - 没有登录 / 认证（`/api/v1/admin` 不是安全边界，只用于 localhost）
-- 没有 Teacher / Institution、支付、小程序
+- 没有 Institution 端、考研生端、Public Teacher 页面、支付、小程序
 - 没有 Catalog 的 child REST，没有硬删除
 - 不直接连接 PostgreSQL；改数据必须同时启动 backend
 
